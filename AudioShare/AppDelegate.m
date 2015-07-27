@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import "RootTabBarController.h"
 @interface AppDelegate ()
 
 @end
@@ -20,6 +20,11 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    
+    RootTabBarController *rootTBC = [[RootTabBarController alloc] init];
+    self.window.rootViewController = rootTBC;
+    
     return YES;
 }
 
