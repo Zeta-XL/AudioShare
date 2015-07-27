@@ -1,0 +1,413 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C2C4DF8D1B66470C004690C3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C4DF8C1B66470C004690C3 /* main.m */; };
+		C2C4DF901B66470C004690C3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C4DF8F1B66470C004690C3 /* AppDelegate.m */; };
+		C2C4DF921B66470C004690C3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2C4DF911B66470C004690C3 /* Images.xcassets */; };
+		C2C4DF951B66470C004690C3 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C2C4DF931B66470C004690C3 /* LaunchScreen.xib */; };
+		C2C4DFA11B66470C004690C3 /* AudioShareTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C4DFA01B66470C004690C3 /* AudioShareTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C2C4DF9B1B66470C004690C3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C2C4DF7F1B66470C004690C3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C2C4DF861B66470C004690C3;
+			remoteInfo = AudioShare;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C2C4DF871B66470C004690C3 /* AudioShare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioShare.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C2C4DF8B1B66470C004690C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C2C4DF8C1B66470C004690C3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C2C4DF8E1B66470C004690C3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		C2C4DF8F1B66470C004690C3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		C2C4DF911B66470C004690C3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		C2C4DF941B66470C004690C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		C2C4DF9A1B66470C004690C3 /* AudioShareTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AudioShareTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C2C4DF9F1B66470C004690C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C2C4DFA01B66470C004690C3 /* AudioShareTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioShareTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C2C4DF841B66470C004690C3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2C4DF971B66470C004690C3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C2C4DF7E1B66470C004690C3 = {
+			isa = PBXGroup;
+			children = (
+				C2C4DF891B66470C004690C3 /* AudioShare */,
+				C2C4DF9D1B66470C004690C3 /* AudioShareTests */,
+				C2C4DF881B66470C004690C3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C2C4DF881B66470C004690C3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C2C4DF871B66470C004690C3 /* AudioShare.app */,
+				C2C4DF9A1B66470C004690C3 /* AudioShareTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C2C4DF891B66470C004690C3 /* AudioShare */ = {
+			isa = PBXGroup;
+			children = (
+				C2C4DF8E1B66470C004690C3 /* AppDelegate.h */,
+				C2C4DF8F1B66470C004690C3 /* AppDelegate.m */,
+				C2C4DF911B66470C004690C3 /* Images.xcassets */,
+				C2C4DF931B66470C004690C3 /* LaunchScreen.xib */,
+				C2C4DF8A1B66470C004690C3 /* Supporting Files */,
+			);
+			path = AudioShare;
+			sourceTree = "<group>";
+		};
+		C2C4DF8A1B66470C004690C3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C2C4DF8B1B66470C004690C3 /* Info.plist */,
+				C2C4DF8C1B66470C004690C3 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C2C4DF9D1B66470C004690C3 /* AudioShareTests */ = {
+			isa = PBXGroup;
+			children = (
+				C2C4DFA01B66470C004690C3 /* AudioShareTests.m */,
+				C2C4DF9E1B66470C004690C3 /* Supporting Files */,
+			);
+			path = AudioShareTests;
+			sourceTree = "<group>";
+		};
+		C2C4DF9E1B66470C004690C3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C2C4DF9F1B66470C004690C3 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C2C4DF861B66470C004690C3 /* AudioShare */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C2C4DFA41B66470C004690C3 /* Build configuration list for PBXNativeTarget "AudioShare" */;
+			buildPhases = (
+				C2C4DF831B66470C004690C3 /* Sources */,
+				C2C4DF841B66470C004690C3 /* Frameworks */,
+				C2C4DF851B66470C004690C3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AudioShare;
+			productName = AudioShare;
+			productReference = C2C4DF871B66470C004690C3 /* AudioShare.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C2C4DF991B66470C004690C3 /* AudioShareTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C2C4DFA71B66470C004690C3 /* Build configuration list for PBXNativeTarget "AudioShareTests" */;
+			buildPhases = (
+				C2C4DF961B66470C004690C3 /* Sources */,
+				C2C4DF971B66470C004690C3 /* Frameworks */,
+				C2C4DF981B66470C004690C3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C2C4DF9C1B66470C004690C3 /* PBXTargetDependency */,
+			);
+			name = AudioShareTests;
+			productName = AudioShareTests;
+			productReference = C2C4DF9A1B66470C004690C3 /* AudioShareTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C2C4DF7F1B66470C004690C3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0640;
+				ORGANIZATIONNAME = DLZ;
+				TargetAttributes = {
+					C2C4DF861B66470C004690C3 = {
+						CreatedOnToolsVersion = 6.4;
+					};
+					C2C4DF991B66470C004690C3 = {
+						CreatedOnToolsVersion = 6.4;
+						TestTargetID = C2C4DF861B66470C004690C3;
+					};
+				};
+			};
+			buildConfigurationList = C2C4DF821B66470C004690C3 /* Build configuration list for PBXProject "AudioShare" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C2C4DF7E1B66470C004690C3;
+			productRefGroup = C2C4DF881B66470C004690C3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C2C4DF861B66470C004690C3 /* AudioShare */,
+				C2C4DF991B66470C004690C3 /* AudioShareTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C2C4DF851B66470C004690C3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C2C4DF951B66470C004690C3 /* LaunchScreen.xib in Resources */,
+				C2C4DF921B66470C004690C3 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2C4DF981B66470C004690C3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C2C4DF831B66470C004690C3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C2C4DF901B66470C004690C3 /* AppDelegate.m in Sources */,
+				C2C4DF8D1B66470C004690C3 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2C4DF961B66470C004690C3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C2C4DFA11B66470C004690C3 /* AudioShareTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C2C4DF9C1B66470C004690C3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C2C4DF861B66470C004690C3 /* AudioShare */;
+			targetProxy = C2C4DF9B1B66470C004690C3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C2C4DF931B66470C004690C3 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C2C4DF941B66470C004690C3 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C2C4DFA21B66470C004690C3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		C2C4DFA31B66470C004690C3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C2C4DFA51B66470C004690C3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = AudioShare/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		C2C4DFA61B66470C004690C3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = AudioShare/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		C2C4DFA81B66470C004690C3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = AudioShareTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AudioShare.app/AudioShare";
+			};
+			name = Debug;
+		};
+		C2C4DFA91B66470C004690C3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = AudioShareTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AudioShare.app/AudioShare";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C2C4DF821B66470C004690C3 /* Build configuration list for PBXProject "AudioShare" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C2C4DFA21B66470C004690C3 /* Debug */,
+				C2C4DFA31B66470C004690C3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C2C4DFA41B66470C004690C3 /* Build configuration list for PBXNativeTarget "AudioShare" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C2C4DFA51B66470C004690C3 /* Debug */,
+				C2C4DFA61B66470C004690C3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		C2C4DFA71B66470C004690C3 /* Build configuration list for PBXNativeTarget "AudioShareTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C2C4DFA81B66470C004690C3 /* Debug */,
+				C2C4DFA91B66470C004690C3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C2C4DF7F1B66470C004690C3 /* Project object */;
+}
