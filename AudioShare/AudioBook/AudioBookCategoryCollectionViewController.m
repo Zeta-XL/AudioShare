@@ -28,10 +28,31 @@ static NSString * const reuseIdentifier = @"CategoryCell";
     // Register cell classes
     [self.collectionView registerClass:[AudioBookCategoryCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     self.collectionView.backgroundColor = [UIColor whiteColor];
-    
+    [self p_setupNavigationBar];
     
     
 }
+
+#pragma mark -----navigationBar
+- (void)p_setupNavigationBar
+{
+    self.navigationItem.title = @"分类";
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:(UIBarButtonSystemItemSearch) target:self action:@selector(searchAction:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back@2x.png"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backAction:)];
+}
+
+- (void)searchAction:(UIBarButtonItem *)sender
+{
+    DLog(@"搜索");
+    
+}
+
+- (void)backAction:(UIBarButtonItem *)sender
+{
+    DLog(@"返回");
+}
+
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -39,15 +60,7 @@ static NSString * const reuseIdentifier = @"CategoryCell";
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 #pragma mark <UICollectionViewDataSource>
 
@@ -70,7 +83,7 @@ static NSString * const reuseIdentifier = @"CategoryCell";
     // Configure the cell
     
     cell.categoryTitleLabel.text = @"测试数据";
-    DLog(@"adfas");
+    DLog(@"%@", NSStringFromCGRect(cell.frame));
     return cell;
 }
 
@@ -111,6 +124,18 @@ static NSString * const reuseIdentifier = @"CategoryCell";
 {
     return 30;
 }
+
+
+// 点击cell响应事件
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    DLog(@"%@", indexPath);
+}
+
+
+
+
+
 
 #pragma mark <UICollectionViewDelegate>
 
