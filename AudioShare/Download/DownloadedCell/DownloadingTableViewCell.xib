@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="140" id="KGk-i7-Jjw" customClass="DownloadingTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="329" height="140"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jpV-lz-K1b">
+                        <rect key="frame" x="40" y="5" width="249" height="40"/>
+                        <color key="backgroundColor" red="0.93792201182401191" green="1" blue="0.073619977996922992" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="BCs-0O-vbG"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ownerName" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gH8-qt-gQg">
+                        <rect key="frame" x="40" y="55" width="80" height="30"/>
+                        <color key="backgroundColor" red="0.5333218502842314" green="1" blue="0.057141478123765022" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="Hvb-cu-2s8"/>
+                            <constraint firstAttribute="width" constant="80" id="qyB-Hj-1gf"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="timeLabel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hts-rZ-Dbx">
+                        <rect key="frame" x="140" y="55" width="80" height="30"/>
+                        <color key="backgroundColor" red="0.53843914148503835" green="1" blue="0.055360443332561515" alpha="1" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="dloadState" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G6t-Ka-G97">
+                        <rect key="frame" x="30" y="95" width="60" height="25"/>
+                        <color key="backgroundColor" red="1" green="0.37757790325408147" blue="0.097093800879054393" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="YFA-hC-CbN"/>
+                            <constraint firstAttribute="height" constant="25" id="n9V-Fd-x3X"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="GRw-YY-7VP">
+                        <rect key="frame" x="90" y="107" width="150" height="2"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="150" id="pwK-Vd-Ctg"/>
+                        </constraints>
+                    </progressView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0M/0.0M" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G2V-6Z-j55">
+                        <rect key="frame" x="240" y="95" width="70" height="25"/>
+                        <color key="backgroundColor" red="1" green="0.30945557382313582" blue="0.055482887639629497" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="70" id="1WO-3o-B28"/>
+                            <constraint firstAttribute="height" constant="25" id="88u-GR-r8u"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="G2V-6Z-j55" firstAttribute="leading" secondItem="G6t-Ka-G97" secondAttribute="trailing" constant="150" id="BNj-Lo-NTg"/>
+                    <constraint firstItem="Hts-rZ-Dbx" firstAttribute="width" secondItem="gH8-qt-gQg" secondAttribute="width" id="Jbd-FS-0Q4"/>
+                    <constraint firstItem="gH8-qt-gQg" firstAttribute="top" secondItem="jpV-lz-K1b" secondAttribute="bottom" constant="10" id="NfT-ZB-MmN"/>
+                    <constraint firstItem="G6t-Ka-G97" firstAttribute="top" secondItem="gH8-qt-gQg" secondAttribute="bottom" constant="10" id="TLN-Ln-sX6"/>
+                    <constraint firstItem="Hts-rZ-Dbx" firstAttribute="leading" secondItem="gH8-qt-gQg" secondAttribute="trailing" constant="20" id="UOg-0d-PEc"/>
+                    <constraint firstItem="gH8-qt-gQg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="40" id="Zcn-aA-vlo"/>
+                    <constraint firstItem="jpV-lz-K1b" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="ciS-li-p7t"/>
+                    <constraint firstItem="G6t-Ka-G97" firstAttribute="centerY" secondItem="G2V-6Z-j55" secondAttribute="centerY" id="f3g-nD-HXC"/>
+                    <constraint firstItem="GRw-YY-7VP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="90" id="foT-1s-Sev"/>
+                    <constraint firstItem="G6t-Ka-G97" firstAttribute="centerY" secondItem="GRw-YY-7VP" secondAttribute="centerY" id="jf9-lU-4XW"/>
+                    <constraint firstItem="Hts-rZ-Dbx" firstAttribute="top" secondItem="gH8-qt-gQg" secondAttribute="top" id="kTI-wk-Rn1"/>
+                    <constraint firstItem="Hts-rZ-Dbx" firstAttribute="height" secondItem="gH8-qt-gQg" secondAttribute="height" id="nGV-fE-CT2"/>
+                    <constraint firstItem="jpV-lz-K1b" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="40" id="qWh-1v-xxu"/>
+                    <constraint firstAttribute="trailing" secondItem="jpV-lz-K1b" secondAttribute="trailing" constant="40" id="sIc-m9-MFc"/>
+                    <constraint firstItem="G6t-Ka-G97" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="uCA-0T-p9L"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="dloadProgress" destination="f3g-nD-HXC" id="ycv-dg-QLV"/>
+                <outlet property="dloaddata" destination="G2V-6Z-j55" id="Dkx-v2-XyS"/>
+                <outlet property="ownerNameLabel" destination="gH8-qt-gQg" id="YkM-hS-Eqv"/>
+                <outlet property="stateLabel" destination="G6t-Ka-G97" id="kdP-cR-KFm"/>
+                <outlet property="timeLabel" destination="Hts-rZ-Dbx" id="ivn-FZ-rKT"/>
+                <outlet property="titleLabel" destination="jpV-lz-K1b" id="XUo-bK-ZIT"/>
+            </connections>
+            <point key="canvasLocation" x="243.5" y="374"/>
+        </tableViewCell>
+    </objects>
+</document>

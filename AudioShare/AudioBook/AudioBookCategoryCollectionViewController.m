@@ -8,7 +8,8 @@
 
 #import "AudioBookCategoryCollectionViewController.h"
 #import "AudioBookCategoryCollectionViewCell.h"
-
+#import "SuggestionCollectionViewController.h"
+#import "SearchTableViewController.h"
 
 @interface AudioBookCategoryCollectionViewController ()<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,UICollectionViewDelegate>
 
@@ -44,12 +45,16 @@ static NSString * const reuseIdentifier = @"CategoryCell";
 - (void)searchAction:(UIBarButtonItem *)sender
 {
     DLog(@"搜索");
+    SearchTableViewController *searchVC = [[SearchTableViewController alloc] init];
+    
+    [self.navigationController pushViewController:searchVC animated:YES];
     
 }
 
 - (void)backAction:(UIBarButtonItem *)sender
 {
     DLog(@"返回");
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -130,6 +135,13 @@ static NSString * const reuseIdentifier = @"CategoryCell";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     DLog(@"%@", indexPath);
+    
+    
+    UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
+    SuggestionCollectionViewController *suggestionVC = [[SuggestionCollectionViewController alloc] initWithCollectionViewLayout:flow];
+    
+    [self.navigationController pushViewController:suggestionVC animated:YES];
+    
 }
 
 

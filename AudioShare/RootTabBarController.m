@@ -7,8 +7,12 @@
 //
 
 #import "RootTabBarController.h"
-#import "PlayViewController.h"
+#import "PlayerViewController.h"
 #import "AudioBookCategoryCollectionViewController.h"
+#import "RadioTableViewController.h"
+#import "AudioTableViewController.h"
+#import "DownloadViewController.h"
+
 
 @interface RootTabBarController ()
 @property (nonatomic, strong)UIButton *playButton;
@@ -23,26 +27,18 @@
     // Do any additional setup after loading the view.
     
     // 主页面(听书)
-//    UIViewController *homeVC = [[UIViewController alloc] init];
-//    homeVC.view.backgroundColor = [UIColor greenColor];
-    
-    
-    // CollectionFlowLayout
-    UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
-
-    AudioBookCategoryCollectionViewController *homeVC = [[AudioBookCategoryCollectionViewController alloc] initWithCollectionViewLayout:flow];
+    AudioTableViewController *homeVC = [[AudioTableViewController alloc] init];
     
     UINavigationController *homeNC = [[UINavigationController alloc] initWithRootViewController:homeVC];
     homeNC.tabBarItem.title = @"听书";
     
     // 直播页
-    UIViewController *radioVC = [[UIViewController alloc] init];
-    radioVC.view.backgroundColor = [UIColor blueColor];
+    RadioTableViewController *radioVC = [[RadioTableViewController alloc] init];
     UINavigationController *radioNC = [[UINavigationController alloc] initWithRootViewController:radioVC];
     radioNC.tabBarItem.title = @"电台直播";
     
-    UIViewController *downloadVC = [[UIViewController alloc] init];
-    downloadVC.view.backgroundColor = [UIColor redColor];
+    // 下载页
+    DownloadViewController *downloadVC = [[DownloadViewController alloc] init];
     UINavigationController *downloadNC = [[UINavigationController alloc] initWithRootViewController:downloadVC];
     downloadNC.tabBarItem.title = @"下载";
     
@@ -88,8 +84,7 @@
 
 - (void)playAction:(UIButton *)sender
 {
-    PlayViewController *newVC = [[PlayViewController alloc]init];
-    newVC.view.backgroundColor = [UIColor yellowColor];
+    PlayerViewController *newVC = [[PlayerViewController alloc]init];
     [self presentViewController:newVC animated:YES completion:^{
         // 播放声音
     }];
