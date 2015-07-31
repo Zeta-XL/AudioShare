@@ -10,6 +10,7 @@
 #import "AlbumTableViewCell.h"
 #import "AlbumView.h"
 #import "PlayerViewController.h"
+#import "API_URL.h"
 
 @interface AlbumTableViewController ()
 
@@ -20,24 +21,15 @@
 @implementation AlbumTableViewController
 
 
-
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
-    
     
     //注册
-    [self.tableView registerClass:[AlbumTableViewCell class] forCellReuseIdentifier:@"cell"];
+    [self.tableView registerClass:[AlbumTableViewCell class] forCellReuseIdentifier:@"AlbumCell"];
     //自定义albumView视图
     [self p_albumView];
+    
     
 }
 
@@ -45,11 +37,9 @@
 //自定义albumView视图
 -(void)p_albumView
 {
-    self.albumView = [[AlbumView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 250)];
-    //self.albumView.backgroundColor = [UIColor grayColor];
+    self.albumView = [[AlbumView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.tableView.frame), 250)];
     self.tableView.tableHeaderView = _albumView;
 }
-
 
 
 
@@ -76,12 +66,9 @@
 }
 
 
-- (AlbumTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    AlbumTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    AlbumTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AlbumCell" forIndexPath:indexPath];
     
-    if (cell == nil) {
-        cell = [[AlbumTableViewCell alloc]initWithStyle:(UITableViewCellStyleSubtitle) reuseIdentifier:@"cell"];
-    }
     
     return cell;
 }
@@ -90,13 +77,16 @@
 //确定每个cell的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 110;
+    return 100;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // 播放声音视图
-    PlayerViewController *playerVC = [[PlayerViewController alloc] init];
+    PlayerViewController *playerVC = [PlayerViewController sharedPlayer];
+    
+    playerVC.urlString = kStreamUrl1;
+    
     [self presentViewController:playerVC animated:YES completion:^{
         DLog(@"打开播放器");
     }];
@@ -104,8 +94,7 @@
 }
 
 
-
-
+// header
 
 
 

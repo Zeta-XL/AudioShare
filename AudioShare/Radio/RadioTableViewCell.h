@@ -10,4 +10,10 @@
 
 @interface RadioTableViewCell : UITableViewCell
 
+@property (nonatomic, strong)UIImageView *radioImageView;
+
+@property (nonatomic, strong)UILabel *nameLabel;
+
+@property (nonatomic, strong)UILabel *contentLabel;
+
 @end

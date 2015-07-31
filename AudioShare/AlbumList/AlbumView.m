@@ -25,19 +25,23 @@
 -(void)p_setupView
 {
     //
-    self.myImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 80, 150, 150)];
-    self.myImageView.backgroundColor = [UIColor blueColor];
-    [self addSubview:_myImageView];
-    
-    //
-    self.titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 20, CGRectGetWidth(self.frame) - 40, 40)];
+    self.titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 10, CGRectGetWidth(self.frame) - 40, (self.bounds.size.height - 30) /4)];
     self.titleLabel.backgroundColor = [UIColor blueColor];
+    self.titleLabel.numberOfLines = 2;
     self.titleLabel.text = @"测试";
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_titleLabel];
     
     //
-    self.writerLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_myImageView.frame) + 10, CGRectGetMinY(_myImageView.frame), CGRectGetWidth(self.frame) - CGRectGetWidth(_myImageView.frame) - 30, 40)];
+    CGFloat height = CGRectGetHeight(_titleLabel.frame) * 2.5;
+    
+    self.myImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(_titleLabel.frame) + 10, height, height)];
+    self.myImageView.backgroundColor = [UIColor blueColor];
+    [self addSubview:_myImageView];
+    
+    
+    //
+    self.writerLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_myImageView.frame) + 10, CGRectGetMinY(_myImageView.frame), CGRectGetWidth(self.frame) - CGRectGetWidth(_myImageView.frame) - 30, height / 4)];
     self.writerLabel.backgroundColor = [UIColor blueColor];
     [self addSubview:_writerLabel];
     
@@ -46,30 +50,17 @@
     self.detailLabel.backgroundColor = [UIColor blueColor];
     [self addSubview:_detailLabel];
     
-    //
-    self.collectionLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(_detailLabel.frame), CGRectGetMaxY(_detailLabel.frame) + 15, 75, CGRectGetHeight(_detailLabel.frame))];
-    //self.collectionLabel.backgroundColor = [UIColor blueColor];
-    //self.collectionLabel.text = @"收藏";
-    //self.collectionLabel.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:_collectionLabel];
-    
-    //
-    self.loadLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_collectionLabel.frame) + 10, CGRectGetMinY(_collectionLabel.frame), CGRectGetWidth(_collectionLabel.frame), CGRectGetHeight(_collectionLabel.frame))];
-    //self.loadLabel.backgroundColor = [UIColor blueColor];
-    //self.loadLabel.text = @"下载";
-    self.loadLabel.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:_loadLabel];
     
     //
     self.collectionButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    self.collectionButton.frame = self.collectionLabel.frame;
+    self.collectionButton.frame = CGRectMake(CGRectGetMinX(_detailLabel.frame), CGRectGetMaxY(_detailLabel.frame) + 15, (CGRectGetWidth(self.frame) - CGRectGetWidth(_myImageView.frame) - 40) / 2, CGRectGetHeight(_detailLabel.frame));
     [self.collectionButton setTitle:@"收藏" forState:(UIControlStateNormal)];
     [self.collectionButton addTarget:self action:@selector(collectionButtonAction : ) forControlEvents:(UIControlEventTouchUpInside)];
     [self addSubview:_collectionButton];
     
     //
     self.loadButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    self.loadButton.frame = self.loadLabel.frame;
+    self.loadButton.frame = CGRectMake(CGRectGetMaxX(_collectionButton.frame) + 10, CGRectGetMinY(_collectionButton.frame), CGRectGetWidth(_collectionButton.frame), CGRectGetHeight(_collectionButton.frame));
     [self.loadButton setTitle:@"批量下载" forState:(UIControlStateNormal)];
     [self.loadButton addTarget:self action:@selector(loadButtonAction : ) forControlEvents:(UIControlEventTouchUpInside)];
     [self addSubview:_loadButton];

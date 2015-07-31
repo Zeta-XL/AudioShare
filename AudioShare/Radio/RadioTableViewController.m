@@ -9,8 +9,10 @@
 #import "RadioTableViewController.h"
 #import "RadioHeader.h"
 #import "RadioTableViewCell.h"
-#import "RadioViewController.h"
+#import "RadioProvinceTableViewController.h"
 #import "RadioFoxView.h"
+#import "API_URL.h"
+#import "PlayerViewController.h"
 
 @interface RadioTableViewController ()
 
@@ -58,24 +60,37 @@
     RadioTableViewCell *foxCell = [tableView dequeueReusableCellWithIdentifier:@"radioCell" forIndexPath:indexPath];
     
     
-    foxCell.textLabel.text = @"测试";
     
    return foxCell;
 }
 
+// 点击某个cell
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    PlayerViewController *playerVC = [PlayerViewController sharedPlayer];
+    // 传url
+    playerVC.urlString = kLiveCast;
+    
+    [self presentViewController:playerVC animated:YES completion:^{
+        DLog(@"打开播放器处理");
+    }];
+    
+}
 
 
+
+#pragma mark ---- header和footer
 //header高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return  160;
+    return  140;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     
     
-    self.radioFoxView = [[RadioFoxView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 160)];
+    self.radioFoxView = [[RadioFoxView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 140)];
     
     
     [self.radioFoxView.networkButton addTarget:self action:@selector(networkButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
@@ -89,12 +104,20 @@
 }
 
 // footer
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+//{
+//    return 50;
+//}
+
+// cell 的高
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50;
+    
+    return 110;
 }
 
 
+#pragma mark ---- 电台button点击事件
 - (void)networkButtonAction:(UIButton *)sender
 {
     
@@ -109,21 +132,16 @@
 
 - (void)provinceButtonAction:(UIButton *)sender
 {
-    RadioViewController *rvVC = [[RadioViewController alloc]init];
+    RadioProvinceTableViewController *provinceVC = [[RadioProvinceTableViewController alloc] init];
     
-    [self presentViewController:rvVC animated:YES completion:^{
-        NSLog(@"模态");
-    }];
+    [self.navigationController pushViewController:provinceVC animated:YES];
 }
 
 
 
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
 
-    return 120;
-}
+
 
 
 

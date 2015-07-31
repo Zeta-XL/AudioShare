@@ -22,12 +22,12 @@
 -(void)p_setupView
 {
     //
-    self.titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, CGRectGetWidth(self.frame) - 50, 50)];
+    self.titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, CGRectGetWidth(self.contentView.frame) - 50, self.contentView.bounds.size.height * 0.5)];
     self.titleLabel.backgroundColor = [UIColor blueColor];
     [self.contentView addSubview:_titleLabel];
     
     //
-    self.playTimesLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(_titleLabel.frame), CGRectGetMaxY(_titleLabel.frame) + 10, 50, 30)];
+    self.playTimesLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(_titleLabel.frame), CGRectGetMaxY(_titleLabel.frame) + 10, 60, CGRectGetHeight(_titleLabel.frame) * 0.5)];
     self.playTimesLabel.backgroundColor = [UIColor blueColor];
     [self.contentView addSubview:_playTimesLabel];
     
@@ -38,17 +38,25 @@
     
     //
     self.optionButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    self.optionButton.frame = CGRectMake(CGRectGetMaxX(_titleLabel.frame) + 20, CGRectGetMinY(_commentLabel.frame) - 10, 50, 40);
-    //self.loadButton.backgroundColor = [UIColor blueColor];
+    self.optionButton.frame = CGRectMake(self.contentView.bounds.size.width - 50 - 10, CGRectGetMinY(_commentLabel.frame) - 10, 50, 40);
+    
     [self.optionButton setTitle:@"下载" forState:(UIControlStateNormal)];
     [self.optionButton addTarget:self action:@selector(optionButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [self.contentView addSubview:_optionButton];
     
     
     
-    
 }
 
+
+-(void)layoutSubviews
+{
+    [super layoutSubviews];
+    _titleLabel.frame = CGRectMake(10, 10, CGRectGetWidth(self.contentView.frame) - 50, self.contentView.bounds.size.height * 0.5);
+    _playTimesLabel.frame = CGRectMake(CGRectGetMinX(_titleLabel.frame), CGRectGetMaxY(_titleLabel.frame) + 10, 60, CGRectGetHeight(_titleLabel.frame) * 0.5);
+    _commentLabel.frame = CGRectMake(CGRectGetMaxX(_playTimesLabel.frame) + 10, CGRectGetMinY(_playTimesLabel.frame), CGRectGetWidth(_playTimesLabel.frame), CGRectGetHeight(_playTimesLabel.frame));
+    _optionButton.frame = CGRectMake(self.contentView.bounds.size.width - 50 - 10, CGRectGetMinY(_commentLabel.frame) - 10, 60, 40);
+}
 
 //下载button点击事件
 -(void)optionButtonAction:(UIButton *)sender

@@ -12,7 +12,7 @@
 #import "RadioTableViewController.h"
 #import "AudioTableViewController.h"
 #import "DownloadViewController.h"
-
+#import "FoxSettingsTableViewController.h"
 
 @interface RootTabBarController ()
 @property (nonatomic, strong)UIButton *playButton;
@@ -43,8 +43,7 @@
     downloadNC.tabBarItem.title = @"下载";
     
     
-    UIViewController *user_settingsVC = [[UIViewController alloc] init];
-    user_settingsVC.view.backgroundColor = [UIColor blackColor ];
+    FoxSettingsTableViewController *user_settingsVC = [[FoxSettingsTableViewController alloc] init];
     UINavigationController *user_settingsNC = [[UINavigationController alloc] initWithRootViewController:user_settingsVC];
     user_settingsNC.tabBarItem.title = @"我的";
     
@@ -84,7 +83,7 @@
 
 - (void)playAction:(UIButton *)sender
 {
-    PlayerViewController *newVC = [[PlayerViewController alloc]init];
+    PlayerViewController *newVC = [PlayerViewController sharedPlayer];
     [self presentViewController:newVC animated:YES completion:^{
         // 播放声音
     }];

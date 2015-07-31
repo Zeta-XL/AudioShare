@@ -8,7 +8,7 @@
 
 #import "SearchTableViewController.h"
 #import "SearchViewController.h"
-#import "AlbumTableViewCell.h"
+#import "AudioTableViewCell.h"
 @interface SearchTableViewController ()<UITableViewDataSource, UITableViewDelegate, UISearchDisplayDelegate>
 
 @property (nonatomic, strong)UISearchBar *searchBar;
@@ -53,7 +53,7 @@
     [self segmentController];
     
     //注册
-    [self.tableView registerClass:[AlbumTableViewCell class] forCellReuseIdentifier:@"searchCell"];
+    [self.tableView registerClass:[AudioTableViewCell class] forCellReuseIdentifier:@"searchCell"];
     
     
 }
@@ -129,12 +129,12 @@
 }
 
 
-- (AlbumTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    AlbumTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"searchCell" forIndexPath:indexPath];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    AudioTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"searchCell" forIndexPath:indexPath];
     
     // Configure the cell...
     
-    
+      
     return cell;
 }
 

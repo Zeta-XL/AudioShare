@@ -22,11 +22,6 @@
 //详情
 @property (nonatomic, strong)UILabel *detailLabel;
 
-//收藏
-@property (nonatomic, strong)UILabel *collectionLabel;
-
-//下载
-@property (nonatomic, strong)UILabel *loadLabel;
 
 //收藏button
 @property (nonatomic, strong)UIButton *collectionButton;
@@ -34,8 +29,7 @@
 //下载button
 @property (nonatomic, strong)UIButton *loadButton;
 
-//详情展示
-@property (nonatomic, strong)UIButton *detailButton;
+
 
 
 @end

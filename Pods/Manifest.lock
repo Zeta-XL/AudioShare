@@ -20,14 +20,11 @@ PODS:
   - AFNetworking/UIKit (2.5.4):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - MSDynamicsDrawerViewController (1.5.1)
 
 DEPENDENCIES:
   - AFNetworking
-  - MSDynamicsDrawerViewController
 
 SPEC CHECKSUMS:
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
-  MSDynamicsDrawerViewController: 2874df90f5e9453dc7d4e32f8038b50615d4baa7
 
 COCOAPODS: 0.37.2

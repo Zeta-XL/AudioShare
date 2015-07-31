@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C2C11FA11B685E9E00CBA7B5 /* FoxSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C11F951B685E9E00CBA7B5 /* FoxSettingsTableViewController.m */; };
+		C2C11FA31B685E9E00CBA7B5 /* FoxCollectionTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C11F9A1B685E9E00CBA7B5 /* FoxCollectionTableViewController.m */; };
+		C2C11FA41B685E9E00CBA7B5 /* FoxPlayTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C11F9C1B685E9E00CBA7B5 /* FoxPlayTableViewController.m */; };
+		C2C11FA51B685E9E00CBA7B5 /* SettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C11F9E1B685E9E00CBA7B5 /* SettingTableViewController.m */; };
+		C2C11FA61B685E9E00CBA7B5 /* UserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C11FA01B685E9E00CBA7B5 /* UserTableViewCell.m */; };
+		C2C11FAA1B68602100CBA7B5 /* RadioProvinceTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C11FA91B68602100CBA7B5 /* RadioProvinceTableViewController.m */; };
+		C2C11FB01B68647900CBA7B5 /* FoxCollectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C11FAF1B68647900CBA7B5 /* FoxCollectionTableViewCell.m */; };
+		C2C11FEA1B68D07400CBA7B5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2C11FE91B68D07400CBA7B5 /* AVFoundation.framework */; };
+		C2C11FF11B69015100CBA7B5 /* testDemo.aac in Resources */ = {isa = PBXBuildFile; fileRef = C2C11FF01B69015100CBA7B5 /* testDemo.aac */; };
 		C2C4DF8D1B66470C004690C3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C4DF8C1B66470C004690C3 /* main.m */; };
 		C2C4DF901B66470C004690C3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C4DF8F1B66470C004690C3 /* AppDelegate.m */; };
 		C2C4DF921B66470C004690C3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2C4DF911B66470C004690C3 /* Images.xcassets */; };
@@ -36,6 +45,9 @@
 		C2C4E0041B665C03004690C3 /* SuggestionCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C4E0031B665C03004690C3 /* SuggestionCollectionViewCell.m */; };
 		C2C4E0071B665C20004690C3 /* SuggestionCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C4E0061B665C20004690C3 /* SuggestionCollectionViewController.m */; };
 		C2C4E00B1B666E3A004690C3 /* SubListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C4E00A1B666E3A004690C3 /* SubListViewController.m */; };
+		C2C725F11B69B307005E671F /* SpecialItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C725F01B69B307005E671F /* SpecialItem.m */; };
+		C2C725F91B69D088005E671F /* TracksListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C725F81B69D088005E671F /* TracksListTableViewController.m */; };
+		C2C725FC1B69D13D005E671F /* TracksListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C725FB1B69D13D005E671F /* TracksListTableViewCell.m */; };
 		C2CCA80D1B670B1500B62775 /* HeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCA80C1B670B1500B62775 /* HeaderCollectionReusableView.m */; };
 		C2CCA8131B67121300B62775 /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCA8111B67121300B62775 /* PlayerViewController.m */; };
 		C2CCA8141B67121300B62775 /* PlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C2CCA8121B67121300B62775 /* PlayerViewController.xib */; };
@@ -43,8 +55,6 @@
 		C2CCA8261B6725E700B62775 /* btn_pre@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C2CCA81E1B6725E700B62775 /* btn_pre@2x.png */; };
 		C2CCA8281B672B4800B62775 /* play_btn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C2CCA8271B672B4800B62775 /* play_btn.jpg */; };
 		C2CCA82A1B672CD700B62775 /* pause_btn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C2CCA8291B672CD700B62775 /* pause_btn.jpg */; };
-		C2CCA8391B675CC000B62775 /* RadioView.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCA82F1B675CC000B62775 /* RadioView.m */; };
-		C2CCA83A1B675CC000B62775 /* RadioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCA8311B675CC000B62775 /* RadioViewController.m */; };
 		C2CCA83B1B675CC000B62775 /* RadioFoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCA8331B675CC000B62775 /* RadioFoxView.m */; };
 		C2CCA83C1B675CC000B62775 /* RadioTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCA8361B675CC000B62775 /* RadioTableViewCell.m */; };
 		C2CCA83D1B675CC000B62775 /* RadioTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCA8381B675CC000B62775 /* RadioTableViewController.m */; };
@@ -77,6 +87,23 @@
 
 /* Begin PBXFileReference section */
 		1E4E816DCCC72B128588F1C9 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		C2C11F941B685E9E00CBA7B5 /* FoxSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoxSettingsTableViewController.h; sourceTree = "<group>"; };
+		C2C11F951B685E9E00CBA7B5 /* FoxSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoxSettingsTableViewController.m; sourceTree = "<group>"; };
+		C2C11F991B685E9E00CBA7B5 /* FoxCollectionTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoxCollectionTableViewController.h; sourceTree = "<group>"; };
+		C2C11F9A1B685E9E00CBA7B5 /* FoxCollectionTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoxCollectionTableViewController.m; sourceTree = "<group>"; };
+		C2C11F9B1B685E9E00CBA7B5 /* FoxPlayTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoxPlayTableViewController.h; sourceTree = "<group>"; };
+		C2C11F9C1B685E9E00CBA7B5 /* FoxPlayTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoxPlayTableViewController.m; sourceTree = "<group>"; };
+		C2C11F9D1B685E9E00CBA7B5 /* SettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingTableViewController.h; sourceTree = "<group>"; };
+		C2C11F9E1B685E9E00CBA7B5 /* SettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingTableViewController.m; sourceTree = "<group>"; };
+		C2C11F9F1B685E9E00CBA7B5 /* UserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserTableViewCell.h; sourceTree = "<group>"; };
+		C2C11FA01B685E9E00CBA7B5 /* UserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserTableViewCell.m; sourceTree = "<group>"; };
+		C2C11FA81B68602100CBA7B5 /* RadioProvinceTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioProvinceTableViewController.h; sourceTree = "<group>"; };
+		C2C11FA91B68602100CBA7B5 /* RadioProvinceTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadioProvinceTableViewController.m; sourceTree = "<group>"; };
+		C2C11FAE1B68647900CBA7B5 /* FoxCollectionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoxCollectionTableViewCell.h; sourceTree = "<group>"; };
+		C2C11FAF1B68647900CBA7B5 /* FoxCollectionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoxCollectionTableViewCell.m; sourceTree = "<group>"; };
+		C2C11FE91B68D07400CBA7B5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		C2C11FEF1B68D47400CBA7B5 /* API_URL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = API_URL.h; sourceTree = "<group>"; };
+		C2C11FF01B69015100CBA7B5 /* testDemo.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = testDemo.aac; sourceTree = "<group>"; };
 		C2C4DF871B66470C004690C3 /* AudioShare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioShare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2C4DF8B1B66470C004690C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C2C4DF8C1B66470C004690C3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -135,6 +162,12 @@
 		C2C4E0061B665C20004690C3 /* SuggestionCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuggestionCollectionViewController.m; sourceTree = "<group>"; };
 		C2C4E0091B666E3A004690C3 /* SubListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubListViewController.h; sourceTree = "<group>"; };
 		C2C4E00A1B666E3A004690C3 /* SubListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubListViewController.m; sourceTree = "<group>"; };
+		C2C725EF1B69B307005E671F /* SpecialItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpecialItem.h; sourceTree = "<group>"; };
+		C2C725F01B69B307005E671F /* SpecialItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpecialItem.m; sourceTree = "<group>"; };
+		C2C725F71B69D088005E671F /* TracksListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TracksListTableViewController.h; sourceTree = "<group>"; };
+		C2C725F81B69D088005E671F /* TracksListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TracksListTableViewController.m; sourceTree = "<group>"; };
+		C2C725FA1B69D13D005E671F /* TracksListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TracksListTableViewCell.h; sourceTree = "<group>"; };
+		C2C725FB1B69D13D005E671F /* TracksListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TracksListTableViewCell.m; sourceTree = "<group>"; };
 		C2CCA80B1B670B1500B62775 /* HeaderCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderCollectionReusableView.h; sourceTree = "<group>"; };
 		C2CCA80C1B670B1500B62775 /* HeaderCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderCollectionReusableView.m; sourceTree = "<group>"; };
 		C2CCA8101B67121300B62775 /* PlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerViewController.h; sourceTree = "<group>"; };
@@ -144,10 +177,6 @@
 		C2CCA81E1B6725E700B62775 /* btn_pre@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_pre@2x.png"; sourceTree = "<group>"; };
 		C2CCA8271B672B4800B62775 /* play_btn.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = play_btn.jpg; sourceTree = "<group>"; };
 		C2CCA8291B672CD700B62775 /* pause_btn.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pause_btn.jpg; sourceTree = "<group>"; };
-		C2CCA82E1B675CC000B62775 /* RadioView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioView.h; sourceTree = "<group>"; };
-		C2CCA82F1B675CC000B62775 /* RadioView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadioView.m; sourceTree = "<group>"; };
-		C2CCA8301B675CC000B62775 /* RadioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioViewController.h; sourceTree = "<group>"; };
-		C2CCA8311B675CC000B62775 /* RadioViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadioViewController.m; sourceTree = "<group>"; };
 		C2CCA8321B675CC000B62775 /* RadioFoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioFoxView.h; sourceTree = "<group>"; };
 		C2CCA8331B675CC000B62775 /* RadioFoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadioFoxView.m; sourceTree = "<group>"; };
 		C2CCA8341B675CC000B62775 /* RadioHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioHeader.h; sourceTree = "<group>"; };
@@ -191,6 +220,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2C11FEA1B68D07400CBA7B5 /* AVFoundation.framework in Frameworks */,
 				CD78E2802ADEB115BE22A4AA /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -208,6 +238,7 @@
 		541ADA4720B2933F46B4ABAF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C2C11FE91B68D07400CBA7B5 /* AVFoundation.framework */,
 				F2398153ACA485CBB3B52F4C /* libPods.a */,
 			);
 			name = Frameworks;
@@ -220,6 +251,32 @@
 				1E4E816DCCC72B128588F1C9 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		C2C11F961B685E9E00CBA7B5 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				C2C11F991B685E9E00CBA7B5 /* FoxCollectionTableViewController.h */,
+				C2C11F9A1B685E9E00CBA7B5 /* FoxCollectionTableViewController.m */,
+				C2C11F9B1B685E9E00CBA7B5 /* FoxPlayTableViewController.h */,
+				C2C11F9C1B685E9E00CBA7B5 /* FoxPlayTableViewController.m */,
+				C2C11F9D1B685E9E00CBA7B5 /* SettingTableViewController.h */,
+				C2C11F9E1B685E9E00CBA7B5 /* SettingTableViewController.m */,
+				C2C11F9F1B685E9E00CBA7B5 /* UserTableViewCell.h */,
+				C2C11FA01B685E9E00CBA7B5 /* UserTableViewCell.m */,
+				C2C11FAE1B68647900CBA7B5 /* FoxCollectionTableViewCell.h */,
+				C2C11FAF1B68647900CBA7B5 /* FoxCollectionTableViewCell.m */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		C2C11FA71B68600F00CBA7B5 /* Province */ = {
+			isa = PBXGroup;
+			children = (
+				C2C11FA81B68602100CBA7B5 /* RadioProvinceTableViewController.h */,
+				C2C11FA91B68602100CBA7B5 /* RadioProvinceTableViewController.m */,
+			);
+			path = Province;
 			sourceTree = "<group>";
 		};
 		C2C4DF7E1B66470C004690C3 = {
@@ -249,6 +306,7 @@
 				C2C4DF8F1B66470C004690C3 /* AppDelegate.m */,
 				C2C4DFB11B6647FD004690C3 /* RootTabBarController.h */,
 				C2C4DFB21B6647FD004690C3 /* RootTabBarController.m */,
+				C2C11FEF1B68D47400CBA7B5 /* API_URL.h */,
 				C2C4DFB41B6648D3004690C3 /* AlbumList */,
 				C2C4DFB51B6648D3004690C3 /* AudioBook */,
 				C2C4DFBC1B6648D3004690C3 /* Player */,
@@ -335,6 +393,9 @@
 		C2C4DFBC1B6648D3004690C3 /* Player */ = {
 			isa = PBXGroup;
 			children = (
+				C2C725F61B69D04F005E671F /* TracksList */,
+				C2C725EF1B69B307005E671F /* SpecialItem.h */,
+				C2C725F01B69B307005E671F /* SpecialItem.m */,
 				C2CCA8101B67121300B62775 /* PlayerViewController.h */,
 				C2CCA8111B67121300B62775 /* PlayerViewController.m */,
 				C2CCA8121B67121300B62775 /* PlayerViewController.xib */,
@@ -345,7 +406,7 @@
 		C2C4DFBF1B6648D3004690C3 /* Radio */ = {
 			isa = PBXGroup;
 			children = (
-				C2CCA82D1B675CC000B62775 /* modal */,
+				C2C11FA71B68600F00CBA7B5 /* Province */,
 				C2CCA8321B675CC000B62775 /* RadioFoxView.h */,
 				C2CCA8331B675CC000B62775 /* RadioFoxView.m */,
 				C2CCA8341B675CC000B62775 /* RadioHeader.h */,
@@ -360,6 +421,7 @@
 		C2C4DFC01B6648D3004690C3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C2C11FF01B69015100CBA7B5 /* testDemo.aac */,
 				C2CCA8271B672B4800B62775 /* play_btn.jpg */,
 				C2CCA8181B6725E700B62775 /* btn_next@2x.png */,
 				C2CCA8291B672CD700B62775 /* pause_btn.jpg */,
@@ -392,6 +454,9 @@
 		C2C4DFC41B6648D3004690C3 /* User_Settings */ = {
 			isa = PBXGroup;
 			children = (
+				C2C11F941B685E9E00CBA7B5 /* FoxSettingsTableViewController.h */,
+				C2C11F951B685E9E00CBA7B5 /* FoxSettingsTableViewController.m */,
+				C2C11F961B685E9E00CBA7B5 /* Settings */,
 			);
 			path = User_Settings;
 			sourceTree = "<group>";
@@ -459,15 +524,15 @@
 			path = Sugestion/SubList;
 			sourceTree = "<group>";
 		};
-		C2CCA82D1B675CC000B62775 /* modal */ = {
+		C2C725F61B69D04F005E671F /* TracksList */ = {
 			isa = PBXGroup;
 			children = (
-				C2CCA82E1B675CC000B62775 /* RadioView.h */,
-				C2CCA82F1B675CC000B62775 /* RadioView.m */,
-				C2CCA8301B675CC000B62775 /* RadioViewController.h */,
-				C2CCA8311B675CC000B62775 /* RadioViewController.m */,
+				C2C725F71B69D088005E671F /* TracksListTableViewController.h */,
+				C2C725F81B69D088005E671F /* TracksListTableViewController.m */,
+				C2C725FA1B69D13D005E671F /* TracksListTableViewCell.h */,
+				C2C725FB1B69D13D005E671F /* TracksListTableViewCell.m */,
 			);
-			path = modal;
+			path = TracksList;
 			sourceTree = "<group>";
 		};
 		C2CCA83E1B676D6C00B62775 /* FirstAudioList */ = {
@@ -601,6 +666,7 @@
 				C2C4DFC91B6648D3004690C3 /* main_play@2x.png in Resources */,
 				C2C4DFCB1B664E14004690C3 /* back@2x.png in Resources */,
 				C2CCA8281B672B4800B62775 /* play_btn.jpg in Resources */,
+				C2C11FF11B69015100CBA7B5 /* testDemo.aac in Resources */,
 				C2CCA8711B67A2A500B62775 /* DownloadingTableViewCell.xib in Resources */,
 				C2CCA8201B6725E700B62775 /* btn_next@2x.png in Resources */,
 				C2CCA8141B67121300B62775 /* PlayerViewController.xib in Resources */,
@@ -660,31 +726,38 @@
 				C2CCA8591B677AC300B62775 /* DownloadViewController.m in Sources */,
 				C2C4DFC61B6648D3004690C3 /* AudioBookCategoryCollectionViewController.m in Sources */,
 				C2CCA85C1B677E3000B62775 /* DownloadView.m in Sources */,
+				C2C725F91B69D088005E671F /* TracksListTableViewController.m in Sources */,
 				C2CCA84F1B676D8700B62775 /* AlbumView.m in Sources */,
-				C2CCA8391B675CC000B62775 /* RadioView.m in Sources */,
 				C2C4DFF61B66553E004690C3 /* SDWebImageManager.m in Sources */,
 				C2CCA8431B676D6C00B62775 /* AudioTableViewCell.m in Sources */,
 				C2CCA84E1B676D8700B62775 /* AlbumTableViewController.m in Sources */,
 				C2C4DFF11B66553E004690C3 /* SDImageCache.m in Sources */,
 				C2CCA83B1B675CC000B62775 /* RadioFoxView.m in Sources */,
 				C2C4DFF51B66553E004690C3 /* SDWebImageDownloaderOperation.m in Sources */,
+				C2C11FAA1B68602100CBA7B5 /* RadioProvinceTableViewController.m in Sources */,
 				C2CCA83C1B675CC000B62775 /* RadioTableViewCell.m in Sources */,
 				C2CCA8551B676D9800B62775 /* SearchTableViewController.m in Sources */,
 				C2C4DFFE1B66553E004690C3 /* UIView+WebCacheOperation.m in Sources */,
+				C2C11FA51B685E9E00CBA7B5 /* SettingTableViewController.m in Sources */,
 				C2C4DFB31B6647FD004690C3 /* RootTabBarController.m in Sources */,
 				C2C4DFF81B66553E004690C3 /* UIButton+WebCache.m in Sources */,
 				C2CCA8131B67121300B62775 /* PlayerViewController.m in Sources */,
+				C2C11FA31B685E9E00CBA7B5 /* FoxCollectionTableViewController.m in Sources */,
 				C2C4DFF01B66553E004690C3 /* NSData+ImageContentType.m in Sources */,
+				C2C725F11B69B307005E671F /* SpecialItem.m in Sources */,
 				C2CCA8681B67885000B62775 /* DownloadedAlbumCell.m in Sources */,
 				C2C4DFF71B66553E004690C3 /* SDWebImagePrefetcher.m in Sources */,
 				C2C4DFF41B66553E004690C3 /* SDWebImageDownloader.m in Sources */,
 				C2C4E0071B665C20004690C3 /* SuggestionCollectionViewController.m in Sources */,
 				C2C4E00B1B666E3A004690C3 /* SubListViewController.m in Sources */,
 				C2C4DF901B66470C004690C3 /* AppDelegate.m in Sources */,
+				C2C11FA11B685E9E00CBA7B5 /* FoxSettingsTableViewController.m in Sources */,
 				C2C4DFFB1B66553E004690C3 /* UIImage+WebP.m in Sources */,
 				C2C4DFFD1B66553E004690C3 /* UIImageView+WebCache.m in Sources */,
+				C2C11FA61B685E9E00CBA7B5 /* UserTableViewCell.m in Sources */,
 				C2C4DFF31B66553E004690C3 /* SDWebImageDecoder.m in Sources */,
 				C2CCA8611B67871B00B62775 /* DownloadedTracksCell.m in Sources */,
+				C2C11FA41B685E9E00CBA7B5 /* FoxPlayTableViewController.m in Sources */,
 				C2CCA8441B676D6C00B62775 /* AudioTableViewController.m in Sources */,
 				C2CCA84D1B676D8700B62775 /* AlbumTableViewCell.m in Sources */,
 				C2C4DFC51B6648D3004690C3 /* AudioBookCategoryCollectionViewCell.m in Sources */,
@@ -696,9 +769,10 @@
 				C2C4DF8D1B66470C004690C3 /* main.m in Sources */,
 				C2C4DFFA1B66553E004690C3 /* UIImage+MultiFormat.m in Sources */,
 				C2C4DFFC1B66553E004690C3 /* UIImageView+HighlightedWebCache.m in Sources */,
-				C2CCA83A1B675CC000B62775 /* RadioViewController.m in Sources */,
 				C2CCA8701B67A2A500B62775 /* DownloadingTableViewCell.m in Sources */,
+				C2C11FB01B68647900CBA7B5 /* FoxCollectionTableViewCell.m in Sources */,
 				C2C4DFF91B66553E004690C3 /* UIImage+GIF.m in Sources */,
+				C2C725FC1B69D13D005E671F /* TracksListTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -820,6 +894,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AudioShare/AudioShare-Prefix.pch";
 				INFOPLIST_FILE = AudioShare/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -833,6 +908,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AudioShare/AudioShare-Prefix.pch";
 				INFOPLIST_FILE = AudioShare/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
