@@ -26,14 +26,14 @@ static PlayerViewController *singlePlayer = nil;
 @property (weak, nonatomic) IBOutlet UIButton *historyButton; // 播放历史
 @property (weak, nonatomic) IBOutlet UIButton *listButton;  // 播放列表
 
-// 记录走后的Item
+// 记录最后的Item
 @property (nonatomic, strong)SpecialItem *lastItem;
 
 // 记录当前的item
 @property (nonatomic, strong)SpecialItem *currentItem;
 
 // 上一次直播的URL
-@property (nonatomic, copy)NSString *lastUrlString;
+@property (nonatomic, copy)NSString *lastLiveUrl;
 
 @end
 
@@ -54,7 +54,7 @@ static PlayerViewController *singlePlayer = nil;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
+    self.titleLabel.text = self.titleString;
     
     
     // 总时间---------------------//
@@ -62,19 +62,20 @@ static PlayerViewController *singlePlayer = nil;
     NSString *totalTime = [self convertTime:_totalSeconds];
     self.totalTimeLabel.text = totalTime;
     
-    if (_urlString) {
+    if (_urlString ) {
         self.currentItem = [self createPlayerItemWithURLString:_urlString];
         // 初始化播放器
         [self p_playerInitWithItem: _currentItem];
     } else {
-        if (_lastUrlString) {
-            self.currentItem = [self createPlayerItemWithURLString:_lastUrlString];
-            self.urlString = _lastUrlString;
+        if (_lastLiveUrl) {
+            self.currentItem = [self createPlayerItemWithURLString:_lastLiveUrl];
+            self.urlString = _lastLiveUrl;
+            
         } else {
             self.currentItem = _lastItem;
         }
     }
-    
+   
     if (_currentItem.isLiveCast) {
         self.preButton.enabled = NO;
         self.nextButton.enabled = NO;
@@ -105,7 +106,6 @@ static PlayerViewController *singlePlayer = nil;
     
     
     
-    
 }
 
 // 视图出现
@@ -128,9 +128,9 @@ static PlayerViewController *singlePlayer = nil;
     
     self.lastItem = _currentItem;
     if (_lastItem.isLiveCast == YES) {
-        self.lastUrlString = _urlString;
+        self.lastLiveUrl = _urlString;
     } else {
-        self.lastUrlString = nil;
+        self.lastLiveUrl = nil;
         
         // 移除item观察者
         [self.currentItem removeObserver:self forKeyPath:@"status"];
@@ -139,9 +139,10 @@ static PlayerViewController *singlePlayer = nil;
         [self p_removeTimerObserver];
     }
     
-    
-    self.currentItem = nil;
-    self.urlString = nil;
+//    self.currentItem = nil;
+//    self.urlString = nil;
+    DLog(@"LiveUrl:%@", _lastLiveUrl);
+    DLog(@"Url:%@",_urlString);
 }
 
 //-------------- 初始化数据  -----------//
@@ -152,17 +153,13 @@ static PlayerViewController *singlePlayer = nil;
     
     
     // 播放历史结果 ----需判断是否有可用url
-    if (_urlString == nil) {
+    if (_urlString == nil && _lastLiveUrl == nil) {
         // 总时间
-        _totalSeconds = 1356.96; // 传值获得
-        NSString *totalTime = [self convertTime:_totalSeconds];
-        self.totalTimeLabel.text = totalTime;
         
         self.lastItem = [self createPlayerItemWithURLString:kStreamUrl1];
         [self p_playerInitWithItem: _lastItem];
         
     }
-    
     
 }
 
@@ -286,6 +283,7 @@ static PlayerViewController *singlePlayer = nil;
 // 根据item初始化播放器
 - (void)p_playerInitWithItem:(SpecialItem *)playerItem;
 {
+
     self.player = [AVPlayer playerWithPlayerItem:playerItem];
 }
 

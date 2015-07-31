@@ -10,21 +10,47 @@
 #import "AudioBookCategoryCollectionViewCell.h"
 #import "SuggestionCollectionViewController.h"
 #import "SearchTableViewController.h"
+#import "API_URL.h"
+#import "RequestTool_v2.h"
+#import "AudioCategory.h"
+#import "UIImageView+WebCache.h"
 
 @interface AudioBookCategoryCollectionViewController ()<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,UICollectionViewDelegate>
 
+@property (nonatomic, strong)NSMutableArray *dataArray;
 @end
 
 @implementation AudioBookCategoryCollectionViewController
 
 static NSString * const reuseIdentifier = @"CategoryCell";
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.dataArray = [NSMutableArray array];
+    [RequestTool_v2 requestWithURL:kAudioCategoryList paramString:nil postRequest:NO callBackData:^(NSData *data) {
+        // 解析
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+        DLog(@"%@", dict[@"msg"]);
+        if ([dict[@"msg"] isEqualToString:@"成功"]) {
+            for (NSDictionary *subDict in dict[@"list"]) {
+                AudioCategory *category = [[AudioCategory alloc] init];
+                [category setValuesForKeysWithDictionary:subDict];
+                [_dataArray addObject:category];
+            }
+            
+        } else {
+            DLog(@"--请求数据失败--");
+        }
+        [self.collectionView reloadData];
+    }];
+    
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = NO;
     
     // Register cell classes
     [self.collectionView registerClass:[AudioBookCategoryCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
@@ -79,7 +105,7 @@ static NSString * const reuseIdentifier = @"CategoryCell";
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
 #warning Incomplete method implementation -- Return the number of items in the section
-    return 23;
+    return _dataArray.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -87,8 +113,14 @@ static NSString * const reuseIdentifier = @"CategoryCell";
     AudioBookCategoryCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     // Configure the cell
     
-    cell.categoryTitleLabel.text = @"测试数据";
-    DLog(@"%@", NSStringFromCGRect(cell.frame));
+    AudioCategory *cate = _dataArray[indexPath.item];
+    
+    cell.categoryTitleLabel.text = cate.title;
+    [cell.categoryImageView sd_setImageWithURL:[NSURL URLWithString:cate.coverPath] placeholderImage:nil];
+    
+    
+    
+    
     return cell;
 }
 

@@ -7,8 +7,15 @@
 //
 
 #import "RadioProvinceTableViewController.h"
+#import "RequestTool_v2.h"
+#import "RadioHeader.h"
+#import "RadioProvince.h"
+
+#import "Radio.h"
 
 @interface RadioProvinceTableViewController ()
+
+@property (nonatomic, strong)NSMutableArray *dataArray;
 
 @end
 
@@ -18,6 +25,24 @@
     [super viewDidLoad];
     self.navigationItem.title = @"请选择要听的省市";
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"provinceCell"];
+    
+    self.dataArray = [NSMutableArray array];
+    [RequestTool_v2 requestWithURL:kUrlCity paramString:nil postRequest:NO callBackData:^(NSData *data) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+        for (NSDictionary *d in dict[@"result"]) {
+            RadioProvince *rp = [[RadioProvince alloc]init];
+            [rp setValuesForKeysWithDictionary:d];
+            [_dataArray addObject:rp];
+            
+        };
+        
+        [self.tableView reloadData];
+
+    }];
+   
+    
+    
 }
 
 
@@ -38,16 +63,33 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 10;
+    return _dataArray.count;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"provinceCell" forIndexPath:indexPath];
     
-    // Configure the cell...
+    RadioProvince *radioProvince = _dataArray[indexPath.row];
+    
+    cell.textLabel.text = radioProvince.provinceName;
+    
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //RadioProvinceTableViewController *rptVC = [[RadioProvinceTableViewController alloc]init];
+    
+    
+    
+    RadioProvince *radioProvince = _dataArray[indexPath.row];
+    _province(radioProvince.provinceCode);
+   
+    
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 

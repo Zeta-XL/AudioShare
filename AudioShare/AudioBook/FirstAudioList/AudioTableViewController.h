@@ -10,4 +10,6 @@
 
 @interface AudioTableViewController : UITableViewController
 
+@property (nonatomic, copy)NSString *categoryId;
+@property (nonatomic, copy)NSString *tagName;
 @end

@@ -29,6 +29,7 @@
 
 // UI控件
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel; // 标题
+@property (nonatomic, copy) NSString *titleString;
 @property (weak, nonatomic) IBOutlet UILabel *timeGoingLabel; // 播放的时长
 @property (weak, nonatomic) IBOutlet UILabel *totalTimeLabel; // 总时间
 @property (weak, nonatomic) IBOutlet UIImageView *contentImageView; // 图片

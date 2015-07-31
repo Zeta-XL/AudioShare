@@ -124,16 +124,6 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ise-wd-RXI">
-                    <rect key="frame" x="226" y="15" width="150" height="50"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="50" id="JJj-oj-hyf"/>
-                        <constraint firstAttribute="width" constant="150" id="nZ7-Ts-sfd"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EIH-rs-s9y">
                     <rect key="frame" x="12" y="515" width="40" height="40"/>
                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
@@ -144,6 +134,16 @@
                         <action selector="ListButtonAction:" destination="-1" eventType="touchUpInside" id="eHE-Fc-wtP"/>
                     </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ise-wd-RXI">
+                    <rect key="frame" x="225" y="15" width="150" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="JJj-oj-hyf"/>
+                        <constraint firstAttribute="width" constant="150" id="nZ7-Ts-sfd"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>

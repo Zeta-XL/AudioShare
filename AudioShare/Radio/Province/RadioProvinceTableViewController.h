@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+//定义block
+typedef void (^provinceBlock)(NSString *aString);
+
 @interface RadioProvinceTableViewController : UITableViewController
+@property (nonatomic, strong)NSString *string;
+
+//声明block
+@property (nonatomic, copy)provinceBlock province;
 
 @end

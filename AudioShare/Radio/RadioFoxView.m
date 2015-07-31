@@ -23,7 +23,7 @@
 
 - (void)p_setupView
 {
-     self.backgroundColor = [UIColor brownColor];
+     self.backgroundColor = [UIColor whiteColor];
 
     self.networkButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
     _networkButton.frame = CGRectMake(15, 45, CGRectGetWidth(self.bounds) / 3 - 20 , 60);

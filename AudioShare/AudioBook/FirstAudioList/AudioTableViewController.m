@@ -10,21 +10,73 @@
 #import "AudioTableViewCell.h"
 #import "AlbumTableViewController.h"
 #import "AudioBookCategoryCollectionViewController.h"
+#import "UIImageView+WebCache.h"
+#import "API_URL.h"
+#import "AudioModel.h"
+#import "RequestTool_v2.h"
+#import "MJRefresh.h"
+
 
 @interface AudioTableViewController ()
+{
+    NSInteger _maxPageId;
+    NSInteger _currentPageId;
+    NSInteger _pageSize;
+}
+@property (nonatomic, strong)NSMutableArray *dataArray;
+
 
 @end
 
 @implementation AudioTableViewController
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    
+    
+}
+
+
+- (void)p_requestDataWithPageId:(NSInteger)pageId
+                       pageSize:(NSInteger)pageSize
+{
+    
+    
+    NSString *params = [NSString stringWithFormat:@"calcDimension=hot&categoryId=%@&device=iPhone&pageId=%ld&pageSize=%ld&status=0&tagName=%@", self.categoryId, pageId, pageSize, self.tagName];
+    
+    [RequestTool_v2 requestWithURL:kSubAudioAlbumList paramString:params postRequest:NO callBackData:^(NSData *data) {
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+        
+        if ([dict[@"msg"] isEqualToString:@"成功"]) {
+            for (NSDictionary *d in dict[@"list"]) {
+                AudioModel *m = [[AudioModel alloc] init];
+                [m setValuesForKeysWithDictionary:d];
+                [_dataArray addObject:m];
+                
+            }
+            // 获得maxPageId
+            static dispatch_once_t onceToken;
+            dispatch_once(&onceToken, ^{
+                _maxPageId = [dict[@"maxPageId"] integerValue];
+                DLog(@"maxPageId = %ld", _maxPageId);
+            });
+
+        }
+        if (_maxPageId != 0) {
+            [self.tableView.footer endRefreshing];
+            [self.tableView.header endRefreshing];
+        }
+        
+        [self.tableView reloadData];
+    }];
+}
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     //右button事件
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"逛逛书城" style:(UIBarButtonItemStylePlain) target:self action:@selector(rightBarButtonAction : )];
@@ -36,10 +88,67 @@
     //注册
     [self.tableView registerClass:[AudioTableViewCell class] forCellReuseIdentifier:@"cell"];
     
+    // 默认设置
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSDictionary *dict = [ud objectForKey:@"defaultSetting"];
+    
+    self.categoryId = [dict objectForKey: @"defaultCategoryId"];
+    self.tagName = [dict objectForKey:@"defaultTagName"];
+    
+    self.dataArray = [NSMutableArray array];
+    _currentPageId = 1;
+    _pageSize = 40;
+    [self p_requestDataWithPageId:_currentPageId++ pageSize:_pageSize];
+    // 上拉加载
+    [self p_dragUptoLoadMore];
+    // 下拉刷新
+    [self p_dragDownToRefresh];
+    
+    
+    
 }
 
+#pragma mark ---- 上拉刷新和下拉刷新
+// 上拉加载
+- (void)p_dragUptoLoadMore
+{
+    // 设置回调（一旦进入刷新状态，就调用target的action，也就是调用self的loadMoreData方法）
+    self.tableView.footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(p_loadMoreData)];
+    // 设置了底部inset
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 30, 0);
+    // 忽略掉底部inset
+    self.tableView.footer.ignoredScrollViewContentInsetTop = 30;
+}
+
+// 加载数据
+- (void)p_loadMoreData
+{
+    if (_currentPageId <= _maxPageId) {
+        [self p_requestDataWithPageId:_currentPageId pageSize:_pageSize];
+        _currentPageId++;
+    } else {
+        [self.tableView.footer noticeNoMoreData];
+    }
+}
+
+
+// 下拉刷新
+- (void)p_dragDownToRefresh
+{
+    __weak __typeof(self) weakSelf = self;
+    
+    // 设置回调（一旦进入刷新状态就会调用这个refreshingBlock）
+    self.tableView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [weakSelf leftBarButtonAction:nil];
+    }];
+    
+    // 马上进入刷新状态
+    [self.tableView.header beginRefreshing];
+}
+
+
 //右button点击事件
--(void)rightBarButtonAction : (UIBarButtonItem *)sender
+- (void)rightBarButtonAction : (UIBarButtonItem *)sender
 {
     DLog(@"逛逛书城");
     // CollectionFlowLayout
@@ -56,6 +165,16 @@
 -(void)leftBarButtonAction : (UIBarButtonItem *)sender
 {
     DLog(@"刷新");
+    NSInteger count = _dataArray.count;
+    self.dataArray = [NSMutableArray array];
+    
+    if (_maxPageId != 0) {
+        [self p_requestDataWithPageId:1 pageSize:count];
+    } else {
+        [self p_requestDataWithPageId:1 pageSize:_pageSize];
+    }
+    
+    
 }
 
 
@@ -69,13 +188,13 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
     // Return the number of sections.
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
     // Return the number of rows in the section.
-    return 10;
+    return _dataArray.count;
 }
 
 
@@ -85,6 +204,15 @@
     
     //cell小箭头
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    AudioModel *m = _dataArray[indexPath.row];
+    cell.titleLabel.text = m.title;
+    cell.tagsLabel.text = m.tags;
+    cell.tracksCountsLabel.text = [NSString stringWithFormat:@"共%@集",m.tracksCounts];
+
+    [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[_dataArray[indexPath.row]coverMiddle]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+    
+    
     
     return cell;
 }

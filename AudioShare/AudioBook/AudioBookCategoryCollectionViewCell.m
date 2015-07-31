@@ -20,13 +20,13 @@
 
 - (void)p_setUpView
 {
-    self.contentView.backgroundColor = [UIColor yellowColor];
+//    self.contentView.backgroundColor = [UIColor yellowColor];
     
     // 大分类的图片
     self.categoryImageView = [[UIImageView alloc] init];
     _categoryImageView.frame = CGRectMake(0, 0, self.contentView.bounds.size.width, self.contentView.bounds.size.height * 2.0 / 3);
     [self.contentView addSubview:_categoryImageView];
-    _categoryImageView.backgroundColor = [UIColor grayColor];
+    _categoryImageView.backgroundColor = [UIColor whiteColor];
     
     // 大分类的标题
     self.categoryTitleLabel = [[UILabel alloc] init];

@@ -14,6 +14,7 @@
 #import "DownloadViewController.h"
 #import "FoxSettingsTableViewController.h"
 
+
 @interface RootTabBarController ()
 @property (nonatomic, strong)UIButton *playButton;
 @property (nonatomic, strong)UIView *buttonView;
@@ -53,7 +54,12 @@
     [self p_setPlayButton];
     
     
-    
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    if ([ud objectForKey:@"defaultSetting"] == nil) {
+        NSDictionary *dict = @{@"defaultCategoryId":@"3", @"defaultTagName": @"恐怖悬疑"};
+        [ud setObject:dict forKey:@"defaultSetting"];
+        [ud synchronize];
+    }
     
     
 

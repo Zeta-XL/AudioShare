@@ -7,30 +7,61 @@
 //
 
 #import "RadioTableViewController.h"
-#import "RadioHeader.h"
+#import "API_URL.h"
 #import "RadioTableViewCell.h"
 #import "RadioProvinceTableViewController.h"
 #import "RadioFoxView.h"
-#import "API_URL.h"
+#import "RequestTool_v2.h"
+#import "Radio.h"
+#import "UIImageView+WebCache.h"
 #import "PlayerViewController.h"
+#import "RadioProvince.h"
 
 @interface RadioTableViewController ()
 
+@property (nonatomic, strong)NSMutableArray *radioArray;
 
-@property (nonatomic , strong)RadioFoxView *radioFoxView;
+@property (nonatomic, strong)RadioFoxView *radioFoxView;
+
+@property (nonatomic, strong)NSString *radioProvinveString;
+
 @end
 
 @implementation RadioTableViewController
 
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
  
-    
     //注册
     [self.tableView registerClass:[RadioTableViewCell class] forCellReuseIdentifier:@"radioCell"];
+    
     self.navigationItem.title = @"电台直播";
+    
+    
+    //解析
+    self.radioArray = [NSMutableArray array];
+    [RequestTool_v2 requestWithURL:kUrlRanking paramString:nil postRequest:NO callBackData:^(NSData *data) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+        for (NSDictionary *radioDict in dict[@"result"]) {
+            Radio *r = [[Radio alloc]init];
+            [r setValuesForKeysWithDictionary:radioDict];
+            [_radioArray addObject:r];
+            
+            //DLog(@"%@", radioDict);
+        }
+        
+        [self.tableView reloadData];
+    } ];
+ 
 
+    
 }
+
+
 
 
 
@@ -51,46 +82,60 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 //#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 6;
+    return _radioArray.count;
 }
+
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     RadioTableViewCell *foxCell = [tableView dequeueReusableCellWithIdentifier:@"radioCell" forIndexPath:indexPath];
     
+    Radio *radio = _radioArray[indexPath.row];
+    
+    foxCell.nameLabel.text = radio.rname;
+    foxCell.contentLabel.text = radio.programName;
+
+    
+    //加载图片
+    [foxCell.radioImageView sd_setImageWithURL:[NSURL URLWithString:[_radioArray[indexPath.row]radioCoverSmall]] placeholderImage:[UIImage imageNamed:@"radio_btn@2x"]];
     
     
    return foxCell;
 }
 
-// 点击某个cell
+//选中行 模态至播放器页面
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PlayerViewController *playerVC = [PlayerViewController sharedPlayer];
-    // 传url
-    playerVC.urlString = kLiveCast;
+    PlayerViewController *pVC = [PlayerViewController sharedPlayer];
     
-    [self presentViewController:playerVC animated:YES completion:^{
-        DLog(@"打开播放器处理");
-    }];
     
+    //传值
+    Radio *radio = _radioArray[indexPath.row];
+    pVC.urlString = radio.radioPlayUrl;
+    pVC.titleString = radio.rname;
+    
+    [self presentViewController:pVC animated:YES completion:nil];
 }
 
 
 
-#pragma mark ---- header和footer
+
+
+
 //header高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return  140;
 }
 
+
+//添加区头视图
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     
     
-    self.radioFoxView = [[RadioFoxView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 140)];
+    self.radioFoxView = [[RadioFoxView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 160)];
     
     
     [self.radioFoxView.networkButton addTarget:self action:@selector(networkButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
@@ -109,39 +154,97 @@
 //    return 50;
 //}
 
-// cell 的高
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    return 110;
-}
 
 
-#pragma mark ---- 电台button点击事件
+//网络电台按钮点击方法
 - (void)networkButtonAction:(UIButton *)sender
 {
+    self.radioArray = [NSMutableArray array];
     
+    [RequestTool_v2 requestWithURL:kUrlnetwork paramString:nil postRequest:NO callBackData:^(NSData *data) {
+        
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+        
+        for (NSDictionary *dict in dictionary[@"result"]) {
+            Radio *radio = [[Radio alloc]init];
+            [radio setValuesForKeysWithDictionary:dict];
+            [_radioArray addObject:radio];
+            
+        }
+        
+        [self.tableView reloadData];
+    }];
 }
 
 
+//国家电台按钮点击方法
 - (void)countriesButtonAction:(UIButton *)sender
 {
+    self.radioArray = [NSMutableArray array];
     
+    [RequestTool_v2 requestWithURL:kUrlcountries paramString:nil postRequest:NO callBackData:^(NSData *data) {
+        
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+        
+        for (NSDictionary *dict in dictionary[@"result"]) {
+            Radio *radio = [[Radio alloc]init];
+            [radio setValuesForKeysWithDictionary:dict];
+            [_radioArray addObject:radio];
+            
+        }
+        
+        [self.tableView reloadData];
+    }];
+
 }
 
-
+//省市电台按钮点击方法
 - (void)provinceButtonAction:(UIButton *)sender
 {
     RadioProvinceTableViewController *provinceVC = [[RadioProvinceTableViewController alloc] init];
+//    provinceVC.string = _radioProvinveString;
     
+    provinceVC.province = ^(NSString *aString){
+        
+        self.radioProvinveString = aString;
+        DLog(@"%@", _radioProvinveString);
+        [self p_p];
+    };
+    
+  
     [self.navigationController pushViewController:provinceVC animated:YES];
 }
 
 
 
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+
+    return 110;
+}
 
 
+- (void)p_p
+{
+    self.radioArray = [NSMutableArray array];
+    
+    DLog(@"******%@", _radioProvinveString);
+    
+    [RequestTool_v2 requestWithURL:[NSString stringWithFormat:@"http://live.ximalaya.com/live-web/v1/getRadiosListByType?pageNum=1&radioType=2&device=android&provinceCode=%@&pageSize=15", _radioProvinveString] paramString:nil postRequest:NO callBackData:^(NSData *data) {
+        
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+        
+        for (NSDictionary *dict in dictionary[@"result"]) {
+            Radio *radio = [[Radio alloc]init];
+            [radio setValuesForKeysWithDictionary:dict];
+            [_radioArray addObject:radio];
+            
+        }
+        
+        [self.tableView reloadData];
+    }];
+}
 
 
 
