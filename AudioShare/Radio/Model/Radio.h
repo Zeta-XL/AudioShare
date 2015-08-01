@@ -13,11 +13,16 @@
 
 @property (nonatomic, copy)NSString *rname; //电台名称
 
-@property (nonatomic, copy)NSString *radioCoverSmall; //广播图片
+@property (nonatomic, copy)NSString *radioCoverSmall; // 广播图片
 
-@property (nonatomic, copy)NSString *programName; //当前节目名称
+@property (nonatomic, copy)NSString *radioCoverLarge; // 大图片
 
-@property (nonatomic, strong)UIImage *radioImage; //解析后存储图片
+@property (nonatomic, copy)NSString *programName; // 当前节目名称
 
 @property (nonatomic, copy)NSString *radioPlayUrl;
+
+@property (nonatomic, copy)NSString *startTime;
+@property (nonatomic, copy)NSString *endTime;
+
+
 @end

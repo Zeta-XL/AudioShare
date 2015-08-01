@@ -9,8 +9,16 @@
 #import "AudioModel.h"
 
 @implementation AudioModel
--(void)setValue:(id)value forUndefinedKey:(NSString *)key
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key
 {
     
+}
+- (void)setValue:(id)value forKey:(NSString *)key
+{
+    if ([key isEqualToString:@"albumId"]) {
+        self.albumId = [NSString stringWithFormat:@"%@", value];
+    } else {
+        [super setValue:value forKey:key];
+    }
 }
 @end

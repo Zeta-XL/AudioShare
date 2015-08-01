@@ -57,10 +57,8 @@
         [self.tableView reloadData];
     } ];
  
-
     
 }
-
 
 
 
@@ -98,7 +96,7 @@
 
     
     //加载图片
-    [foxCell.radioImageView sd_setImageWithURL:[NSURL URLWithString:[_radioArray[indexPath.row]radioCoverSmall]] placeholderImage:[UIImage imageNamed:@"radio_btn@2x"]];
+    [foxCell.radioImageView sd_setImageWithURL:[NSURL URLWithString:[_radioArray[indexPath.row]radioCoverSmall]] placeholderImage:[UIImage imageNamed:@"radio_btn@2x.jpg"]];
     
     
    return foxCell;
@@ -113,7 +111,10 @@
     //传值
     Radio *radio = _radioArray[indexPath.row];
     pVC.urlString = radio.radioPlayUrl;
-    pVC.titleString = radio.rname;
+    pVC.titleString = radio.programName;
+    pVC.liveStartTime = radio.startTime;
+    pVC.liveEndTime = radio.endTime;
+    pVC.imageUrl = radio.radioCoverLarge;
     
     [self presentViewController:pVC animated:YES completion:nil];
 }

@@ -10,6 +10,7 @@
 
 @interface AlbumTableViewController : UITableViewController
 
-
+@property (nonatomic, copy)NSString *categoryId;
+@property (nonatomic, copy)NSString *albumId;
 
 @end

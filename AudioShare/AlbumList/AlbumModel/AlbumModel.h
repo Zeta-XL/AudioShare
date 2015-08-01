@@ -9,24 +9,35 @@
 #import <Foundation/Foundation.h>
 
 @interface AlbumModel : NSObject
-//专辑名
+// 专辑Id
+@property (nonatomic, copy)NSString *albumId;
+
+// 专辑名
 @property (nonatomic, copy)NSString *title;
 
-//专辑简介
+// 所属专辑类型
+@property (nonatomic, copy)NSString *categoryName;
+
+// 专辑图片大
 @property (nonatomic, copy)NSString *coverLarge;
 
-//作者
-@property (nonatomic, copy)NSString *nickname;
+// 专辑图片小
+@property (nonatomic, copy)NSString *coverSmall;
 
-//图片
+// 原始图片
 @property (nonatomic, copy)NSString *coverOrigin;
 
-//标题
-@property (nonatomic, copy)NSString *albumTitle;
+// 作者
+@property (nonatomic, copy)NSString *nickname;
 
-//播放时长
-@property (nonatomic, copy)NSString *play_time;
+// 简介
+@property (nonatomic, copy)NSString *intro;
 
+// 专辑类型
+@property (nonatomic, copy)NSString *tags;
 //播放次数
-@property (nonatomic, copy)NSString *playtimes;
+@property (nonatomic, copy)NSString *playsCounts;
+
+// 声音个数
+@property (nonatomic, copy)NSString *tracksCount;
 @end

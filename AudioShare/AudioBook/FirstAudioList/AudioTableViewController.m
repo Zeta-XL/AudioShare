@@ -56,13 +56,13 @@
                 
             }
             // 获得maxPageId
-            static dispatch_once_t onceToken;
-            dispatch_once(&onceToken, ^{
-                _maxPageId = [dict[@"maxPageId"] integerValue];
-                DLog(@"maxPageId = %ld", _maxPageId);
-            });
+            _maxPageId = [dict[@"maxPageId"] integerValue];
+            DLog(@"maxPageId = %ld", _maxPageId);
 
+        } else {
+            DLog(@"加载数据无效");
         }
+        
         if (_maxPageId != 0) {
             [self.tableView.footer endRefreshing];
             [self.tableView.header endRefreshing];
@@ -97,7 +97,7 @@
     
     self.dataArray = [NSMutableArray array];
     _currentPageId = 1;
-    _pageSize = 40;
+    _pageSize = 30;
     [self p_requestDataWithPageId:_currentPageId++ pageSize:_pageSize];
     // 上拉加载
     [self p_dragUptoLoadMore];
@@ -225,7 +225,12 @@
 //跳转到专辑页面
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    AlbumTableViewController *albumTVC = [[AlbumTableViewController alloc]init];
+    AlbumTableViewController *albumTVC = [[AlbumTableViewController alloc] init];
+    
+    AudioModel *am = _dataArray[indexPath.row];
+    
+    albumTVC.albumId = am.albumId;
+    
     [self.navigationController pushViewController:albumTVC animated:YES];
 }
 

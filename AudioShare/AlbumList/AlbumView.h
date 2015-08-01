@@ -11,7 +11,7 @@
 @interface AlbumView : UIView
 
 //视图
-@property (nonatomic, strong)UIImageView *myImageView;
+@property (nonatomic, strong)UIImageView *albumImageView;
 
 //标题
 @property (nonatomic, strong)UILabel *titleLabel;

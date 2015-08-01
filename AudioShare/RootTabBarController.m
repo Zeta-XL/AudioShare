@@ -92,6 +92,7 @@
     PlayerViewController *newVC = [PlayerViewController sharedPlayer];
     [self presentViewController:newVC animated:YES completion:^{
         // 播放声音
+
     }];
 }
 

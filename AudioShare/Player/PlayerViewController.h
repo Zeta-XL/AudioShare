@@ -14,12 +14,12 @@
 
 
 @interface PlayerViewController : UIViewController
-// 播放器相关
-{
-    NSUInteger _currentIndex;
-    BOOL _isPlaying;
-}
+
 // player 相关
+
+@property (nonatomic, assign)NSUInteger currentIndex;
+@property (nonatomic, assign)BOOL isPlaying;
+
 @property (nonatomic, strong)AVPlayer *player; //
 @property (nonatomic, copy)NSString *urlString;
 
@@ -33,13 +33,17 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeGoingLabel; // 播放的时长
 @property (weak, nonatomic) IBOutlet UILabel *totalTimeLabel; // 总时间
 @property (weak, nonatomic) IBOutlet UIImageView *contentImageView; // 图片
-
+@property (nonatomic, copy) NSString *imageUrl;
 
 
 
 // 数据
 
 @property (nonatomic, strong)NSMutableArray *tracksList;
+
+// radio-live
+@property (nonatomic, copy)NSString *liveStartTime;
+@property (nonatomic, copy)NSString *liveEndTime;
 
 
 // 根据UrlString初始化播放项目

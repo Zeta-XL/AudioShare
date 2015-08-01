@@ -21,5 +21,5 @@
 //专辑中声音个数
 @property (nonatomic, copy)NSString *tracksCounts;
 
-
+@property (nonatomic, copy)NSString *albumId;
 @end
