@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface SuggestionCollectionViewController : UICollectionViewController
-
+@property (nonatomic, copy)NSString *categoryId;
+@property (nonatomic, copy)NSString *categoryName;
+@property (nonatomic, copy)NSString *apiString;
 @end

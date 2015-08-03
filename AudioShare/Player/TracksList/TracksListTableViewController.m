@@ -8,6 +8,7 @@
 
 #import "TracksListTableViewController.h"
 #import "TracksListTableViewCell.h"
+#import "TrackModel.h"
 
 @interface TracksListTableViewController ()
 
@@ -23,6 +24,23 @@
     
 }
 
+- (NSString *)p_convertTime:(CGFloat)second
+{
+    NSDate *d = [NSDate dateWithTimeIntervalSince1970:second];
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    if (second/3600 >= 1) {
+        [formatter setDateFormat:@"HH:mm:ss"];
+        
+    } else {
+        [formatter setDateFormat:@"mm:ss"];
+    }
+    NSString *showtimeNew = [formatter stringFromDate:d];
+    return showtimeNew;
+}
+
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -30,16 +48,16 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 1;
-}
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+//#warning Potentially incomplete method implementation.
+//    // Return the number of sections.
+//    return 1;
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 10;
+    return _trackList.count;
 }
 
 
@@ -47,13 +65,21 @@
     TracksListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tracksList" forIndexPath:indexPath];
     
     // Configure the cell...
+    TrackModel *track = _trackList[indexPath.row];
+    
+    
+    [cell.optionButton setTitle:@"下载" forState:(UIControlStateNormal)];
+    cell.titleLabel.text = track.title;
+    NSString *time = [self p_convertTime:track.duration];
+    cell.playTimesLabel.text = [NSString stringWithFormat:@"时长 %@", time];
+    cell.commentLabel.text = [NSString stringWithFormat:@"第%ld个", indexPath.row +1];
     
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return 80;
 }
 
 
@@ -65,11 +91,13 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 40   )];
     UIButton *backButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    backButton.frame = CGRectMake(0, 30, 80, 30);
+    backButton.frame = CGRectMake(CGRectGetMidX([UIScreen mainScreen].bounds) -40, 30, 80, 20);
     [backButton setTitle:@"返回" forState:(UIControlStateNormal)];
     [backButton addTarget:self action:@selector(backAction:) forControlEvents:(UIControlEventTouchUpInside)];
-    return backButton;
+    [view addSubview:backButton];
+    return view;
 }
 
 - (void)backAction:(UIButton *)sender

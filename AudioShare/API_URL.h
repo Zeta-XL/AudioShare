@@ -12,6 +12,8 @@
 
 #import "RadioHeader.h"
 
+#define kRadioUrl @"http://live.ximalaya.com/live-web/v1/getRadiosListByType"
+#define kRadioCityUrl @"http://live.ximalaya.com/live-web/v1/getProvinceList?device=iPhone"
 
 #define kStreamUrl1 @"http://fdfs.xmcdn.com/group9/M00/40/EA/wKgDZlWhtSXgp22zAKWl4zfNMB4283.mp3"
 #define kStreamUrl2 @"http://fdfs.xmcdn.com/group9/M09/36/53/wKgDZlWV3NeibnhLALj028B3jTI787.mp3"

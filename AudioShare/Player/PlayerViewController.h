@@ -44,10 +44,13 @@
 // radio-live
 @property (nonatomic, copy)NSString *liveStartTime;
 @property (nonatomic, copy)NSString *liveEndTime;
+// 上一次直播的URL
+@property (nonatomic, copy)NSString *lastLiveUrl;
 
 
 // 根据UrlString初始化播放项目
 - (SpecialItem *)createPlayerItemWithURLString:(NSString *)urlString;
 + (instancetype)sharedPlayer;
+- (void)releasePlayer;
 
 @end

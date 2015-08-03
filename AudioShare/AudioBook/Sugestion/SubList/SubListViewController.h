@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+typedef void(^returnBackTag)(NSString *aString);
 
 @interface SubListViewController : UITableViewController
-
+@property (nonatomic, strong)NSMutableArray *tagNameArray;
+@property (nonatomic, copy)returnBackTag backTagName;
+@property (nonatomic, copy)NSString *titleString;
 @end

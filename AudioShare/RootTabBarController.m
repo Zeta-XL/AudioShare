@@ -54,7 +54,16 @@
     [self p_setPlayButton];
     
     
+    // 反归档获得setting信息
+    NSString *cachePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
+    NSString *filePath = [cachePath stringByAppendingPathComponent:@"user/data/setting"];
+    
+    // 获得数据
+    NSDictionary * dict = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];
+    DLog(@"+++%@+++", dict);
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud setObject:dict forKey:@"defaultSetting"];
+    [ud synchronize];
     if ([ud objectForKey:@"defaultSetting"] == nil) {
         NSDictionary *dict = @{@"defaultCategoryId":@"3", @"defaultTagName": @"恐怖悬疑"};
         [ud setObject:dict forKey:@"defaultSetting"];

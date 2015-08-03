@@ -11,7 +11,7 @@
 #define kPlayUrl playUrl64
 #define kDloadUrl downloadUrl
 
-@interface TrackModel : NSObject
+@interface TrackModel : NSObject <NSCoding>
 
 // 音频id
 @property (nonatomic, copy)NSString *trackId;
@@ -28,6 +28,7 @@
 @property (nonatomic, assign)CGFloat duration;
 // 下载大小 ***** 注: 格式******
 @property (nonatomic, assign)CGFloat downloadSize;
+@property (nonatomic, assign)CGFloat lastSeconds;
 
 // 制作者名称
 @property (nonatomic, copy)NSString *nickname;

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface TracksListTableViewController : UITableViewController
-
+@property (nonatomic, strong)NSMutableArray *trackList;
 @end

@@ -7,7 +7,6 @@
 //
 
 #import "SearchTableViewController.h"
-#import "SearchViewController.h"
 #import "AudioTableViewCell.h"
 @interface SearchTableViewController ()<UITableViewDataSource, UITableViewDelegate, UISearchDisplayDelegate>
 

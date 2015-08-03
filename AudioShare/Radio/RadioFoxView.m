@@ -26,7 +26,7 @@
      self.backgroundColor = [UIColor whiteColor];
 
     self.networkButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    _networkButton.frame = CGRectMake(15, 45, CGRectGetWidth(self.bounds) / 3 - 20 , 40);
+    _networkButton.frame = CGRectMake(15, 30, CGRectGetWidth(self.bounds) / 3 - 20 , 50);
     [_networkButton setTitle:@"网络电台" forState:(UIControlStateNormal)];
     _networkButton.backgroundColor = [UIColor  yellowColor];
     [self addSubview:_networkButton];
@@ -48,7 +48,7 @@
     
     
     self.foxLabel = [[UILabel alloc]init];
-    _foxLabel.frame = CGRectMake(CGRectGetMinX(_countriesButton.frame), CGRectGetMaxY(_countriesButton.frame)+10 , CGRectGetWidth(_countriesButton.frame), 30);
+    _foxLabel.frame = CGRectMake(CGRectGetMinX(_countriesButton.frame), CGRectGetMaxY(_countriesButton.frame)+15 , CGRectGetWidth(_countriesButton.frame), 30);
     _foxLabel.text = @"电台列表";
     _foxLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_foxLabel];
@@ -57,10 +57,10 @@
 
 - (void)layoutSubviews
 {
-    _networkButton.frame = CGRectMake(15, 45, CGRectGetWidth(self.bounds) / 3 - 20 , 60);
+    _networkButton.frame = CGRectMake(15, 30, CGRectGetWidth(self.bounds) / 3 - 20 , 50);
     _countriesButton.frame = CGRectMake(CGRectGetMaxX(_networkButton.frame) + 15, CGRectGetMinY(_networkButton.frame), CGRectGetWidth(_networkButton.frame), CGRectGetHeight(_networkButton.frame));
     _provinceButton.frame =  CGRectMake(CGRectGetMaxX(_countriesButton.frame) + 15, CGRectGetMinY(_countriesButton.frame), CGRectGetWidth(_countriesButton.frame), CGRectGetHeight(_countriesButton.frame));
-    _foxLabel.frame = CGRectMake(CGRectGetMinX(_countriesButton.frame), CGRectGetMaxY(_countriesButton.frame)+5 , CGRectGetWidth(_countriesButton.frame), 30);
+    _foxLabel.frame = CGRectMake(CGRectGetMinX(_countriesButton.frame), CGRectGetMaxY(_countriesButton.frame)+15 , CGRectGetWidth(_countriesButton.frame), 30);
 }
 
 /*

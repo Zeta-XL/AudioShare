@@ -17,6 +17,9 @@
 {
     if ([key isEqualToString:@"albumId"]) {
         self.albumId = [NSString stringWithFormat:@"%@", value];
+    
+    } else if ([key isEqualToString:@"tracksCounts"]) {
+        self.tracksCounts = [NSString stringWithFormat:@"%@", value];
     } else {
         [super setValue:value forKey:key];
     }

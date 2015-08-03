@@ -167,10 +167,13 @@ static NSString * const reuseIdentifier = @"CategoryCell";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     DLog(@"%@", indexPath);
-    
+    AudioCategory *audioCate = _dataArray[indexPath.row];
     
     UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
     SuggestionCollectionViewController *suggestionVC = [[SuggestionCollectionViewController alloc] initWithCollectionViewLayout:flow];
+    
+    suggestionVC.categoryId = audioCate.categoryId;
+    suggestionVC.categoryName = audioCate.title;
     
     [self.navigationController pushViewController:suggestionVC animated:YES];
     

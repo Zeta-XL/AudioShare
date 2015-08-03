@@ -94,7 +94,6 @@
 		C2CCA84E1B676D8700B62775 /* AlbumTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCA8481B676D8700B62775 /* AlbumTableViewController.m */; };
 		C2CCA84F1B676D8700B62775 /* AlbumView.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCA84A1B676D8700B62775 /* AlbumView.m */; };
 		C2CCA8551B676D9800B62775 /* SearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCA8521B676D9800B62775 /* SearchTableViewController.m */; };
-		C2CCA8561B676D9800B62775 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCA8541B676D9800B62775 /* SearchViewController.m */; };
 		C2CCA8591B677AC300B62775 /* DownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCA8581B677AC300B62775 /* DownloadViewController.m */; };
 		C2CCA85C1B677E3000B62775 /* DownloadView.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCA85B1B677E3000B62775 /* DownloadView.m */; };
 		C2CCA8611B67871B00B62775 /* DownloadedTracksCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCA8601B67871B00B62775 /* DownloadedTracksCell.m */; };
@@ -282,8 +281,6 @@
 		C2CCA84A1B676D8700B62775 /* AlbumView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumView.m; sourceTree = "<group>"; };
 		C2CCA8511B676D9800B62775 /* SearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTableViewController.h; sourceTree = "<group>"; };
 		C2CCA8521B676D9800B62775 /* SearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchTableViewController.m; sourceTree = "<group>"; };
-		C2CCA8531B676D9800B62775 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
-		C2CCA8541B676D9800B62775 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		C2CCA8571B677AC300B62775 /* DownloadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadViewController.h; sourceTree = "<group>"; };
 		C2CCA8581B677AC300B62775 /* DownloadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadViewController.m; sourceTree = "<group>"; };
 		C2CCA85A1B677E3000B62775 /* DownloadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadView.h; sourceTree = "<group>"; };
@@ -680,8 +677,6 @@
 			children = (
 				C2CCA8511B676D9800B62775 /* SearchTableViewController.h */,
 				C2CCA8521B676D9800B62775 /* SearchTableViewController.m */,
-				C2CCA8531B676D9800B62775 /* SearchViewController.h */,
-				C2CCA8541B676D9800B62775 /* SearchViewController.m */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -973,7 +968,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C2CCA80D1B670B1500B62775 /* HeaderCollectionReusableView.m in Sources */,
-				C2CCA8561B676D9800B62775 /* SearchViewController.m in Sources */,
 				C2CCA8591B677AC300B62775 /* DownloadViewController.m in Sources */,
 				C2C08FA71B6B574E00930A4F /* MJRefreshFooter.m in Sources */,
 				C2C4DFC61B6648D3004690C3 /* AudioBookCategoryCollectionViewController.m in Sources */,

@@ -40,9 +40,8 @@
                         <action selector="backAction:" destination="-1" eventType="touchUpInside" id="0Zq-aE-sJD"/>
                     </connections>
                 </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t5w-1p-b2u">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="placeholder.png" translatesAutoresizingMaskIntoConstraints="NO" id="t5w-1p-b2u">
                     <rect key="frame" x="10" y="63" width="580" height="336"/>
-                    <color key="backgroundColor" red="0.44954403921276342" green="1" blue="0.072998336388357177" alpha="1" colorSpace="calibratedRGB"/>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aEG-Hz-PI2">
                     <rect key="frame" x="525" y="25" width="60" height="30"/>
@@ -204,6 +203,7 @@
     <resources>
         <image name="btn_next.png" width="45" height="45"/>
         <image name="btn_pre.png" width="45" height="45"/>
+        <image name="placeholder.png" width="512" height="512"/>
         <image name="play_btn.jpg" width="128" height="128"/>
     </resources>
 </document>

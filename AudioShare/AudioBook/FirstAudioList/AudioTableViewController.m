@@ -22,6 +22,7 @@
     NSInteger _maxPageId;
     NSInteger _currentPageId;
     NSInteger _pageSize;
+    BOOL _dragDown;
 }
 @property (nonatomic, strong)NSMutableArray *dataArray;
 
@@ -62,14 +63,14 @@
         } else {
             DLog(@"加载数据无效");
         }
-        
-        if (_maxPageId != 0) {
-            [self.tableView.footer endRefreshing];
-            [self.tableView.header endRefreshing];
-        }
-        
+        DLog(@"加载完毕");
+        [self.tableView.footer endRefreshing];
+        [self.tableView.header endRefreshing];
         [self.tableView reloadData];
+        
+        self.navigationItem.leftBarButtonItem.enabled = YES;
     }];
+    self.navigationItem.leftBarButtonItem.enabled = NO;
 }
 
 
@@ -88,14 +89,14 @@
     //注册
     [self.tableView registerClass:[AudioTableViewCell class] forCellReuseIdentifier:@"cell"];
     
-    // 默认设置
+    //     默认设置
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSDictionary *dict = [ud objectForKey:@"defaultSetting"];
     
     self.categoryId = [dict objectForKey: @"defaultCategoryId"];
     self.tagName = [dict objectForKey:@"defaultTagName"];
-    
     self.dataArray = [NSMutableArray array];
+    
     _currentPageId = 1;
     _pageSize = 30;
     [self p_requestDataWithPageId:_currentPageId++ pageSize:_pageSize];
@@ -103,6 +104,8 @@
     [self p_dragUptoLoadMore];
     // 下拉刷新
     [self p_dragDownToRefresh];
+    
+    
     
     
     
@@ -139,11 +142,13 @@
     
     // 设置回调（一旦进入刷新状态就会调用这个refreshingBlock）
     self.tableView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        _dragDown = YES;
         [weakSelf leftBarButtonAction:nil];
     }];
-    
+
     // 马上进入刷新状态
     [self.tableView.header beginRefreshing];
+    _dragDown = NO;
 }
 
 
@@ -165,14 +170,19 @@
 -(void)leftBarButtonAction : (UIBarButtonItem *)sender
 {
     DLog(@"刷新");
-    NSInteger count = _dataArray.count;
-    self.dataArray = [NSMutableArray array];
     
-    if (_maxPageId != 0) {
-        [self p_requestDataWithPageId:1 pageSize:count];
-    } else {
-        [self p_requestDataWithPageId:1 pageSize:_pageSize];
+    if (self.tableView.decelerating == NO || _dragDown) {
+        NSInteger count = _dataArray.count;
+        self.dataArray = [NSMutableArray array];
+        
+        if (count != 0) {
+            [self p_requestDataWithPageId:1 pageSize:count];
+        } else {
+            [self p_requestDataWithPageId:1 pageSize:_pageSize];
+        }
     }
+    
+   
     
     
 }
@@ -185,11 +195,11 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
-    // Return the number of sections.
-    return 1;
-}
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+//
+//    // Return the number of sections.
+//    return 1;
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 

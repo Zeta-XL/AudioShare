@@ -19,6 +19,7 @@
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"SubListCell"];
     [self p_navigationBar];
+    DLog(@"%@", _tagNameArray);
     
 }
 
@@ -26,6 +27,7 @@
 - (void)p_navigationBar
 {
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back@2x.png"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backAction:)];
+    self.navigationItem.title = self.titleString;
 }
 
 
@@ -43,16 +45,16 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 1;
-}
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+//#warning Potentially incomplete method implementation.
+//    // Return the number of sections.
+//    return 1;
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 10;
+    return _tagNameArray.count;
 }
 
 
@@ -61,7 +63,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SubListCell" forIndexPath:indexPath];
     
     // Configure the cell...
-    cell.textLabel.text = @"详细分类";
+    cell.textLabel.text = _tagNameArray[indexPath.row]  ;
     
     return cell;
 }
@@ -72,6 +74,8 @@
     DLog(@"%@", indexPath);
     
     // 反向传值
+    _backTagName(_tagNameArray[indexPath.row]);
+    
     [self.navigationController popViewControllerAnimated:YES];
     
 }

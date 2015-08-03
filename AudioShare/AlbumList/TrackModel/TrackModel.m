@@ -30,6 +30,36 @@
     }
 }
 
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    // 对编码的属性标记
+    [aCoder encodeObject:_trackId forKey:@"trackId"];
+    [aCoder encodeObject:_albumId forKey:@"albumId"];
+    [aCoder encodeObject:_playUrl64 forKey:@"playUrl"];
+    [aCoder encodeObject:_downloadUrl forKey:@"downloadUrl"];
+    [aCoder encodeObject:_title forKey:@"title"];
+    [aCoder encodeDouble:_duration forKey:@"duration"];
+    [aCoder encodeDouble:_downloadSize forKey:@"downloadSize"];
+    [aCoder encodeDouble:_lastSeconds forKey:@"lastSeconds"];
+    [aCoder encodeObject:_nickname forKey:@"nickname"];
+    
+}
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super init]) {
+        self.trackId = [aDecoder decodeObjectForKey:@"trackId"];
+        self.albumId = [aDecoder decodeObjectForKey:@"albumId"];
+        self.playUrl64 = [aDecoder decodeObjectForKey:@"playUrl"];
+        self.downloadUrl = [aDecoder decodeObjectForKey:@"downloadUrl"];
+        self.title = [aDecoder decodeObjectForKey:@"title"];
+        self.duration = [aDecoder decodeDoubleForKey:@"duration"];
+        self.downloadSize = [aDecoder decodeDoubleForKey:@"downloadSize"];
+        self.lastSeconds = [aDecoder decodeDoubleForKey:@"lastSeconds"];
+        self.nickname = [aDecoder decodeObjectForKey:@"nickname"];
+    }
+    
+    return self;
+}
 
 @end
