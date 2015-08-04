@@ -16,12 +16,16 @@
 #import "MJRefresh.h"
 #import "AlbumModel.h"
 #import "TrackModel.h"
+#import "DataBaseHandle.h"
 
-@interface AlbumTableViewController ()
+
+@interface AlbumTableViewController () <AlbumViewDelegate>
 {
     NSInteger _pageSize;
     NSInteger _maxPageId;
     NSInteger _currentPageId;
+    BOOL _loadOk;
+    BOOL _isSaved;
 }
 @property (nonatomic, strong)AlbumView *albumView;
 @property (nonatomic, strong)NSMutableArray *tracksList;
@@ -35,6 +39,9 @@
     [super viewDidLoad];
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:(UIBarButtonItemStyleDone) target:self action:@selector(backButtonAction:)];
+    [self p_albumView];
+    
+
     
     //注册
     [self.tableView registerClass:[AlbumTableViewCell class] forCellReuseIdentifier:@"AlbumCell"];
@@ -43,7 +50,6 @@
     self.tracksList = [NSMutableArray array];
     
     [self p_requestDataWithPageId:_currentPageId++ pageSize:_pageSize];
-    
     [self p_dragUptoLoadMore];
      
 }
@@ -74,7 +80,7 @@
         
         if ([dict[@"msg"] isEqualToString:@"0"]) {
             // 获取声音model
-            DLog(@"%@", dict[@"tracks"][@"list"]);
+//            DLog(@"%@", dict[@"tracks"][@"list"]);
             for (NSDictionary *d in dict[@"tracks"][@"list"]) {
                 TrackModel *trackm = [[TrackModel alloc] init];
                 [trackm setValuesForKeysWithDictionary:d];
@@ -88,9 +94,14 @@
             self.album = [[AlbumModel alloc] init];
             [_album setValuesForKeysWithDictionary:dict[@"album"]];
             self.navigationItem.title = _album.categoryName;
-            // 加载自定义albumView视图
-            [self p_albumView];
             
+            [_albumView.albumImageView sd_setImageWithURL:[NSURL URLWithString:_album.coverLarge] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+            _albumView.titleLabel.text = _album.title;
+            _albumView.writerLabel.text = [NSString stringWithFormat:@"作者: %@",  _album.nickname];
+            _albumView.detailLabel.text = [NSString stringWithFormat:@"简介: %@",  _album.intro];
+            _loadOk = YES;
+            _albumView.collectionButton.enabled = YES;
+            _albumView.loadButton.enabled = YES;
         } else {
             DLog(@"加载数据无效");
         }
@@ -103,6 +114,9 @@
         self.tableView.scrollEnabled = YES;
     }];
     self.tableView.scrollEnabled = NO;
+    _loadOk = NO;
+    _albumView.collectionButton.enabled = NO;
+    _albumView.loadButton.enabled = NO;
 }
 
 // 上拉加载
@@ -130,23 +144,77 @@
 
 
 
-
-
+#pragma mark ----albumView 设置
 //自定义albumView视图
 -(void)p_albumView
 {
     self.albumView = [[AlbumView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.tableView.frame), 220)];
     self.tableView.tableHeaderView = _albumView;
-    [_albumView.albumImageView sd_setImageWithURL:[NSURL URLWithString:_album.coverLarge] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
-    _albumView.titleLabel.text = _album.title;
-    _albumView.writerLabel.text = [NSString stringWithFormat:@"作者: %@",  _album.nickname];
-    _albumView.detailLabel.text = [NSString stringWithFormat:@"简介: %@",  _album.intro];
+    self.albumView.delegate = self;
+    
+    //打开数据库 //
+    NSString *docPath = [[DataBaseHandle shareDataBase] getPathOf:Document];
+    [[DataBaseHandle shareDataBase] openDBWithName:kDBName atPath:docPath];
+    // 创建表 (收藏)
+    [[DataBaseHandle shareDataBase] createTableWithName:kFavorateTableName paramNames:[AlbumModel propertyNames] paramTypes:[AlbumModel propertyTypes] setPrimaryKey:YES];
+    // 查找数据
+    NSArray *resultArray = [[DataBaseHandle shareDataBase] selectFromTable:kFavorateTableName withKey:@"albumId" pairValue:self.albumId modelProperty:[AlbumModel propertyNames]];
+    if (resultArray) {
+        _isSaved = YES;
+        [_albumView.collectionButton setTitle:@"取消收藏" forState:(UIControlStateNormal)];
+    } else {
+        _isSaved = NO;
+        [_albumView.collectionButton setTitle:@"收藏" forState:(UIControlStateNormal)];
+    }
+    
+    
+    [[DataBaseHandle shareDataBase] closeDB];
+    
+    
     
     _albumView.detailLabel.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
     [_albumView.detailLabel addGestureRecognizer:tap];
     
 }
+
+//代理
+- (void)onClickCollectionButton:(UIButton *)sender
+{
+    _isSaved = !_isSaved;
+    // 打开数据库
+    NSString *docPath = [[DataBaseHandle shareDataBase] getPathOf:Document];
+    [[DataBaseHandle shareDataBase] openDBWithName:kDBName atPath:docPath];
+    if (_isSaved) {
+        
+        // 数据库插入数据
+       BOOL result = [[DataBaseHandle shareDataBase] insertIntoTable:kFavorateTableName paramKeys:[AlbumModel propertyNames] withValues:[_album albumInfoValue]];
+        if (result) {
+            DLog(@"收藏%@成功", self.albumId);
+            [sender setTitle:@"取消收藏" forState:(UIControlStateNormal)];
+        } else {
+            DLog(@"收藏%@失败", self.albumId);
+        }
+        
+  
+    } else {
+        // 数据库删除数据
+        [[DataBaseHandle shareDataBase] deletefromTable:kFavorateTableName withKey:@"albumId" value:_albumId];
+        
+        
+        [sender setTitle:@"收藏" forState:(UIControlStateNormal)];
+    }
+    
+
+    [[DataBaseHandle shareDataBase] closeDB];
+    
+}
+
+- (void)onClickDownloadButton:(UIButton *)sender
+{
+    
+}
+
 
 - (void)tapAction:(UITapGestureRecognizer *)sender
 {

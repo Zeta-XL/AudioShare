@@ -40,7 +40,7 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     
-    
+    [super viewDidAppear:animated];
 }
 
 

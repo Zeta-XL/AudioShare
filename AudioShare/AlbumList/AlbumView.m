@@ -62,7 +62,7 @@
     self.loadButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
     self.loadButton.frame = CGRectMake(CGRectGetMaxX(_collectionButton.frame) + 10, CGRectGetMinY(_collectionButton.frame), CGRectGetWidth(_collectionButton.frame), CGRectGetHeight(_collectionButton.frame));
     [self.loadButton setTitle:@"批量下载" forState:(UIControlStateNormal)];
-    [self.loadButton addTarget:self action:@selector(loadButtonAction : ) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.loadButton addTarget:self action:@selector(MultiDownloadButtonAction: ) forControlEvents:(UIControlEventTouchUpInside)];
     [self addSubview:_loadButton];
     
     
@@ -71,12 +71,18 @@
 //collectionButton点击事件
 -(void)collectionButtonAction : (UIButton *)sender
 {
+    if (_delegate && [_delegate respondsToSelector:@selector(onClickCollectionButton:)]) {
+        [self.delegate onClickCollectionButton:sender];
+    }
     DLog(@"收藏");
 }
 
 //loadButtonAction点击事件
--(void)loadButtonAction : (UIButton *)sender
+-(void)MultiDownloadButtonAction: (UIButton *)sender
 {
+    if (_delegate && [_delegate respondsToSelector:@selector(onClickDownloadButton:)]) {
+        [self.delegate onClickDownloadButton:sender];
+    }
     DLog(@"批量下载");
 }
 

@@ -167,7 +167,9 @@ static PlayerViewController *singlePlayer = nil;
         [self p_data];
         
         // 添加时间进度观察者
+        
         [self p_setPlayerTimerObserver];
+        
         
         // 添加通知监测播放结束
         [self p_listenPlayTimeToEnd];
@@ -225,6 +227,9 @@ static PlayerViewController *singlePlayer = nil;
     
     self.loadingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:(UIActivityIndicatorViewStyleGray)];
     
+    _loadingView.frame = CGRectMake(0, 0, 50, 50);
+    _loadingView.center = CGPointMake(CGRectGetMidX([UIScreen mainScreen].bounds), [UIScreen mainScreen].bounds.size.height - 180);
+    [self.view addSubview:_loadingView];
     
     // Do any additional setup after loading the view from its nib.
     [self.timeGoingSlider setThumbImage:[UIImage imageNamed:@"slider.png"] forState:(UIControlStateHighlighted)]; // 滑动时
@@ -298,7 +303,7 @@ static PlayerViewController *singlePlayer = nil;
 }
 
 
-#pragma mark ---- 观察者 ---设置播放进度的观察者
+#pragma mark ---- 观察者(player) ---设置播放进度的观察者
 
 // 添加进度观察者
 - (void)p_setPlayerTimerObserver
@@ -322,6 +327,7 @@ static PlayerViewController *singlePlayer = nil;
 - (void)p_removeTimerObserver
 {
     [self.player removeTimeObserver:_timeObserver];
+    self.timeObserver = nil;
 }
 
 
@@ -332,8 +338,9 @@ static PlayerViewController *singlePlayer = nil;
     if (self.currentItem.status == AVPlayerItemStatusReadyToPlay) {
         if (_isPlaying == NO) {
             [self playAction:self.playButton];
+            [_loadingView stopAnimating]; /****************************/
         }
-        [_loadingView stopAnimating]; /****************************/
+        
     }
     if (_currentItem.statusObserver) {
         [_currentItem removeObserver:self forKeyPath:@"status"];
@@ -430,18 +437,25 @@ static PlayerViewController *singlePlayer = nil;
 // slider进度条拖动
 - (IBAction)timeSliderAction:(UISlider *)sender
 {
+    
     if (_currentItem.statusObserver) {
         [_currentItem removeObserver:self forKeyPath:@"status"];
         _currentItem.statusObserver = NO;
     }
-    [self.player pause];
+    if (_isPlaying) {
+        [self.player pause];
+    }
+    
     _currentSeconds = sender.value * _totalSeconds;
     
     [self.currentItem seekToTime:CMTimeMakeWithSeconds(_currentSeconds, 1)];
-    [_loadingView startAnimating]; /***********************/
+    
     [_currentItem addObserver:self forKeyPath:@"status" options:(NSKeyValueObservingOptionNew) context:nil];
     _currentItem.statusObserver = YES;
-    [self.player play];
+    if (_isPlaying) {
+        [self.player play];
+    }
+    
 }
 
 // 播放按键
@@ -543,6 +557,9 @@ static PlayerViewController *singlePlayer = nil;
     [self p_removeTimerObserver];
     
     CGFloat lastSeconds = CMTimeGetSeconds([_currentItem currentTime]);
+    if (lastSeconds >= CMTimeGetSeconds(_currentItem.duration) - 1.0) {
+        lastSeconds = 0.0;
+    }
     [_urlStateList[lastIndex] setObject:@(lastSeconds) forKey:@"timeState"];
     
     self.currentItem = [self createPlayerItemWithURLString:_urlStateList[index][@"url"]];

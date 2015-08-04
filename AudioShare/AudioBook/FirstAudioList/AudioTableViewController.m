@@ -175,7 +175,7 @@
     if (self.tableView.decelerating == NO || _dragDown) {
         NSInteger count = _dataArray.count;
         self.dataArray = [NSMutableArray array];
-        
+        [self.tableView reloadData];
         if (count != 0) {
             [self p_requestDataWithPageId:1 pageSize:count];
         } else {

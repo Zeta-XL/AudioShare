@@ -9,8 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "AlbumModel.h"
 
-#define kDBName @"modelDB.sqlite"
-#define kTableName @"categories"
+#define kDBName @"userData.sqlite"
+#define kFavorateTableName @"favorateTable"
+#define kHistoryTableName @"historyTable"
 
 typedef enum paths{
     Document = 0,
@@ -36,6 +37,13 @@ typedef enum paths{
 
 // 创建表 自定义primary key
 - (void)createTableWithName:(NSString *)tableName paramNames:(NSArray *)nameArray paramTypes:(NSArray *)TypeArray setPrimaryKey:(BOOL) option;
+
+
+
+
+// 删除表
+- (void)dropTableWithName:(NSString *)tableName;
+
 
 // 插入数据(专辑)
 - (BOOL)insertIntoTable:(NSString *)tableName

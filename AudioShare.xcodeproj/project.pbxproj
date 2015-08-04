@@ -20,7 +20,6 @@
 		C2C08F631B6B04CF00930A4F /* RadioProvinceTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C08F601B6B04CF00930A4F /* RadioProvinceTableViewController.m */; };
 		C2C08F691B6B207F00930A4F /* AlbumModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C08F681B6B207F00930A4F /* AlbumModel.m */; };
 		C2C08F701B6B227400930A4F /* AudioModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C08F6F1B6B227400930A4F /* AudioModel.m */; };
-		C2C08F721B6B24BD00930A4F /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = C2C08F711B6B24BD00930A4F /* 1.png */; };
 		C2C08F761B6B28D100930A4F /* AudioCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C08F751B6B28D100930A4F /* AudioCategory.m */; };
 		C2C08FA41B6B574E00930A4F /* MJRefreshAutoFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C08F7A1B6B574E00930A4F /* MJRefreshAutoFooter.m */; };
 		C2C08FA51B6B574E00930A4F /* MJRefreshBackFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C08F7C1B6B574E00930A4F /* MJRefreshBackFooter.m */; };
@@ -143,7 +142,6 @@
 		C2C08F681B6B207F00930A4F /* AlbumModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumModel.m; sourceTree = "<group>"; };
 		C2C08F6E1B6B227400930A4F /* AudioModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioModel.h; sourceTree = "<group>"; };
 		C2C08F6F1B6B227400930A4F /* AudioModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioModel.m; sourceTree = "<group>"; };
-		C2C08F711B6B24BD00930A4F /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
 		C2C08F741B6B28D100930A4F /* AudioCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioCategory.h; sourceTree = "<group>"; };
 		C2C08F751B6B28D100930A4F /* AudioCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioCategory.m; sourceTree = "<group>"; };
 		C2C08F791B6B574E00930A4F /* MJRefreshAutoFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshAutoFooter.h; sourceTree = "<group>"; };
@@ -693,7 +691,6 @@
 		C2C4DFC01B6648D3004690C3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				C2C08F711B6B24BD00930A4F /* 1.png */,
 				C2C9B7F31B6CB40F0053D5B1 /* slider.png */,
 				C2C9B7F11B6CA5750053D5B1 /* radio_btn@2x.jpg */,
 				C2C08FBB1B6B971C00930A4F /* placeholder.png */,
@@ -942,7 +939,6 @@
 				C2C11FF11B69015100CBA7B5 /* testDemo.aac in Resources */,
 				C2C08FB21B6B574E00930A4F /* MJRefresh.bundle in Resources */,
 				C2CCA8711B67A2A500B62775 /* DownloadingTableViewCell.xib in Resources */,
-				C2C08F721B6B24BD00930A4F /* 1.png in Resources */,
 				C2CCA8201B6725E700B62775 /* btn_next@2x.png in Resources */,
 				C2CCA8141B67121300B62775 /* PlayerViewController.xib in Resources */,
 				C2CCA8261B6725E700B62775 /* btn_pre@2x.png in Resources */,

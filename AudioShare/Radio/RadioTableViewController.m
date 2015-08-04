@@ -127,7 +127,6 @@
             
             [self.tableView reloadData];
             self.loadEnable = YES;
-            self.tableView.scrollEnabled = YES;
             self.navigationItem.leftBarButtonItem.enabled = YES;
             [self.tableView.footer endRefreshing];
             
@@ -135,7 +134,6 @@
         }];
     }
     self.loadEnable = NO;
-    self.tableView.scrollEnabled = NO;
     self.navigationItem.leftBarButtonItem.enabled = NO;
 }
 
@@ -240,13 +238,12 @@
 //网络电台按钮点击方法
 - (void)networkButtonAction:(UIButton *)sender
 {
-    if (self.tableView.decelerating == NO || self.tableView.dragging == NO) {
-        self.radioType = 3;
-        self.currentPageId = 1;
-        self.radioArray = [NSMutableArray array];
+    self.radioType = 3;
+    self.currentPageId = 1;
+    self.radioArray = [NSMutableArray array];
+    [self.tableView reloadData];
+    [self p_requestDataWithPageId:_currentPageId++ pageSize:_pageSize];
 
-        [self p_requestDataWithPageId:_currentPageId++ pageSize:_pageSize];
-    }
     
 }
 
@@ -254,12 +251,12 @@
 //国家电台按钮点击方法
 - (void)countriesButtonAction:(UIButton *)sender
 {
-    if (self.tableView.decelerating == NO || self.tableView.dragging == NO) {
-        self.radioType = 1;
-        self.currentPageId = 1;
-        self.radioArray = [NSMutableArray array];
-        [self p_requestDataWithPageId:_currentPageId++ pageSize:_pageSize];
-    }
+
+    self.radioType = 1;
+    self.currentPageId = 1;
+    self.radioArray = [NSMutableArray array];
+    [self.tableView reloadData];
+    [self p_requestDataWithPageId:_currentPageId++ pageSize:_pageSize];
     
     
 

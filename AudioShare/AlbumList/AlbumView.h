@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol AlbumViewDelegate <NSObject>
+
+- (void)onClickCollectionButton:(UIButton *)sender;
+
+- (void)onClickDownloadButton:(UIButton *)sender;
+
+@end
+
 @interface AlbumView : UIView
 
 //视图
@@ -29,7 +37,6 @@
 //下载button
 @property (nonatomic, strong)UIButton *loadButton;
 
-
-
+@property (nonatomic, weak)id <AlbumViewDelegate> delegate;
 
 @end

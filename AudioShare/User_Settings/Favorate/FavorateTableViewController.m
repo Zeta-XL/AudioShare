@@ -8,12 +8,49 @@
 
 #import "FavorateTableViewController.h"
 #import "AudioTableViewCell.h"
+#import "RequestTool_v2.h"
+#import "DataBaseHandle.h"
+#import "UIImageView+WebCache.h"
+#import "AlbumModel.h"
+#import "AlbumTableViewController.h"
+#import "API_URL.h"
 
 @interface FavorateTableViewController ()
+
+@property (nonatomic, strong)NSMutableArray *dataArray;
+@property (nonatomic, assign)BOOL onceFlag;
 
 @end
 
 @implementation FavorateTableViewController
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    //打开数据库 //
+    
+    NSString *docPath = [[DataBaseHandle shareDataBase] getPathOf:Document];
+    [[DataBaseHandle shareDataBase] openDBWithName:kDBName atPath:docPath];
+    
+    self.dataArray = [[[DataBaseHandle shareDataBase] selectAllFromTable:kFavorateTableName modelProperty:[AlbumModel propertyNames] sidOption:NO] mutableCopy];
+    
+    
+    [[DataBaseHandle shareDataBase] closeDB];
+    [self.tableView reloadData];
+    
+    if (self.dataArray.count == 0) {
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 30)];
+        label.text = @"没有收藏记录..";
+        label.textAlignment = NSTextAlignmentCenter;
+        self.tableView.tableHeaderView = label;
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+    } else {
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+    }
+    
+    
+    
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -21,8 +58,120 @@
     [self.tableView registerClass:[AudioTableViewCell class] forCellReuseIdentifier:@"favorateCell"];
     self.navigationItem.title = @"收藏专辑";
     
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"清空" style:(UIBarButtonItemStyleDone) target:self action:@selector(deleteAllAction:)];
+    
+    
+    // 数据库更新
+    DLog(@"once--------------------");
+    NSString *docPath = [[DataBaseHandle shareDataBase] getPathOf:Document];
+    [[DataBaseHandle shareDataBase] openDBWithName:kDBName atPath:docPath];
+    
+    
+    NSArray *resultArray = [[[DataBaseHandle shareDataBase] selectAllFromTable:kFavorateTableName modelProperty:[AlbumModel propertyNames] sidOption:NO] mutableCopy];
+    
+    [[DataBaseHandle shareDataBase] closeDB];
+    
+    if (resultArray.count != 0) {
+        
+        dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_group_t group = dispatch_group_create();
+        
+        
+        for (AlbumModel *am in resultArray) {
+            dispatch_group_async(group, globalQueue, ^{
+                [self p_requestDataWithAlbumId:am.albumId];
+            });
+            
+        }
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            NSString *docPath = [[DataBaseHandle shareDataBase] getPathOf:Document];
+            [[DataBaseHandle shareDataBase] openDBWithName:kDBName atPath:docPath];
+            
+            self.dataArray = [[[DataBaseHandle shareDataBase] selectAllFromTable:kFavorateTableName modelProperty:[AlbumModel propertyNames] sidOption:NO] mutableCopy];
+            
+            [[DataBaseHandle shareDataBase] closeDB];
+            [self.tableView reloadData];
+        });
+        
+    }
+    
+    
+    
+    
+    
+    
     
 }
+
+// 请求数据更新数据库
+- (void)p_requestDataWithAlbumId:(NSString *)albumId
+{
+    DLog(@"currentThread---%@",[NSThread currentThread]);
+    NSString *params = [NSString stringWithFormat:@"pageId=1&pageSize=1&albumId=%@", albumId];
+    
+    [RequestTool_v2 requestWithURL:kDetailAlbumList paramString:params postRequest:NO callBackData:^(NSData *data) {
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+        
+        if ([dict[@"msg"] isEqualToString:@"0"]) {
+            
+            AlbumModel *album = [[AlbumModel alloc] init];
+            [album setValuesForKeysWithDictionary:dict[@"album"]];
+            DLog(@"albumId=%@", album.albumId);
+            // 数据库更新
+            NSString *docPath = [[DataBaseHandle shareDataBase] getPathOf:Document];
+            [[DataBaseHandle shareDataBase] openDBWithName:kDBName atPath:docPath];
+            
+            NSArray *resultArray = [[DataBaseHandle shareDataBase] selectFromTable:kFavorateTableName withKey:@"albumId" pairValue:albumId modelProperty:[AlbumModel propertyNames]];
+            
+            if ( ![[resultArray.firstObject tracksCount] isEqualToString:album.tracksCount] ) {
+                [[DataBaseHandle shareDataBase] updateTable:kFavorateTableName changeDict:@{@"tracksCount": album.tracksCount} atPrimaryKey:@"albumId" primaryKeyValue:albumId];
+                DLog(@"更新-----完成");
+            } else {
+                DLog(@"没有-----更新");
+            }
+            [[DataBaseHandle shareDataBase] closeDB];
+            
+            
+        } else {
+            DLog(@"加载数据无效, 未更新数据库");
+        }
+        
+    }];
+    
+    
+    
+    
+    
+}
+
+
+
+- (void)deleteAllAction:(UIBarButtonItem *)sender
+{
+    
+    NSString *docPath = [[DataBaseHandle shareDataBase] getPathOf:Document];
+    [[DataBaseHandle shareDataBase] openDBWithName:kDBName atPath:docPath];
+    
+    
+    [[DataBaseHandle shareDataBase] dropTableWithName:kFavorateTableName];
+    
+    self.dataArray = [[[DataBaseHandle shareDataBase] selectAllFromTable:kFavorateTableName modelProperty:[AlbumModel propertyNames] sidOption:NO] mutableCopy];
+    
+    [[DataBaseHandle shareDataBase] closeDB];
+    [self.tableView reloadData];
+    if (self.dataArray.count == 0 || self.dataArray == nil) {
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 30)];
+        label.text = @"没有收藏记录..";
+        label.textAlignment = NSTextAlignmentCenter;
+        self.tableView.tableHeaderView = label;
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+    } else {
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+    }
+    
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -40,7 +189,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 10;
+    return _dataArray.count;
 }
 
 
@@ -49,7 +198,34 @@
     
     // Configure the cell...
     
+    AlbumModel *album = _dataArray[indexPath.row];
+    cell.titleLabel.text = album.title;
+    cell.tagsLabel.text = album.tags;
+    cell.tracksCountsLabel.text = [NSString stringWithFormat:@"共%@集",album.tracksCount];
+    
+    [cell.myImageView sd_setImageWithURL:[NSURL URLWithString: album.coverSmall] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+    
     return cell;
+}
+
+// cell 的高
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 120;
+    
+}
+
+// 点击cell响应事件
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    AlbumTableViewController *albumTVC = [[AlbumTableViewController alloc] init];
+    
+    AlbumModel *album = _dataArray[indexPath.row];
+    
+    albumTVC.albumId = album.albumId;
+    
+    [self.navigationController pushViewController:albumTVC animated:YES];
+    
 }
 
 

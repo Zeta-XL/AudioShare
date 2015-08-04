@@ -27,7 +27,7 @@
 // 原始图片
 @property (nonatomic, copy)NSString *coverOrigin;
 
-// 作者
+// 作者 /-----未使用-----/
 @property (nonatomic, copy)NSString *nickname;
 
 // 简介
@@ -35,9 +35,15 @@
 
 // 专辑类型
 @property (nonatomic, copy)NSString *tags;
-//播放次数
+
+//播放次数 //--未使用--//
 @property (nonatomic, copy)NSString *playsCounts;
 
 // 声音个数
 @property (nonatomic, copy)NSString *tracksCount;
+
++ (NSArray *)propertyNames;
++ (NSArray *)propertyTypes;
+- (NSArray *)albumInfoValue;
+
 @end

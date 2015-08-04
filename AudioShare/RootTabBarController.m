@@ -14,6 +14,7 @@
 #import "DownloadViewController.h"
 #import "FoxSettingsTableViewController.h"
 #import "DataBaseHandle.h"
+#import "AlbumModel.h"
 
 @interface RootTabBarController ()
 @property (nonatomic, strong)UIButton *playButton;
@@ -56,11 +57,13 @@
     // 创建数据库
     
     NSString *docPath = [[DataBaseHandle shareDataBase] getPathOf:Document];
+    DLog(@"docPath----  %@",docPath);
+    [[DataBaseHandle shareDataBase] openDBWithName:kDBName atPath:docPath];
     
-    [[DataBaseHandle shareDataBase] openDBWithName:@"user.sqlite" atPath:docPath];
+    // 创建表 (收藏)
+    [[DataBaseHandle shareDataBase] createTableWithName:kFavorateTableName paramNames:[AlbumModel propertyNames] paramTypes:[AlbumModel propertyTypes] setPrimaryKey:YES];
     
-    // 创建表
-    
+    // 创建表 (播放历史)
     
     
     [[DataBaseHandle shareDataBase] closeDB];

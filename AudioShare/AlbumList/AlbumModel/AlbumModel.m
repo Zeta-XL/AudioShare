@@ -28,4 +28,20 @@
         
 }
 
++ (NSArray *)propertyNames
+{
+    return @[@"albumId", @"title", @"categoryName", @"coverLarge", @"coverSmall", @"tags", @"tracksCount"];
+}
+
++ (NSArray *)propertyTypes
+{
+    return @[@"TEXT", @"TEXT", @"TEXT", @"TEXT", @"TEXT", @"TEXT", @"TEXT", ];
+}
+
+- (NSArray *)albumInfoValue
+{
+    return @[_albumId, _title, _categoryName, _coverLarge, _coverSmall, _tags, _tracksCount];
+}
+
+
 @end

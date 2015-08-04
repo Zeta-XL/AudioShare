@@ -145,6 +145,24 @@ static sqlite3 *db;
     
 }
 
+// 删除表
+- (void)dropTableWithName:(NSString *)tableName
+{
+    NSString *dropTableSQL = [NSString stringWithFormat:@"DROP TABLE %@", tableName];
+    // 执行SQL语句
+    int result = sqlite3_exec(db, dropTableSQL.UTF8String, NULL, NULL, NULL);
+    if (result == SQLITE_OK) {
+        NSLog(@"删除表成功");
+    }else {
+        NSLog(@"删除表失败");
+    }
+    
+}
+
+
+
+
+
 // 插入数据任意
 - (BOOL)insertIntoTable:(NSString *)tableName
               paramKeys:(NSArray *)keys
@@ -243,10 +261,10 @@ static sqlite3 *db;
     // 执行
     int result = sqlite3_exec(db, updateSQL.UTF8String, NULL, NULL, NULL);
     if (result == SQLITE_OK) {
-        NSLog(@"更改成功");
+        NSLog(@"数据更改成功");
         
     }else {
-        NSLog(@"更新失败");
+        NSLog(@"数据更新失败");
     }
 }
 
