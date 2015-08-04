@@ -67,10 +67,11 @@
         [self.tableView.footer endRefreshing];
         [self.tableView.header endRefreshing];
         [self.tableView reloadData];
-        
+        self.tableView.scrollEnabled = YES;
         self.navigationItem.leftBarButtonItem.enabled = YES;
     }];
     self.navigationItem.leftBarButtonItem.enabled = NO;
+    self.tableView.scrollEnabled = NO;
 }
 
 

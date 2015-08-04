@@ -37,11 +37,11 @@
     [self.contentView addSubview:_titleLabel];
     
     //
-    self.tagsLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(_titleLabel.frame), CGRectGetMaxY(_titleLabel.frame) + 10, 130, CGRectGetHeight(_titleLabel.frame))];
+    self.tagsLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(_titleLabel.frame), CGRectGetMaxY(_titleLabel.frame) + 10, 200, CGRectGetHeight(_titleLabel.frame))];
 //    self.tagsLabel.backgroundColor = [UIColor blueColor];
     
     //自动调整放置文字位置的大小
-    self.tagsLabel.adjustsFontSizeToFitWidth = YES;
+    self.tagsLabel.font = [UIFont systemFontOfSize:14.f];
     [self.contentView addSubview:_tagsLabel];
     
     //

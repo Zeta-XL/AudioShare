@@ -13,4 +13,5 @@ typedef void(^returnBackTag)(NSString *aString);
 @property (nonatomic, strong)NSMutableArray *tagNameArray;
 @property (nonatomic, copy)returnBackTag backTagName;
 @property (nonatomic, copy)NSString *titleString;
+@property (nonatomic, copy)NSString *categoryId;
 @end

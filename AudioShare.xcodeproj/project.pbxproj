@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C241B8E51B6F6B6500845637 /* SearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C241B8E21B6F6B6500845637 /* SearchModel.m */; };
+		C241B8E61B6F6B6500845637 /* SearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C241B8E41B6F6B6500845637 /* SearchTableViewController.m */; };
+		C241B8EA1B6FA35A00845637 /* DataBaseHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = C241B8E91B6FA35A00845637 /* DataBaseHandle.m */; };
+		C241B8EF1B6FA94700845637 /* FavorateTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C241B8EE1B6FA94700845637 /* FavorateTableViewController.m */; };
+		C241B8F11B6FABF200845637 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C241B8F01B6FABF200845637 /* libsqlite3.dylib */; };
+		C241B8F41B6FAD7C00845637 /* HistoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C241B8F31B6FAD7C00845637 /* HistoryTableViewController.m */; };
 		C2C08F551B6AFD5200930A4F /* RequestTool_v2.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C08F541B6AFD5200930A4F /* RequestTool_v2.m */; };
 		C2C08F581B6B047E00930A4F /* RadioTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C08F571B6B047E00930A4F /* RadioTableViewController.m */; };
 		C2C08F611B6B04CF00930A4F /* Radio.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C08F5B1B6B04CF00930A4F /* Radio.m */; };
@@ -38,11 +44,7 @@
 		C2C08FBA1B6B744700930A4F /* TrackModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C08FB91B6B744700930A4F /* TrackModel.m */; };
 		C2C08FBC1B6B971C00930A4F /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = C2C08FBB1B6B971C00930A4F /* placeholder.png */; };
 		C2C11FA11B685E9E00CBA7B5 /* FoxSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C11F951B685E9E00CBA7B5 /* FoxSettingsTableViewController.m */; };
-		C2C11FA31B685E9E00CBA7B5 /* FoxCollectionTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C11F9A1B685E9E00CBA7B5 /* FoxCollectionTableViewController.m */; };
-		C2C11FA41B685E9E00CBA7B5 /* FoxPlayTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C11F9C1B685E9E00CBA7B5 /* FoxPlayTableViewController.m */; };
 		C2C11FA51B685E9E00CBA7B5 /* SettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C11F9E1B685E9E00CBA7B5 /* SettingTableViewController.m */; };
-		C2C11FA61B685E9E00CBA7B5 /* UserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C11FA01B685E9E00CBA7B5 /* UserTableViewCell.m */; };
-		C2C11FB01B68647900CBA7B5 /* FoxCollectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C11FAF1B68647900CBA7B5 /* FoxCollectionTableViewCell.m */; };
 		C2C11FEA1B68D07400CBA7B5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2C11FE91B68D07400CBA7B5 /* AVFoundation.framework */; };
 		C2C11FF11B69015100CBA7B5 /* testDemo.aac in Resources */ = {isa = PBXBuildFile; fileRef = C2C11FF01B69015100CBA7B5 /* testDemo.aac */; };
 		C2C4DF8D1B66470C004690C3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C4DF8C1B66470C004690C3 /* main.m */; };
@@ -93,7 +95,6 @@
 		C2CCA84D1B676D8700B62775 /* AlbumTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCA8461B676D8700B62775 /* AlbumTableViewCell.m */; };
 		C2CCA84E1B676D8700B62775 /* AlbumTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCA8481B676D8700B62775 /* AlbumTableViewController.m */; };
 		C2CCA84F1B676D8700B62775 /* AlbumView.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCA84A1B676D8700B62775 /* AlbumView.m */; };
-		C2CCA8551B676D9800B62775 /* SearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCA8521B676D9800B62775 /* SearchTableViewController.m */; };
 		C2CCA8591B677AC300B62775 /* DownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCA8581B677AC300B62775 /* DownloadViewController.m */; };
 		C2CCA85C1B677E3000B62775 /* DownloadView.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCA85B1B677E3000B62775 /* DownloadView.m */; };
 		C2CCA8611B67871B00B62775 /* DownloadedTracksCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCA8601B67871B00B62775 /* DownloadedTracksCell.m */; };
@@ -116,6 +117,17 @@
 
 /* Begin PBXFileReference section */
 		1E4E816DCCC72B128588F1C9 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		C241B8E11B6F6B6500845637 /* SearchModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchModel.h; sourceTree = "<group>"; };
+		C241B8E21B6F6B6500845637 /* SearchModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchModel.m; sourceTree = "<group>"; };
+		C241B8E31B6F6B6500845637 /* SearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTableViewController.h; sourceTree = "<group>"; };
+		C241B8E41B6F6B6500845637 /* SearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchTableViewController.m; sourceTree = "<group>"; };
+		C241B8E81B6FA35A00845637 /* DataBaseHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataBaseHandle.h; sourceTree = "<group>"; };
+		C241B8E91B6FA35A00845637 /* DataBaseHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataBaseHandle.m; sourceTree = "<group>"; };
+		C241B8ED1B6FA94700845637 /* FavorateTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavorateTableViewController.h; sourceTree = "<group>"; };
+		C241B8EE1B6FA94700845637 /* FavorateTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavorateTableViewController.m; sourceTree = "<group>"; };
+		C241B8F01B6FABF200845637 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		C241B8F21B6FAD7C00845637 /* HistoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryTableViewController.h; sourceTree = "<group>"; };
+		C241B8F31B6FAD7C00845637 /* HistoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryTableViewController.m; sourceTree = "<group>"; };
 		C2C08F531B6AFD5200930A4F /* RequestTool_v2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestTool_v2.h; sourceTree = "<group>"; };
 		C2C08F541B6AFD5200930A4F /* RequestTool_v2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestTool_v2.m; sourceTree = "<group>"; };
 		C2C08F561B6B047E00930A4F /* RadioTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioTableViewController.h; sourceTree = "<group>"; };
@@ -177,16 +189,8 @@
 		C2C08FBB1B6B971C00930A4F /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
 		C2C11F941B685E9E00CBA7B5 /* FoxSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoxSettingsTableViewController.h; sourceTree = "<group>"; };
 		C2C11F951B685E9E00CBA7B5 /* FoxSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoxSettingsTableViewController.m; sourceTree = "<group>"; };
-		C2C11F991B685E9E00CBA7B5 /* FoxCollectionTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoxCollectionTableViewController.h; sourceTree = "<group>"; };
-		C2C11F9A1B685E9E00CBA7B5 /* FoxCollectionTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoxCollectionTableViewController.m; sourceTree = "<group>"; };
-		C2C11F9B1B685E9E00CBA7B5 /* FoxPlayTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoxPlayTableViewController.h; sourceTree = "<group>"; };
-		C2C11F9C1B685E9E00CBA7B5 /* FoxPlayTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoxPlayTableViewController.m; sourceTree = "<group>"; };
 		C2C11F9D1B685E9E00CBA7B5 /* SettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingTableViewController.h; sourceTree = "<group>"; };
 		C2C11F9E1B685E9E00CBA7B5 /* SettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingTableViewController.m; sourceTree = "<group>"; };
-		C2C11F9F1B685E9E00CBA7B5 /* UserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserTableViewCell.h; sourceTree = "<group>"; };
-		C2C11FA01B685E9E00CBA7B5 /* UserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserTableViewCell.m; sourceTree = "<group>"; };
-		C2C11FAE1B68647900CBA7B5 /* FoxCollectionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoxCollectionTableViewCell.h; sourceTree = "<group>"; };
-		C2C11FAF1B68647900CBA7B5 /* FoxCollectionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoxCollectionTableViewCell.m; sourceTree = "<group>"; };
 		C2C11FE91B68D07400CBA7B5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		C2C11FEF1B68D47400CBA7B5 /* API_URL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = API_URL.h; sourceTree = "<group>"; };
 		C2C11FF01B69015100CBA7B5 /* testDemo.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = testDemo.aac; sourceTree = "<group>"; };
@@ -279,8 +283,6 @@
 		C2CCA8481B676D8700B62775 /* AlbumTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumTableViewController.m; sourceTree = "<group>"; };
 		C2CCA8491B676D8700B62775 /* AlbumView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumView.h; sourceTree = "<group>"; };
 		C2CCA84A1B676D8700B62775 /* AlbumView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumView.m; sourceTree = "<group>"; };
-		C2CCA8511B676D9800B62775 /* SearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTableViewController.h; sourceTree = "<group>"; };
-		C2CCA8521B676D9800B62775 /* SearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchTableViewController.m; sourceTree = "<group>"; };
 		C2CCA8571B677AC300B62775 /* DownloadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadViewController.h; sourceTree = "<group>"; };
 		C2CCA8581B677AC300B62775 /* DownloadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadViewController.m; sourceTree = "<group>"; };
 		C2CCA85A1B677E3000B62775 /* DownloadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadView.h; sourceTree = "<group>"; };
@@ -303,6 +305,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C241B8F11B6FABF200845637 /* libsqlite3.dylib in Frameworks */,
 				C2C11FEA1B68D07400CBA7B5 /* AVFoundation.framework in Frameworks */,
 				CD78E2802ADEB115BE22A4AA /* libPods.a in Frameworks */,
 			);
@@ -321,6 +324,7 @@
 		541ADA4720B2933F46B4ABAF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C241B8F01B6FABF200845637 /* libsqlite3.dylib */,
 				C2C11FE91B68D07400CBA7B5 /* AVFoundation.framework */,
 				F2398153ACA485CBB3B52F4C /* libPods.a */,
 			);
@@ -334,6 +338,45 @@
 				1E4E816DCCC72B128588F1C9 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		C241B8E01B6F6B3500845637 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				C241B8E11B6F6B6500845637 /* SearchModel.h */,
+				C241B8E21B6F6B6500845637 /* SearchModel.m */,
+				C241B8E31B6F6B6500845637 /* SearchTableViewController.h */,
+				C241B8E41B6F6B6500845637 /* SearchTableViewController.m */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		C241B8E71B6FA33C00845637 /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				C241B8E81B6FA35A00845637 /* DataBaseHandle.h */,
+				C241B8E91B6FA35A00845637 /* DataBaseHandle.m */,
+			);
+			name = Tool;
+			path = Download/Tool;
+			sourceTree = "<group>";
+		};
+		C241B8EB1B6FA7A600845637 /* Favorate */ = {
+			isa = PBXGroup;
+			children = (
+				C241B8ED1B6FA94700845637 /* FavorateTableViewController.h */,
+				C241B8EE1B6FA94700845637 /* FavorateTableViewController.m */,
+			);
+			path = Favorate;
+			sourceTree = "<group>";
+		};
+		C241B8EC1B6FA7A600845637 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				C241B8F21B6FAD7C00845637 /* HistoryTableViewController.h */,
+				C241B8F31B6FAD7C00845637 /* HistoryTableViewController.m */,
+			);
+			path = History;
 			sourceTree = "<group>";
 		};
 		C2C08F521B6AFD5200930A4F /* Tools */ = {
@@ -497,16 +540,8 @@
 		C2C11F961B685E9E00CBA7B5 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				C2C11F991B685E9E00CBA7B5 /* FoxCollectionTableViewController.h */,
-				C2C11F9A1B685E9E00CBA7B5 /* FoxCollectionTableViewController.m */,
-				C2C11F9B1B685E9E00CBA7B5 /* FoxPlayTableViewController.h */,
-				C2C11F9C1B685E9E00CBA7B5 /* FoxPlayTableViewController.m */,
 				C2C11F9D1B685E9E00CBA7B5 /* SettingTableViewController.h */,
 				C2C11F9E1B685E9E00CBA7B5 /* SettingTableViewController.m */,
-				C2C11F9F1B685E9E00CBA7B5 /* UserTableViewCell.h */,
-				C2C11FA01B685E9E00CBA7B5 /* UserTableViewCell.m */,
-				C2C11FAE1B68647900CBA7B5 /* FoxCollectionTableViewCell.h */,
-				C2C11FAF1B68647900CBA7B5 /* FoxCollectionTableViewCell.m */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -544,8 +579,9 @@
 				C2C4DFB51B6648D3004690C3 /* AudioBook */,
 				C2C4DFBC1B6648D3004690C3 /* Player */,
 				C2C4DFBF1B6648D3004690C3 /* Radio */,
+				C241B8E01B6F6B3500845637 /* Search */,
 				C2C4DFBA1B6648D3004690C3 /* Download */,
-				C2C4DFC21B6648D3004690C3 /* Search */,
+				C241B8E71B6FA33C00845637 /* Tool */,
 				C2C4DFC41B6648D3004690C3 /* User_Settings */,
 				C2C4DFC31B6648D3004690C3 /* ThirdPart */,
 				C2C4DFC01B6648D3004690C3 /* Resources */,
@@ -672,15 +708,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		C2C4DFC21B6648D3004690C3 /* Search */ = {
-			isa = PBXGroup;
-			children = (
-				C2CCA8511B676D9800B62775 /* SearchTableViewController.h */,
-				C2CCA8521B676D9800B62775 /* SearchTableViewController.m */,
-			);
-			path = Search;
-			sourceTree = "<group>";
-		};
 		C2C4DFC31B6648D3004690C3 /* ThirdPart */ = {
 			isa = PBXGroup;
 			children = (
@@ -696,6 +723,8 @@
 			children = (
 				C2C11F941B685E9E00CBA7B5 /* FoxSettingsTableViewController.h */,
 				C2C11F951B685E9E00CBA7B5 /* FoxSettingsTableViewController.m */,
+				C241B8EB1B6FA7A600845637 /* Favorate */,
+				C241B8EC1B6FA7A600845637 /* History */,
 				C2C11F961B685E9E00CBA7B5 /* Settings */,
 			);
 			path = User_Settings;
@@ -972,6 +1001,7 @@
 				C2C08FA71B6B574E00930A4F /* MJRefreshFooter.m in Sources */,
 				C2C4DFC61B6648D3004690C3 /* AudioBookCategoryCollectionViewController.m in Sources */,
 				C2CCA85C1B677E3000B62775 /* DownloadView.m in Sources */,
+				C241B8EF1B6FA94700845637 /* FavorateTableViewController.m in Sources */,
 				C2C08FAA1B6B574E00930A4F /* MJRefreshAutoNormalFooter.m in Sources */,
 				C2C725F91B69D088005E671F /* TracksListTableViewController.m in Sources */,
 				C2C08FA41B6B574E00930A4F /* MJRefreshAutoFooter.m in Sources */,
@@ -987,14 +1017,13 @@
 				C2C08FAE1B6B574E00930A4F /* MJRefreshBackStateFooter.m in Sources */,
 				C2C4DFF51B66553E004690C3 /* SDWebImageDownloaderOperation.m in Sources */,
 				C2CCA83C1B675CC000B62775 /* RadioTableViewCell.m in Sources */,
-				C2CCA8551B676D9800B62775 /* SearchTableViewController.m in Sources */,
 				C2C08FA51B6B574E00930A4F /* MJRefreshBackFooter.m in Sources */,
+				C241B8E61B6F6B6500845637 /* SearchTableViewController.m in Sources */,
 				C2C4DFFE1B66553E004690C3 /* UIView+WebCacheOperation.m in Sources */,
 				C2C11FA51B685E9E00CBA7B5 /* SettingTableViewController.m in Sources */,
 				C2C4DFB31B6647FD004690C3 /* RootTabBarController.m in Sources */,
 				C2C4DFF81B66553E004690C3 /* UIButton+WebCache.m in Sources */,
 				C2CCA8131B67121300B62775 /* PlayerViewController.m in Sources */,
-				C2C11FA31B685E9E00CBA7B5 /* FoxCollectionTableViewController.m in Sources */,
 				C2C08F551B6AFD5200930A4F /* RequestTool_v2.m in Sources */,
 				C2C4DFF01B66553E004690C3 /* NSData+ImageContentType.m in Sources */,
 				C2C08F611B6B04CF00930A4F /* Radio.m in Sources */,
@@ -1014,15 +1043,14 @@
 				C2C11FA11B685E9E00CBA7B5 /* FoxSettingsTableViewController.m in Sources */,
 				C2C4DFFB1B66553E004690C3 /* UIImage+WebP.m in Sources */,
 				C2C4DFFD1B66553E004690C3 /* UIImageView+WebCache.m in Sources */,
-				C2C11FA61B685E9E00CBA7B5 /* UserTableViewCell.m in Sources */,
 				C2C4DFF31B66553E004690C3 /* SDWebImageDecoder.m in Sources */,
 				C2CCA8611B67871B00B62775 /* DownloadedTracksCell.m in Sources */,
 				C2C08FB01B6B574E00930A4F /* MJRefreshNormalHeader.m in Sources */,
-				C2C11FA41B685E9E00CBA7B5 /* FoxPlayTableViewController.m in Sources */,
 				C2C08FB11B6B574E00930A4F /* MJRefreshStateHeader.m in Sources */,
 				C2CCA8441B676D6C00B62775 /* AudioTableViewController.m in Sources */,
 				C2C08FAC1B6B574E00930A4F /* MJRefreshBackGifFooter.m in Sources */,
 				C2C08F691B6B207F00930A4F /* AlbumModel.m in Sources */,
+				C241B8E51B6F6B6500845637 /* SearchModel.m in Sources */,
 				C2CCA84D1B676D8700B62775 /* AlbumTableViewCell.m in Sources */,
 				C2C08FB31B6B574E00930A4F /* MJRefreshConst.m in Sources */,
 				C2C4DFC51B6648D3004690C3 /* AudioBookCategoryCollectionViewCell.m in Sources */,
@@ -1038,7 +1066,8 @@
 				C2C4DFFA1B66553E004690C3 /* UIImage+MultiFormat.m in Sources */,
 				C2C4DFFC1B66553E004690C3 /* UIImageView+HighlightedWebCache.m in Sources */,
 				C2CCA8701B67A2A500B62775 /* DownloadingTableViewCell.m in Sources */,
-				C2C11FB01B68647900CBA7B5 /* FoxCollectionTableViewCell.m in Sources */,
+				C241B8EA1B6FA35A00845637 /* DataBaseHandle.m in Sources */,
+				C241B8F41B6FAD7C00845637 /* HistoryTableViewController.m in Sources */,
 				C2C08FAB1B6B574E00930A4F /* MJRefreshAutoStateFooter.m in Sources */,
 				C2C4DFF91B66553E004690C3 /* UIImage+GIF.m in Sources */,
 				C2C08F761B6B28D100930A4F /* AudioCategory.m in Sources */,

@@ -170,11 +170,9 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
     self.collectionView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         [weakSelf p_loadMoreData];
         
-        
     }];
-    // 默认先隐藏footer
-    [self.collectionView.footer beginRefreshing];
     
+    [self.collectionView.footer beginRefreshing];
     
 }
 
@@ -217,6 +215,8 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
     } else {
         [self.collectionView.footer noticeNoMoreData];
     }
+    // 默认先隐藏footer
+    
 }
 
 
@@ -270,6 +270,7 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
     // 传值;
     subListVC.titleString = self.categoryName;
     subListVC.tagNameArray = self.tagNameArray;
+    subListVC.categoryId = self.categoryId;
     subListVC.backTagName = ^(NSString *tagName){
         self.currentTagName = tagName;
         _currentPageId = 1;
@@ -329,7 +330,7 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
     // Configure the cell
     
     AudioModel *m = _dataArray[indexPath.section][@"list"][indexPath.row];
-    cell.tracksCountsLabel.text = [NSString stringWithFormat:@"共%@集", m.tracksCounts];
+    cell.tracksCountsLabel.text = [NSString stringWithFormat:@"共%02ld集", [m.tracksCounts integerValue]];
     cell.albumTitleLabel.text = m.title;
     [cell.albumImageView sd_setImageWithURL:[NSURL URLWithString:m.coverMiddle] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
     return cell;

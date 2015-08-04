@@ -7,7 +7,6 @@
 //
 
 #import "SettingTableViewController.h"
-#import "UserTableViewCell.h"
 @interface SettingTableViewController ()
 
 
@@ -34,7 +33,7 @@
     self.navigationItem.title = @"设置";
     
     //注册
-    [self.tableView registerClass:[UserTableViewCell class] forCellReuseIdentifier:@"settingCell"];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"settingCell"];
     
     self.dataArray = @[@"定时关闭", @"仅wifi下播放或下载", @"缓存设置"];
     
@@ -83,7 +82,7 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UserTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"settingCell" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"settingCell" forIndexPath:indexPath];
     
     
     
@@ -101,6 +100,18 @@
 
     
     return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    
+    if (indexPath.row == 2) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否清除缓存" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alert show];
+        DLog(@"清除缓存");
+    }
+
 }
 
 //确定cell高度

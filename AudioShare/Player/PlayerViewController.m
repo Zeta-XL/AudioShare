@@ -40,19 +40,15 @@ static PlayerViewController *singlePlayer = nil;
 // 上次播放时间
 @property (nonatomic, assign)CGFloat lastSeconds;
 
-// 播放item列表
-@property (nonatomic, strong)NSMutableArray *playItemList;
 
-// url地址和播放状态时间的列表
+// url地址和播放状态时间的列表(播放列表)
 @property (nonatomic, strong)NSMutableArray *urlStateList;
 
+@property (nonatomic, strong)UIActivityIndicatorView *loadingView;
 @end
 
 @implementation PlayerViewController
--(void)dealloc
-{
-    singlePlayer = nil;
-}
+
 
 - (void)releasePlayer
 {
@@ -60,14 +56,17 @@ static PlayerViewController *singlePlayer = nil;
     [self p_cancelListen];
     
     // 移除item观察者
-    [self.currentItem removeObserver:self forKeyPath:@"status"];
+    if (_currentItem.statusObserver == YES) {
+        [self.currentItem removeObserver:self forKeyPath:@"status"];
+        _currentItem.statusObserver = NO;
+    }
+    ;
     
     // 移除时间观察者
     [self p_removeTimerObserver];
     self.urlString = nil;
     self.lastItem = nil;
     self.currentItem = nil;
-    self.playItemList = nil;
     self.tracksList = nil;
     [self p_playerInitWithItem:nil];
     
@@ -134,9 +133,9 @@ static PlayerViewController *singlePlayer = nil;
         self.listButton.enabled = NO;
         self.timeGoingSlider.value = 0;
         self.timeGoingSlider.enabled = NO;
-        self.playItemList = nil;
         self.tracksList = nil;
         self.urlStateList = nil;
+        self.currentItem.statusObserver = NO;
         if (self.liveEndTime.length == 0 || self.liveStartTime.length == 0) {
             self.timeGoingLabel.text = [NSString stringWithFormat:@"00:00"];
             self.totalTimeLabel.text = [NSString stringWithFormat:@"23:59"];
@@ -158,10 +157,12 @@ static PlayerViewController *singlePlayer = nil;
             // 需传参数
             [self.currentItem seekToTime:CMTimeMakeWithSeconds(_lastSeconds, 1)];
             // 点播需设置观察者
+            [_loadingView startAnimating];  /****************/
             
         }
         // 设置观察者监测当前item status
         [self.currentItem addObserver:self forKeyPath:@"status" options:(NSKeyValueObservingOptionNew) context:nil];
+        self.currentItem.statusObserver = YES;
         // 处理数据
         [self p_data];
         
@@ -203,10 +204,13 @@ static PlayerViewController *singlePlayer = nil;
         self.lastLiveUrl = nil;
         
         // 移除item观察者
-        [self.currentItem removeObserver:self forKeyPath:@"status"];
+        if (_currentItem.statusObserver) {
+            [self.currentItem removeObserver:self forKeyPath:@"status"];
+            _currentItem.statusObserver = NO;
+        }
         
-        // 移除时间观察者
-        [self p_removeTimerObserver];
+//        // 移除时间观察者
+//        [self p_removeTimerObserver];
     }
     self.lastSeconds = _currentSeconds;
     self.currentSeconds = 0;
@@ -218,6 +222,10 @@ static PlayerViewController *singlePlayer = nil;
 //-------------- 初始化数据  -----------//
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.loadingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:(UIActivityIndicatorViewStyleGray)];
+    
+    
     // Do any additional setup after loading the view from its nib.
     [self.timeGoingSlider setThumbImage:[UIImage imageNamed:@"slider.png"] forState:(UIControlStateHighlighted)]; // 滑动时
     [self.timeGoingSlider setThumbImage:[UIImage imageNamed:@"slider.png"] forState:(UIControlStateNormal)]; // 不滑动时
@@ -253,6 +261,7 @@ static PlayerViewController *singlePlayer = nil;
             DLog(@"trackTitle---%@", track.title);
             
             [self.lastItem seekToTime:CMTimeMakeWithSeconds(_lastSeconds, 1)];
+            [_loadingView startAnimating]; /***************/
         } else if (radioExist) {
             NSDictionary *dataDict = [NSKeyedUnarchiver unarchiveObjectWithFile:radioPath];
             self.imageUrl = dataDict[@"imageUrl"];
@@ -324,8 +333,13 @@ static PlayerViewController *singlePlayer = nil;
         if (_isPlaying == NO) {
             [self playAction:self.playButton];
         }
-        
+        [_loadingView stopAnimating]; /****************************/
     }
+    if (_currentItem.statusObserver) {
+        [_currentItem removeObserver:self forKeyPath:@"status"];
+        _currentItem.statusObserver = NO;
+    }
+    
     
 }
 
@@ -339,26 +353,18 @@ static PlayerViewController *singlePlayer = nil;
 {
     
     
-    self.playItemList = [NSMutableArray array];
-//    self.urlStateList = [NSMutableArray array];
+    self.urlStateList = [NSMutableArray array];
     for (int i = 0; i < _tracksList.count; i++) {
-        if (i == _currentIndex) {
-            [self.playItemList addObject:self.currentItem];
-//            [self.urlStateList addObject:@{@"url":_urlString, @"timeState":@(0.0)}];
-        } else {
-            TrackModel *track = self.tracksList[i];
-            SpecialItem *item= [self createPlayerItemWithURLString:track.playUrl64];
-            [_playItemList addObject:item];
-//            [self.urlStateList addObject:@{@"url":track.playUrl64, @"timeState":@(0.0)}];
-            
-        }
+        TrackModel *track = self.tracksList[i];
+        
+        [_urlStateList addObject:[@{@"url":track.playUrl64, @"timeState":@(0.0)} mutableCopy]];
     }
     if (_currentIndex == 0) {
         self.preButton.enabled = NO;
     } else if (_currentIndex == _tracksList.count - 1) {
         self.nextButton.enabled = YES;
     }
-    DLog(@"listCount = %ld", _playItemList.count);
+    
     DLog(@"urlListCount = %ld", _urlStateList.count);
     for (NSDictionary *d in _urlStateList) {
         DLog(@"urlArray:keys-%@, values-%@", d[@"url"], d[@"timeState"]);
@@ -395,13 +401,7 @@ static PlayerViewController *singlePlayer = nil;
 }
 
 
-// 根据列表索引准备播放器///// 暂未使用  //////
-- (void)p_initWithIndex:(NSInteger)index
-{
-    AVPlayerItem *avItem = _playItemList[_currentIndex];
-    self.player = [AVPlayer playerWithPlayerItem:avItem];
-    
-}
+
 
 // 根据item初始化播放器
 - (void)p_playerInitWithItem:(SpecialItem *)playerItem;
@@ -430,10 +430,17 @@ static PlayerViewController *singlePlayer = nil;
 // slider进度条拖动
 - (IBAction)timeSliderAction:(UISlider *)sender
 {
+    if (_currentItem.statusObserver) {
+        [_currentItem removeObserver:self forKeyPath:@"status"];
+        _currentItem.statusObserver = NO;
+    }
     [self.player pause];
     _currentSeconds = sender.value * _totalSeconds;
     
     [self.currentItem seekToTime:CMTimeMakeWithSeconds(_currentSeconds, 1)];
+    [_loadingView startAnimating]; /***********************/
+    [_currentItem addObserver:self forKeyPath:@"status" options:(NSKeyValueObservingOptionNew) context:nil];
+    _currentItem.statusObserver = YES;
     [self.player play];
 }
 
@@ -475,8 +482,8 @@ static PlayerViewController *singlePlayer = nil;
             [self playAction:self.playButton];
         }
 
-
-        [self p_replacePlayItemAtIndex:_currentIndex startSeconds:0.0];
+        CGFloat lastSeconds = [_urlStateList[_currentIndex][@"timeState"] doubleValue];
+        [self p_replacePlayItemAtIndex:_currentIndex startSeconds:lastSeconds lastIndex:_currentIndex + 1];
         
         [self playAction:self.playButton];
     }
@@ -490,10 +497,10 @@ static PlayerViewController *singlePlayer = nil;
     if (self.preButton.enabled == NO) {
         self.preButton.enabled = YES;
     }
-    if (_currentIndex < _playItemList.count - 1) {
+    if (_currentIndex < _tracksList.count - 1) {
         _currentIndex++;
          DLog(@"nest to %ld", _currentIndex);
-        if (_currentIndex == _playItemList.count - 1) {
+        if (_currentIndex == _tracksList.count - 1) {
             sender.enabled = NO;
         }
         
@@ -501,7 +508,8 @@ static PlayerViewController *singlePlayer = nil;
             [self playAction:self.playButton];
         }
         
-        [self p_replacePlayItemAtIndex:_currentIndex startSeconds:0.0];
+        CGFloat lastSeconds = [_urlStateList[_currentIndex][@"timeState"] doubleValue];
+        [self p_replacePlayItemAtIndex:_currentIndex startSeconds:lastSeconds lastIndex:_currentIndex - 1];
         
         [self playAction:self.playButton];
         
@@ -523,18 +531,32 @@ static PlayerViewController *singlePlayer = nil;
 
 #pragma mark ---- 替换playitem;
 // 更换playItem的方法
-- (void)p_replacePlayItemAtIndex:(NSInteger)index startSeconds:(CGFloat)startSecs
+- (void)p_replacePlayItemAtIndex:(NSInteger)index startSeconds:(CGFloat)startSecs lastIndex:(NSInteger)lastIndex
 {
+    // 移除观察者
     [self p_cancelListen];
-    [_currentItem removeObserver:self forKeyPath:@"status"];
+    if (_currentItem.statusObserver) {
+        [_currentItem removeObserver:self forKeyPath:@"status"];
+        _currentItem.statusObserver = NO;
+    }
+   
+    [self p_removeTimerObserver];
     
-    self.currentItem = _playItemList[index];
+    CGFloat lastSeconds = CMTimeGetSeconds([_currentItem currentTime]);
+    [_urlStateList[lastIndex] setObject:@(lastSeconds) forKey:@"timeState"];
     
+    self.currentItem = [self createPlayerItemWithURLString:_urlStateList[index][@"url"]];
+    self.lastItem = _currentItem;
+    
+    // 添加观察者
     [self p_listenPlayTimeToEnd];
     [_currentItem addObserver:self forKeyPath:@"status" options:(NSKeyValueObservingOptionNew) context:nil];
-    [self.player removeTimeObserver:nil];
+    _currentItem.statusObserver = YES;
     
     self.currentSeconds = startSecs;
+    [self.currentItem seekToTime:CMTimeMakeWithSeconds(_currentSeconds, 1)];
+    [_loadingView startAnimating]; /*********************/
+    
     TrackModel *ctrack = _tracksList[index];
     self.totalSeconds = ctrack.duration;
     // 视图相关
@@ -570,7 +592,7 @@ static PlayerViewController *singlePlayer = nil;
     
     DLog(@"播放结束");
 
-    if (_currentIndex < _playItemList.count - 1) {
+    if (_currentIndex < _tracksList.count - 1) {
         
         [self nextButtonAction:self.nextButton];
 

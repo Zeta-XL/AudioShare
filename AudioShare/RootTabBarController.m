@@ -13,7 +13,7 @@
 #import "AudioTableViewController.h"
 #import "DownloadViewController.h"
 #import "FoxSettingsTableViewController.h"
-
+#import "DataBaseHandle.h"
 
 @interface RootTabBarController ()
 @property (nonatomic, strong)UIButton *playButton;
@@ -53,9 +53,21 @@
     
     [self p_setPlayButton];
     
+    // 创建数据库
+    
+    NSString *docPath = [[DataBaseHandle shareDataBase] getPathOf:Document];
+    
+    [[DataBaseHandle shareDataBase] openDBWithName:@"user.sqlite" atPath:docPath];
+    
+    // 创建表
+    
+    
+    
+    [[DataBaseHandle shareDataBase] closeDB];
+    
     
     // 反归档获得setting信息
-    NSString *cachePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
+    NSString *cachePath = [[DataBaseHandle shareDataBase] getPathOf:Cache];
     NSString *filePath = [cachePath stringByAppendingPathComponent:@"user/data/setting"];
     
     // 获得数据
@@ -64,6 +76,7 @@
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     [ud setObject:dict forKey:@"defaultSetting"];
     [ud synchronize];
+    
     if ([ud objectForKey:@"defaultSetting"] == nil) {
         NSDictionary *dict = @{@"defaultCategoryId":@"3", @"defaultTagName": @"恐怖悬疑"};
         [ud setObject:dict forKey:@"defaultSetting"];
@@ -82,6 +95,10 @@
     _buttonView.backgroundColor = [UIColor whiteColor];
     _buttonView.layer.cornerRadius = 25;
     _buttonView.alpha = 0.5;
+    
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panAction:)];
+    [_buttonView addGestureRecognizer:pan];
+    
     self.playButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
     _playButton.frame = _buttonView.bounds;
     [_playButton setImage:[UIImage imageNamed:@"main_play@2x.png"] forState:(UIControlStateNormal)];
@@ -93,6 +110,15 @@
 }
 
 
+- (void)panAction:(UIPanGestureRecognizer *)sender
+{
+    
+
+    CGPoint point = [sender translationInView:sender.view];
+    sender.view.transform = CGAffineTransformTranslate(sender.view.transform, point.x, 0);
+    [sender setTranslation:CGPointZero inView:sender.view];
+    
+}
 
 
 

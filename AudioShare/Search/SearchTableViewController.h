@@ -10,4 +10,7 @@
 
 @interface SearchTableViewController : UITableViewController
 
+@property (nonatomic, copy)NSString *kw;
+
+
 @end

@@ -124,9 +124,10 @@
                 DLog(@"加载数据无效");
             }
             
-            self.tableView.scrollEnabled = YES;
+            
             [self.tableView reloadData];
             self.loadEnable = YES;
+            self.tableView.scrollEnabled = YES;
             self.navigationItem.leftBarButtonItem.enabled = YES;
             [self.tableView.footer endRefreshing];
             

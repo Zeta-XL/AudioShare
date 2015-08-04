@@ -8,11 +8,28 @@
 
 #import "SearchTableViewController.h"
 #import "AudioTableViewCell.h"
-@interface SearchTableViewController ()<UITableViewDataSource, UITableViewDelegate, UISearchDisplayDelegate>
+#import "RequestTool_v2.h"
+#import "API_URL.h"
+#import "SearchModel.h"
+#import "UIImageView+WebCache.h"
+#import "AlbumTableViewController.h"
+#import "MJRefresh.h"
+@interface SearchTableViewController ()<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
+
+{
+    
+    NSInteger _numFound;
+    NSInteger _currentPageId;
+    NSInteger _pageSize;
+    NSInteger _maxPageId;
+    BOOL _loadEnable;
+    
+}
 
 @property (nonatomic, strong)UISearchBar *searchBar;
 
-@property (nonatomic, strong)UITableView *aTableView;
+
+@property (nonatomic, strong)NSMutableArray *dataArray;
 
 
 @end
@@ -22,8 +39,11 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    [self.aTableView reloadData];
+    
+    
 }
+
+
 
 
 
@@ -48,53 +68,165 @@
     //布局
     [self createView];
     
-    //添加 UISegmentedControl
-    [self segmentController];
+    [self headerView];
     
     //注册
     [self.tableView registerClass:[AudioTableViewCell class] forCellReuseIdentifier:@"searchCell"];
     
     
+    _currentPageId = 1;
+    _pageSize = 30;
+    
+    _loadEnable = YES;
+    
+    // 上拉加载
+    [self p_dragUptoLoadMore];
+    self.tableView.footer.hidden = YES;
+    self.tableView.tableHeaderView.hidden = YES;
 }
+
+
+
+
+-(void)p_requestDataWithPageId:(NSInteger)pageId
+                      pageSize:(NSInteger)pageSize
+{
+    
+    self.kw = self.searchBar.text;
+    
+    NSString *params = [NSString stringWithFormat:@"device=android&condition=relation&core=album&kw=%@&page=%ld&rows=%ld", self.kw, pageId, pageSize];
+    
+    if (_loadEnable) {
+        [RequestTool_v2 requestWithURL:kSearchUrl paramString:params postRequest:nil callBackData:^(NSData *data) {
+            
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+            
+
+            NSDictionary *dic = [dict objectForKey:@"response"];
+            NSArray *arr = [dic objectForKey:@"docs"];
+            
+            DLog(@"%@", arr);
+            
+            if ([dict[@"response"][@"docs"] count] != 0) {
+                
+                for (NSDictionary *d in dict[@"response"][@"docs"]) {
+                    SearchModel *sm = [[SearchModel alloc]init];
+                    [sm setValuesForKeysWithDictionary:d];
+                    [_dataArray addObject:sm];
+                }
+                
+                // 获得maxPageId
+                NSInteger maxNum = [dict[@"response"][@"numFound"] integerValue];
+                
+                _maxPageId = maxNum % _pageSize == 0 ? (maxNum / pageSize) : (maxNum / pageSize) + 1;
+                
+                DLog(@"pageId = %ld", _maxPageId);
+            }else {
+                
+                DLog(@"加载数据无效");
+                self.tableView.tableHeaderView.hidden = NO;
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    self.tableView.tableHeaderView.hidden = YES;
+                });
+            }
+            
+            if (_maxPageId != 0) {
+                [self.tableView.footer endRefreshing];
+                [self.tableView.header endRefreshing];
+            }
+            
+            
+            [self.tableView reloadData];
+            _loadEnable = YES;
+            self.tableView.scrollEnabled = YES;
+            self.tableView.footer.hidden = NO;
+        }];
+        _loadEnable = NO;
+        self.tableView.scrollEnabled = NO;
+    }
+    
+}
+
+
+
 
 //搜索button点击事件
 -(void)rightBarButtonAction : (UIBarButtonItem *)sender
 {
     DLog(@"搜索");
-    //SearchViewController *searchVC = [[SearchViewController alloc]init];
-    //[self.navigationController pushViewController:searchVC animated:YES];
+    
+    
+    if (self.tableView.decelerating == NO && _loadEnable) {
+        _currentPageId = 1;
+        self.dataArray = [NSMutableArray array];
+        [self p_requestDataWithPageId:_currentPageId++ pageSize:_pageSize];
+        [self.searchBar resignFirstResponder];
+    }
+    
+    
+    
 }
+
+#pragma mark ---- 上拉刷新和下拉刷新
+// 上拉加载
+- (void)p_dragUptoLoadMore
+{
+    // 设置回调（一旦进入刷新状态，就调用target的action，也就是调用self的loadMoreData方法）
+    self.tableView.footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(p_loadMoreData)];
+    
+    // 设置了底部inset
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 30, 0);
+    // 忽略掉底部inset
+    self.tableView.footer.ignoredScrollViewContentInsetTop = 30;
+    
+    
+}
+
+// 加载数据
+- (void)p_loadMoreData
+{
+    if (_currentPageId <= _maxPageId) {
+        [self p_requestDataWithPageId:_currentPageId pageSize:_pageSize];
+        _currentPageId++;
+    } else {
+        [self.tableView.footer noticeNoMoreData];
+    }
+    
+    
+    
+}
+
 
 //返回button事件
 -(void)leftBarButtonAction : (UIBarButtonItem *)sender
 {
     DLog(@"返回");
     
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 //添加UISegmentedControl
--(void)segmentController
+-(void)headerView
 {
-    UISegmentedControl *segmentedControl = [[UISegmentedControl alloc]initWithItems:@[@"专辑", @"声音"]];
-    segmentedControl.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 40);
-    segmentedControl.selectedSegmentIndex = 0;
-    self.tableView.tableHeaderView = segmentedControl;
+//    UISegmentedControl *segmentedControl = [[UISegmentedControl alloc]initWithItems:@[@"专辑", @"声音"]];
+//    segmentedControl.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 40);
+//    segmentedControl.selectedSegmentIndex = 0;
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 20)];
+    label.text = @"未搜索到结果";
+    label.textAlignment = NSTextAlignmentCenter;
+    self.tableView.tableHeaderView = label;
     
     
 }
 
-
-
-
-
-
+//加载searchBar
 -(void)createView
 {
     
     self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds) - 100, 40)];
     
-    self.searchBar.placeholder = @"搜索声音、专辑、人";
+    self.searchBar.placeholder = @"搜索专辑";
     
     self.searchBar.backgroundColor = [UIColor whiteColor];
     
@@ -103,7 +235,12 @@
     self.searchBar.showsCancelButton = NO;
     
     self.navigationItem.titleView = _searchBar;
-    
+    _searchBar.delegate = self;
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [self rightBarButtonAction:nil];
 }
 
 
@@ -124,18 +261,41 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
     // Return the number of rows in the section.
-    return 10;
+    return _dataArray.count;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     AudioTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"searchCell" forIndexPath:indexPath];
     
-    // Configure the cell...
+    SearchModel *sm = _dataArray[indexPath.row];
+    
+    cell.titleLabel.text = sm.title;
+    
+    cell.tagsLabel.text = sm.tags;
+    
+    cell.tracksCountsLabel.text = [NSString stringWithFormat:@"共%@集", sm.tracks];
+    
+     [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[_dataArray[indexPath.row]cover_path]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
     
       
     return cell;
 }
+
+//
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    AlbumTableViewController *albumTVC = [[AlbumTableViewController alloc]init];
+    
+    SearchModel *sm = _dataArray[indexPath.row];
+    
+    DLog(@"%@",sm.albumId);
+    
+    albumTVC.albumId = sm.albumId;
+    
+    [self.navigationController pushViewController:albumTVC animated:YES];
+}
+
 
 
 //确定每个cell的高度

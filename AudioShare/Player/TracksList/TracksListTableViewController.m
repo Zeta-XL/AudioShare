@@ -9,6 +9,7 @@
 #import "TracksListTableViewController.h"
 #import "TracksListTableViewCell.h"
 #import "TrackModel.h"
+#import "PlayerViewController.h"
 
 @interface TracksListTableViewController ()
 
@@ -92,6 +93,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 40   )];
+    view.backgroundColor = [UIColor whiteColor];
     UIButton *backButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
     backButton.frame = CGRectMake(CGRectGetMidX([UIScreen mainScreen].bounds) -40, 30, 80, 20);
     [backButton setTitle:@"返回" forState:(UIControlStateNormal)];
@@ -104,6 +106,19 @@
 {
     [self dismissViewControllerAnimated:YES completion:^{
         DLog(@"退出列表");
+    }];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    TrackModel *track = _trackList[indexPath.row];
+    PlayerViewController *playerVC = [PlayerViewController sharedPlayer];
+    playerVC.urlString = track.playUrl64;
+    playerVC.totalSeconds = track.duration;
+    playerVC.titleString = track.title;
+    playerVC.currentIndex = indexPath.row;
+    [self dismissViewControllerAnimated:YES completion:^{
+        
     }];
 }
 

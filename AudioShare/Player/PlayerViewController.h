@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
-
 #import "SpecialItem.h"
 #import "API_URL.h"
 
@@ -34,7 +33,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *totalTimeLabel; // 总时间
 @property (weak, nonatomic) IBOutlet UIImageView *contentImageView; // 图片
 @property (nonatomic, copy) NSString *imageUrl;
-
 
 
 // 数据

@@ -1,36 +1,26 @@
 //
-//  FoxCollectionTableViewController.m
+//  HistoryTableViewController.m
 //  AudioShare
 //
-//  Created by lanou3g on 15/7/28.
+//  Created by lanou3g on 15/8/3.
 //  Copyright (c) 2015年 DLZ. All rights reserved.
 //
 
-#import "FoxCollectionTableViewController.h"
-#import "FoxCollectionTableViewCell.h"
-#import "AlbumTableViewController.h"
+#import "HistoryTableViewController.h"
+#import "AudioTableViewCell.h"
 
-@interface FoxCollectionTableViewController ()
+@interface HistoryTableViewController ()
 
 @end
 
-@implementation FoxCollectionTableViewController
+@implementation HistoryTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    [self.tableView registerClass:[FoxCollectionTableViewCell class] forCellReuseIdentifier:@"collectionCell"];
     
-    self.navigationItem.title = @"收藏专辑";
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightAction:)];
+    [self.tableView registerClass:[AudioTableViewCell class] forCellReuseIdentifier:@"historyCell"];
+    self.navigationItem.title = @"播放历史";
 }
-
-- (void)rightAction:(UIBarButtonItem *)sender
-{
-    [self.navigationController popToRootViewControllerAnimated:YES];
-}
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -39,39 +29,25 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 1;
-}
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+//#warning Potentially incomplete method implementation.
+//    // Return the number of sections.
+//    return 0;
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 20;
+    return 10;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    FoxCollectionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"collectionCell" forIndexPath:indexPath];
+    AudioTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"historyCell" forIndexPath:indexPath];
     
     // Configure the cell...
     
     return cell;
-}
-
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 120;
-}
-
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    AlbumTableViewController *foxATVC = [[AlbumTableViewController alloc]init];
-    [self.navigationController pushViewController:foxATVC animated:YES];
-    
 }
 
 

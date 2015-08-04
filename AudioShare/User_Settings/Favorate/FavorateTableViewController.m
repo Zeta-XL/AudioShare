@@ -1,36 +1,28 @@
 //
-//  FoxPlayTableViewController.m
+//  FavorateTableViewController.m
 //  AudioShare
 //
-//  Created by lanou3g on 15/7/28.
+//  Created by lanou3g on 15/8/3.
 //  Copyright (c) 2015年 DLZ. All rights reserved.
 //
 
-#import "FoxPlayTableViewController.h"
-#import "FoxCollectionTableViewCell.h"
-#import "PlayerViewController.h"
+#import "FavorateTableViewController.h"
+#import "AudioTableViewCell.h"
 
-@interface FoxPlayTableViewController ()
+@interface FavorateTableViewController ()
 
 @end
 
-@implementation FoxPlayTableViewController
+@implementation FavorateTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = @"播放历史";
+    [self.tableView registerClass:[AudioTableViewCell class] forCellReuseIdentifier:@"favorateCell"];
+    self.navigationItem.title = @"收藏专辑";
     
-    [self.tableView registerClass:[FoxCollectionTableViewCell class] forCellReuseIdentifier:@"playCell"];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStyleDone) target:self action:@selector(rightAction:)];
 }
-
-- (void)rightAction:(UIBarButtonItem *)sender
-{
-    [self.navigationController popToRootViewControllerAnimated:YES];
-}
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -39,11 +31,11 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 1;
-}
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+//#warning Potentially incomplete method implementation.
+//    // Return the number of sections.
+//    return 1;
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete method implementation.
@@ -53,28 +45,13 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    FoxCollectionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"playCell" forIndexPath:indexPath];
+    AudioTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"favorateCell" forIndexPath:indexPath];
     
     // Configure the cell...
     
     return cell;
 }
 
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 120;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    PlayerViewController *foxPVC = [[PlayerViewController alloc]init];
-    
-    [self presentViewController:foxPVC animated:YES completion:^{
-        DLog(@"模态成功");
-    }];
-    
-}
 
 /*
 // Override to support conditional editing of the table view.

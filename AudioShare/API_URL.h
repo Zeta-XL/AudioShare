@@ -34,6 +34,7 @@
 // 专辑详情界面
 #define kDetailAlbumList @"http://mobile.ximalaya.com/mobile/others/ca/album/track" // 参数 pageId=2&pageSize=20&albumId=2722845
 
-
+// 专辑搜索
+#define kSearchUrl @"http://search.ximalaya.com/front/v1"
 
 #endif

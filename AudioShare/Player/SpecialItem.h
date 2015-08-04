@@ -10,4 +10,5 @@
 
 @interface SpecialItem : AVPlayerItem 
 @property (nonatomic, assign)BOOL isLiveCast;
+@property (nonatomic, assign)BOOL statusObserver;
 @end

@@ -100,7 +100,9 @@
         }
         
         [self.tableView reloadData];
+        self.tableView.scrollEnabled = YES;
     }];
+    self.tableView.scrollEnabled = NO;
 }
 
 // 上拉加载
@@ -130,8 +132,6 @@
 
 
 
-
-
 //自定义albumView视图
 -(void)p_albumView
 {
@@ -142,6 +142,15 @@
     _albumView.writerLabel.text = [NSString stringWithFormat:@"作者: %@",  _album.nickname];
     _albumView.detailLabel.text = [NSString stringWithFormat:@"简介: %@",  _album.intro];
     
+    _albumView.detailLabel.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
+    [_albumView.detailLabel addGestureRecognizer:tap];
+    
+}
+
+- (void)tapAction:(UITapGestureRecognizer *)sender
+{
+    DLog(@"点击");
 }
 
 // 格式化时间

@@ -7,8 +7,9 @@
 //
 
 #import "FoxSettingsTableViewController.h"
-#import "FoxCollectionTableViewController.h"
-#import "FoxPlayTableViewController.h"
+#import "FavorateTableViewController.h"
+#import "HistoryTableViewController.h"
+
 #import "SettingTableViewController.h"
 
 @interface FoxSettingsTableViewController ()
@@ -63,15 +64,15 @@
     
     if (indexPath.row == 0) {
         
-        FoxCollectionTableViewController *fcTVC = [[FoxCollectionTableViewController alloc]init];
+        FavorateTableViewController *favoVC = [[FavorateTableViewController alloc]init];
         
-        [self.navigationController pushViewController:fcTVC animated:YES];
+        [self.navigationController pushViewController:favoVC animated:YES];
         
     } else if(indexPath.row == 1) {
         
-        FoxPlayTableViewController *fpTVC = [[FoxPlayTableViewController alloc]init];
+        HistoryTableViewController *histVC = [[HistoryTableViewController alloc]init];
         
-        [self.navigationController pushViewController:fpTVC animated:YES];
+        [self.navigationController pushViewController:histVC animated:YES];
         
     } else if(indexPath.row == 2) {
         

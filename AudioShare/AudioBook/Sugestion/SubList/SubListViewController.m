@@ -76,6 +76,11 @@
     // 反向传值
     _backTagName(_tagNameArray[indexPath.row]);
     
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSDictionary *dict = @{@"defaultCategoryId":_categoryId, @"defaultTagName": _tagNameArray[indexPath.row]};
+    [ud setObject:dict forKey:@"defaultSetting"];
+    [ud synchronize];
+    
     [self.navigationController popViewControllerAnimated:YES];
     
 }
