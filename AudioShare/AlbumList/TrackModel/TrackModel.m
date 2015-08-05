@@ -38,10 +38,12 @@
     [aCoder encodeObject:_playUrl64 forKey:@"playUrl"];
     [aCoder encodeObject:_downloadUrl forKey:@"downloadUrl"];
     [aCoder encodeObject:_title forKey:@"title"];
+    [aCoder encodeObject:_albumTitle forKey:@"albumTitle"];
     [aCoder encodeDouble:_duration forKey:@"duration"];
     [aCoder encodeDouble:_downloadSize forKey:@"downloadSize"];
     [aCoder encodeDouble:_lastSeconds forKey:@"lastSeconds"];
     [aCoder encodeObject:_nickname forKey:@"nickname"];
+    [aCoder encodeObject:_coverMiddle forKey:@"coverMiddle"];
     
 }
 
@@ -53,10 +55,12 @@
         self.playUrl64 = [aDecoder decodeObjectForKey:@"playUrl"];
         self.downloadUrl = [aDecoder decodeObjectForKey:@"downloadUrl"];
         self.title = [aDecoder decodeObjectForKey:@"title"];
+        self.albumTitle = [aDecoder decodeObjectForKey:@"albumTitle"];
         self.duration = [aDecoder decodeDoubleForKey:@"duration"];
         self.downloadSize = [aDecoder decodeDoubleForKey:@"downloadSize"];
         self.lastSeconds = [aDecoder decodeDoubleForKey:@"lastSeconds"];
         self.nickname = [aDecoder decodeObjectForKey:@"nickname"];
+        self.coverMiddle = [aDecoder decodeObjectForKey:@"coverMiddle"];
     }
     
     return self;

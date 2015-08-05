@@ -15,15 +15,19 @@
 
 // 音频id
 @property (nonatomic, copy)NSString *trackId;
+// 声音标题
+@property (nonatomic, copy)NSString *title;
 
 // 所属专辑id
 @property (nonatomic, copy)NSString *albumId;
+
+// 专辑名称
+@property (nonatomic, copy)NSString *albumTitle;
 // 音频播放地址
 @property (nonatomic, copy)NSString *kPlayUrl;
 // 音频下载地址
 @property (nonatomic, copy)NSString *kDloadUrl;
-// 声音标题
-@property (nonatomic, copy)NSString *title;
+
 // 声音播放时长 ***** 注: 格式******
 @property (nonatomic, assign)CGFloat duration;
 // 下载大小 ***** 注: 格式******
@@ -32,5 +36,8 @@
 
 // 制作者名称
 @property (nonatomic, copy)NSString *nickname;
+// 专辑图片(中)
+@property (nonatomic, copy)NSString *coverMiddle;
+
 
 @end

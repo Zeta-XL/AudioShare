@@ -28,18 +28,26 @@
 
 // UI控件
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel; // 标题
-@property (nonatomic, copy) NSString *titleString;
 @property (weak, nonatomic) IBOutlet UILabel *timeGoingLabel; // 播放的时长
 @property (weak, nonatomic) IBOutlet UILabel *totalTimeLabel; // 总时间
 @property (weak, nonatomic) IBOutlet UIImageView *contentImageView; // 图片
-@property (nonatomic, copy) NSString *imageUrl;
 
+@property (nonatomic, copy) NSString *imageUrl;
+@property (nonatomic, copy) NSString *titleString;
+// 上次播放时间
+@property (nonatomic, assign)CGFloat lastSeconds;
 
 // 数据
+@property (nonatomic, assign)BOOL historyFlag;
 
+
+// 在线点播(挺熟)
 @property (nonatomic, strong)NSMutableArray *tracksList;
+@property (nonatomic, copy)NSString *albumId;
 
-// radio-live
+
+
+// 在线直播radio -live
 @property (nonatomic, copy)NSString *liveStartTime;
 @property (nonatomic, copy)NSString *liveEndTime;
 // 上一次直播的URL

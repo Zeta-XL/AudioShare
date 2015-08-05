@@ -15,6 +15,7 @@
 #import "FoxSettingsTableViewController.h"
 #import "DataBaseHandle.h"
 #import "AlbumModel.h"
+#import "HistoryModel.h"
 
 @interface RootTabBarController ()
 @property (nonatomic, strong)UIButton *playButton;
@@ -57,7 +58,21 @@
     [self p_setPlayButton];
     
     // 创建数据库
+    [self p_createDBAndTable];
     
+    
+    
+    
+    // 反归档获得setting信息
+    [self p_unarchiveData];
+    
+    
+
+}
+
+// 创建数据库和表
+- (void)p_createDBAndTable
+{
     NSString *docPath = [[DataBaseHandle shareDataBase] getPathOf:Document];
     DLog(@"docPath----  %@",docPath);
     [[DataBaseHandle shareDataBase] openDBWithName:kDBName atPath:docPath];
@@ -66,12 +81,16 @@
     [[DataBaseHandle shareDataBase] createTableWithName:kFavorateTableName paramNames:[AlbumModel propertyNames] paramTypes:[AlbumModel propertyTypes] setPrimaryKey:YES];
     
     // 创建表 (播放历史)
+    [[DataBaseHandle shareDataBase] createTableWithName:kHistoryTableName paramNames:[HistoryModel historyPropertyNames] paramTypes:[HistoryModel historyPropertyTypes] setPrimaryKey:YES];
     
     
     [[DataBaseHandle shareDataBase] closeDB];
-    
-    
-    // 反归档获得setting信息
+}
+
+
+// 反归档获取设置信息
+- (void)p_unarchiveData
+{
     NSString *cachePath = [[DataBaseHandle shareDataBase] getPathOf:Cache];
     NSString *filePath = [cachePath stringByAppendingPathComponent:@"user/data/setting"];
     
@@ -87,10 +106,10 @@
         [ud setObject:dict forKey:@"defaultSetting"];
         [ud synchronize];
     }
-    
-    
 
 }
+
+
 
 // 设置播放按钮
 - (void)p_setPlayButton

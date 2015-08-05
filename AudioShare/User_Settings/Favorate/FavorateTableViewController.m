@@ -35,7 +35,7 @@
     
     
     [[DataBaseHandle shareDataBase] closeDB];
-    [self.tableView reloadData];
+    
     
     if (self.dataArray.count == 0) {
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 30)];
@@ -46,7 +46,7 @@
     } else {
         self.navigationItem.rightBarButtonItem.enabled = YES;
     }
-    
+    [self.tableView reloadData];
     
     
 }
@@ -159,7 +159,7 @@
     self.dataArray = [[[DataBaseHandle shareDataBase] selectAllFromTable:kFavorateTableName modelProperty:[AlbumModel propertyNames] sidOption:NO] mutableCopy];
     
     [[DataBaseHandle shareDataBase] closeDB];
-    [self.tableView reloadData];
+    
     if (self.dataArray.count == 0 || self.dataArray == nil) {
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 30)];
         label.text = @"没有收藏记录..";
@@ -169,7 +169,7 @@
     } else {
         self.navigationItem.rightBarButtonItem.enabled = YES;
     }
-    
+    [self.tableView reloadData];
 }
 
 

@@ -8,21 +8,108 @@
 
 #import "HistoryTableViewController.h"
 #import "AudioTableViewCell.h"
+#import "HistoryModel.h"
+#import "DataBaseHandle.h"
+#import "UIImageView+WebCache.h"
+#import "TrackModel.h"
+#import "PlayerViewController.h"
+#import "RequestTool_v2.h"
 
 @interface HistoryTableViewController ()
 
 @property (nonatomic, strong)NSMutableArray *dataArray;
+@property (nonatomic, strong)NSMutableArray *tracksList;
 
 @end
 
 @implementation HistoryTableViewController
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self p_loadDataFromDatabase];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self.tableView registerClass:[AudioTableViewCell class] forCellReuseIdentifier:@"historyCell"];
     self.navigationItem.title = @"播放历史";
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"清空" style:(UIBarButtonItemStyleDone) target:self action:@selector(p_deleteAllHistoryAction:)];
+    
+    
+    
+    
+    
+    
+    
 }
+
+// 加载数据库数据
+- (void)p_loadDataFromDatabase
+{
+    NSString *docPath = [[DataBaseHandle shareDataBase] getPathOf:Document];
+    [[DataBaseHandle shareDataBase] openDBWithName:kDBName atPath:docPath];
+    
+    self.dataArray = [[[DataBaseHandle shareDataBase] selectAllFromTable:kHistoryTableName historyProperty:[HistoryModel historyPropertyNames] sidOption:NO] mutableCopy];
+    
+    
+    [[DataBaseHandle shareDataBase] closeDB];
+    
+    
+    if (self.dataArray.count == 0) {
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 30)];
+        label.text = @"没有历史记录..";
+        label.textAlignment = NSTextAlignmentCenter;
+        self.tableView.tableHeaderView = label;
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+    } else {
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+        
+        // 数组排序
+        [_dataArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            NSString *timeStampStr1 = [(HistoryModel *)obj1 timestamp];
+            NSString *timeStampStr2 = [(HistoryModel *)obj2 timestamp];
+            NSTimeInterval t1 = [timeStampStr1 doubleValue];
+            NSTimeInterval t2 = [timeStampStr2 doubleValue];
+            return -[@(t1) compare:@(t2)];
+        }];
+        
+    }
+    [self.tableView reloadData];
+}
+
+
+- (void)p_deleteAllHistoryAction:(UIBarButtonItem *)sender;
+{
+    NSString *docPath = [[DataBaseHandle shareDataBase] getPathOf:Document];
+    [[DataBaseHandle shareDataBase] openDBWithName:kDBName atPath:docPath];
+    
+    
+    [[DataBaseHandle shareDataBase] dropTableWithName:kHistoryTableName];
+    
+    self.dataArray = [[[DataBaseHandle shareDataBase] selectAllFromTable:kHistoryTableName historyProperty:[AlbumModel propertyNames] sidOption:NO] mutableCopy];
+    
+    [[DataBaseHandle shareDataBase] closeDB];
+    
+    if (self.dataArray.count == 0 || self.dataArray == nil) {
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 30)];
+        label.text = @"没有历史记录..";
+        label.textAlignment = NSTextAlignmentCenter;
+        self.tableView.tableHeaderView = label;
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+    } else {
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+    }
+    
+    NSString *cachePath = [[DataBaseHandle shareDataBase] getPathOf:Cache];
+    NSString *userHistoryPath = [cachePath stringByAppendingPathComponent:@"user/history"];
+    
+    [[NSFileManager defaultManager] removeItemAtPath:userHistoryPath error:nil];
+    [self.tableView reloadData];
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -40,7 +127,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 10;
+    return _dataArray.count;
 }
 
 
@@ -49,7 +136,115 @@
     
     // Configure the cell...
     
+    HistoryModel *history = _dataArray[indexPath.row];
+    
+    cell.titleLabel.text = history.albumTitle;
+    cell.tagsLabel.text = history.trackTitle;
+    cell.tagsLabel.numberOfLines = 2;
+    
+    cell.tracksCountsLabel.text = @"播放时长:";
+    cell.timeLabel.text = history.currentTime;
+    [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:history.coverSmall] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+    
     return cell;
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 120;
+}
+
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    HistoryModel *history = _dataArray[indexPath.row];
+    
+    [self p_unarchiveWithTrackListName:history.archiveName albumId:history.albumId];
+    
+}
+
+// 反归档
+- (void)p_unarchiveWithTrackListName:(NSString *)tracksListName albumId:(NSString *)albumId
+{
+    // 用户数据路径
+    
+    NSString *cachePath = [[DataBaseHandle shareDataBase] getPathOf:Cache];
+    
+    NSString *trackListPath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"/user/history/%@", tracksListName]];
+    
+    
+    BOOL trackListExist = [[NSFileManager defaultManager] fileExistsAtPath:trackListPath];
+    
+    if (trackListExist) {
+        // 反归档获取播放列表
+        NSDictionary *dataDict = [NSKeyedUnarchiver unarchiveObjectWithFile:trackListPath];
+        
+        NSInteger index = [dataDict[@"lastIndex"] integerValue];
+        NSInteger tracksCount = [dataDict[@"tracksCount"] integerValue];
+        CGFloat lastSeconds = [dataDict[@"lastSeconds"] doubleValue];
+        NSString *imgUrl = dataDict[@"imageUrl"];
+        
+        __weak typeof(self) weakSelf = self;
+        self.handleTrackList = ^(NSMutableArray *trackList){
+            if (tracksCount != 0) {
+                PlayerViewController *playerVC = [PlayerViewController sharedPlayer];
+                playerVC.tracksList = trackList;
+                playerVC.lastSeconds = lastSeconds;
+                playerVC.currentIndex = index;
+                playerVC.imageUrl = imgUrl;
+                TrackModel *track = trackList[index];
+                playerVC.totalSeconds = track.duration;
+                playerVC.titleString = track.title;
+                playerVC.urlString = track.playUrl64;
+                playerVC.historyFlag = YES;
+                playerVC.albumId = track.albumId;
+                [weakSelf presentViewController:playerVC animated:YES completion:nil];
+            }
+            
+        };
+        
+        [self p_requestDataWithPageId:1 pageSize:tracksCount albumId:albumId];
+        
+    }
+}
+
+// 请求数据
+- (void)p_requestDataWithPageId:(NSInteger)pageId
+                       pageSize:(NSInteger)pageSize
+                        albumId:(NSString *)albumId
+{
+    
+    NSString *params = [NSString stringWithFormat:@"pageId=%ld&pageSize=%ld&albumId=%@", pageId, pageSize, albumId];
+    
+    [RequestTool_v2 requestWithURL:kDetailAlbumList paramString:params postRequest:NO callBackData:^(NSData *data) {
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+        NSMutableArray *tracksList = [NSMutableArray array];
+        if ([dict[@"msg"] isEqualToString:@"0"]) {
+            // 获取声音model
+            
+            for (NSDictionary *d in dict[@"tracks"][@"list"]) {
+                TrackModel *trackm = [[TrackModel alloc] init];
+                [trackm setValuesForKeysWithDictionary:d];
+                [tracksList addObject:trackm];
+            }
+            
+
+        } else {
+            DLog(@"加载数据无效");
+        }
+        
+        self.handleTrackList(tracksList);
+        
+    }];
+    
+}
+
+
+- (void)backToPlayer:(UIBarButtonItem *)leftbutton
+{
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 

@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^trackListBlock)(NSMutableArray *trackList);
 @interface HistoryTableViewController : UITableViewController
+@property (nonatomic, copy)trackListBlock handleTrackList;
 
+
+- (void)backToPlayer:(UIBarButtonItem *)leftbutton;
 @end

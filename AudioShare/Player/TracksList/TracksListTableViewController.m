@@ -10,8 +10,18 @@
 #import "TracksListTableViewCell.h"
 #import "TrackModel.h"
 #import "PlayerViewController.h"
+#import "RequestTool_v2.h"
+#import "MJRefresh.h"
+
 
 @interface TracksListTableViewController ()
+{
+    NSInteger _maxPageId;
+    NSInteger _currentPageId;
+    NSInteger _pageSize;
+}
+
+
 
 @end
 
@@ -22,6 +32,10 @@
     
     [self.tableView registerClass:[TracksListTableViewCell class] forCellReuseIdentifier:@"tracksList"];
     
+    _pageSize = _trackList.count;
+    _currentPageId = 2;
+    _maxPageId = 99;
+    [self p_dragUptoLoadMore];
     
 }
 
@@ -121,6 +135,70 @@
         
     }];
 }
+
+#pragma mark ------- 请求数据
+// 请求数据
+- (void)p_requestDataWithPageId:(NSInteger)pageId
+                       pageSize:(NSInteger)pageSize
+{
+    
+    NSString *params = [NSString stringWithFormat:@"pageId=%ld&pageSize=%ld&albumId=%@", pageId, pageSize, self.albumId];
+    
+    [RequestTool_v2 requestWithURL:kDetailAlbumList paramString:params postRequest:NO callBackData:^(NSData *data) {
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+        
+        if ([dict[@"msg"] isEqualToString:@"0"]) {
+            // 获取声音model
+            //            DLog(@"%@", dict[@"tracks"][@"list"]);
+            for (NSDictionary *d in dict[@"tracks"][@"list"]) {
+                TrackModel *trackm = [[TrackModel alloc] init];
+                [trackm setValuesForKeysWithDictionary:d];
+                [_trackList addObject:trackm];
+            }
+            
+            // 获得maxPageId
+            _maxPageId = [dict[@"tracks"][@"maxPageId"] integerValue];
+            DLog(@"maxPageId = %ld", _maxPageId);
+            
+        } else {
+            DLog(@"加载数据无效");
+        }
+        
+        if (_maxPageId != 0) {
+            [self.tableView.footer endRefreshing];
+        }
+        
+        [self.tableView reloadData];
+        self.tableView.scrollEnabled = YES;
+    }];
+    self.tableView.scrollEnabled = NO;
+}
+
+// 上拉加载
+- (void)p_dragUptoLoadMore
+{
+    
+    // 设置回调（一旦进入刷新状态，就调用target的action，也就是调用self的loadMoreData方法）
+    self.tableView.footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(p_loadMoreData)];
+    // 设置了底部inset
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 30, 0);
+    // 忽略掉底部inset
+    self.tableView.footer.ignoredScrollViewContentInsetTop = 30;
+}
+
+// 加载数据
+- (void)p_loadMoreData
+{
+    if (_currentPageId <= _maxPageId) {
+        [self p_requestDataWithPageId:_currentPageId pageSize:_pageSize];
+        _currentPageId++;
+    } else {
+        [self.tableView.footer noticeNoMoreData];
+    }
+}
+
+
+
 
 /*
 // Override to support conditional editing of the table view.

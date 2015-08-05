@@ -17,7 +17,7 @@
 #import "AlbumModel.h"
 #import "TrackModel.h"
 #import "DataBaseHandle.h"
-
+#import "Album_ListViewController.h"
 
 @interface AlbumTableViewController () <AlbumViewDelegate>
 {
@@ -219,6 +219,15 @@
 - (void)tapAction:(UITapGestureRecognizer *)sender
 {
     DLog(@"点击");
+    Album_ListViewController *albumLVC = [[Album_ListViewController alloc]init];
+    
+    albumLVC.titleString = _albumView.titleLabel.text;
+    albumLVC.writerString = _albumView.writerLabel.text;
+    albumLVC.discriptionString = _albumView.detailLabel.text;
+    
+    [self.navigationController pushViewController:albumLVC animated:YES];
+    
+    
 }
 
 // 格式化时间
@@ -299,7 +308,7 @@
     playerVC.titleString = track.title;
     playerVC.currentIndex = indexPath.row;
     playerVC.imageUrl = self.album.coverLarge;
-
+    playerVC.albumId = self.albumId;
     playerVC.tracksList = _tracksList;
     
  

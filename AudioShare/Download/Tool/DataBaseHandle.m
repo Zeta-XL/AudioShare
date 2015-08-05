@@ -316,7 +316,59 @@ static sqlite3 *db;
     return modelArray;
 }
 
-// Primary条件查
+// 全查 (history)
+- (NSArray *)selectAllFromTable:(NSString *)tableName historyProperty:(NSArray *)propertes sidOption:(BOOL)option;
+{
+    NSMutableArray *modelArray = nil;
+    
+    // SQL
+    NSString *selectALLSQL = [NSString stringWithFormat:@"select * from %@", tableName];
+    
+    // 伴随指针
+    sqlite3_stmt *stmt = NULL;
+    
+    // 预执行
+    int result = sqlite3_prepare_v2(db, selectALLSQL.UTF8String, -1, &stmt, NULL);
+    if (result == SQLITE_OK) {
+        //
+        modelArray = [NSMutableArray array];
+        
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            
+            HistoryModel *hm = [[HistoryModel alloc] init];
+            if (option) {
+                
+                NSInteger sid = sqlite3_column_int(stmt, 0);
+                for (int i = 0; i < propertes.count; i++) {
+                    NSString *proString = [NSString stringWithUTF8String:(const char *)sqlite3_column_text(stmt, i+1)];
+                    [hm setValue: proString forKey:propertes[i]];
+                }
+                NSMutableArray *tempArr = [NSMutableArray arrayWithArray:@[@(sid), hm]];
+                [modelArray addObject:tempArr];
+                
+            }else {
+                
+                for (int i = 0; i < propertes.count; i++) {
+                    NSString *proString = [NSString stringWithUTF8String:(const char *)sqlite3_column_text(stmt, i)];
+                    [hm setValue: proString forKey:propertes[i]];
+                }
+                
+                [modelArray addObject:hm];
+            }
+        }
+        
+    }
+    
+    sqlite3_finalize(stmt);
+    
+    return modelArray;
+}
+
+
+
+
+
+// Primary条件查 (album)
 - (NSArray *)selectFromTable:(NSString *)tableName withKey:(NSString *) key pairValue:(NSString *)value modelProperty:(NSArray *)propertes
 {
     NSMutableArray *modelArray = nil;
@@ -363,7 +415,58 @@ static sqlite3 *db;
     return modelArray;
 }
 
-// 多条件查询
+
+// 条件查 (history)
+- (NSArray *)selectFromTable:(NSString *)tableName withKey:(NSString *) key pairValue:(NSString *)value historyProperty:(NSArray *)propertes
+{
+    NSMutableArray *modelArray = nil;
+    
+    // SQL语句
+    NSString *selectSQL = [NSString stringWithFormat: @"select * from %@ where %@ = ?", tableName, key];
+    
+    // 创建伴随指针
+    sqlite3_stmt *stmt = nil;
+    
+    // 预执行
+    int result = sqlite3_prepare_v2(db, selectSQL.UTF8String, -1, &stmt, NULL);
+    if (result == SQLITE_OK) {
+        // 初始化数组
+        modelArray = [NSMutableArray array];
+        
+        // 绑定参数
+        sqlite3_bind_text(stmt, 1, value.UTF8String, -1, NULL);
+        
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            HistoryModel *hm = [[HistoryModel alloc] init];
+            for (int i = 0; i < propertes.count; i++) {
+                NSString *proString = [NSString stringWithUTF8String:(const char *)sqlite3_column_text(stmt, i)];
+                [hm setValue: proString forKey:propertes[i]];
+            }
+            
+            [modelArray addObject:hm];
+        }
+        
+        if (modelArray.count ==0) {
+            NSLog(@"没查到");
+            sqlite3_finalize(stmt);
+            return nil;
+        }
+        
+    }else {
+        NSLog(@"查找无结果");
+    }
+    
+    // 关闭伴随指针
+    sqlite3_finalize(stmt);
+    
+    return modelArray;
+}
+
+
+
+
+
+// 多条件查询 (album)
 - (NSArray *)selectFromTable:(NSString *)tableName
                withQueryDict:(NSDictionary *)dict
                modelProperty:(NSArray *)propertes

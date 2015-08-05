@@ -40,12 +40,12 @@
                         <action selector="backAction:" destination="-1" eventType="touchUpInside" id="0Zq-aE-sJD"/>
                     </connections>
                 </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="placeholder.png" translatesAutoresizingMaskIntoConstraints="NO" id="t5w-1p-b2u">
-                    <rect key="frame" x="10" y="63" width="580" height="336"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder.png" translatesAutoresizingMaskIntoConstraints="NO" id="t5w-1p-b2u">
+                    <rect key="frame" x="10" y="64" width="580" height="336"/>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aEG-Hz-PI2">
                     <rect key="frame" x="525" y="25" width="60" height="30"/>
-                    <state key="normal" title="定时关闭">
+                    <state key="normal" title="定时睡眠">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -84,10 +84,10 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D5s-b6-nFH">
-                    <rect key="frame" x="80" y="510" width="50" height="50"/>
+                    <rect key="frame" x="80" y="515" width="40" height="40"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="50" id="IVg-1b-Try"/>
-                        <constraint firstAttribute="height" constant="50" id="mqv-Su-DhD"/>
+                        <constraint firstAttribute="width" constant="40" id="IVg-1b-Try"/>
+                        <constraint firstAttribute="height" constant="40" id="mqv-Su-DhD"/>
                     </constraints>
                     <state key="normal" title="Button" image="music_rewind_button.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -96,17 +96,8 @@
                         <action selector="preButtonAction:" destination="-1" eventType="touchUpInside" id="Tu9-9C-YSi"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="245-wy-SYD">
-                    <rect key="frame" x="470" y="510" width="50" height="50"/>
-                    <state key="normal" title="Button" image="music_fastforward_button.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="nextButtonAction:" destination="-1" eventType="touchUpInside" id="cUU-pe-6B2"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Qd-Ej-hIg">
-                    <rect key="frame" x="540" y="515" width="40" height="40"/>
+                    <rect key="frame" x="548" y="515" width="40" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="Mc2-yD-Q3O"/>
                         <constraint firstAttribute="width" constant="40" id="Zhh-zd-KUh"/>
@@ -115,6 +106,9 @@
                     <state key="normal" title="播放历史">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="historyButtonAction:" destination="-1" eventType="touchUpInside" id="4G7-kh-Yoa"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EIH-rs-s9y">
                     <rect key="frame" x="12" y="515" width="40" height="40"/>
@@ -143,6 +137,15 @@
                         <action selector="timeSliderAction:" destination="-1" eventType="valueChanged" id="DgR-4d-dsv"/>
                     </connections>
                 </slider>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="245-wy-SYD">
+                    <rect key="frame" x="490" y="515" width="40" height="40"/>
+                    <state key="normal" title="Button" image="music_fastforward_button.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="nextButtonAction:" destination="-1" eventType="touchUpInside" id="cUU-pe-6B2"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -161,7 +164,7 @@
                 <constraint firstAttribute="bottom" secondItem="t5w-1p-b2u" secondAttribute="bottom" constant="150" id="Ai5-Ga-LAK"/>
                 <constraint firstAttribute="trailing" secondItem="aEG-Hz-PI2" secondAttribute="trailing" constant="10" id="B5f-Iu-RRu"/>
                 <constraint firstItem="mxg-bV-73w" firstAttribute="top" secondItem="09b-SZ-6Nf" secondAttribute="bottom" constant="30" id="DMl-0c-iPG"/>
-                <constraint firstAttribute="trailing" secondItem="4Qd-Ej-hIg" secondAttribute="trailing" constant="20" id="Hho-a3-KqW"/>
+                <constraint firstAttribute="trailing" secondItem="4Qd-Ej-hIg" secondAttribute="trailing" constant="12" id="Hho-a3-KqW"/>
                 <constraint firstItem="69O-Yv-QD7" firstAttribute="top" secondItem="aEG-Hz-PI2" secondAttribute="top" id="IoD-GO-utZ"/>
                 <constraint firstItem="ise-wd-RXI" firstAttribute="centerX" secondItem="t5w-1p-b2u" secondAttribute="centerX" id="LiT-iZ-lUH"/>
                 <constraint firstItem="4Qd-Ej-hIg" firstAttribute="centerY" secondItem="245-wy-SYD" secondAttribute="centerY" id="Qjk-nf-jdT"/>
@@ -173,10 +176,12 @@
                 <constraint firstItem="69O-Yv-QD7" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="25" id="XS5-5z-5gG"/>
                 <constraint firstItem="4Qd-Ej-hIg" firstAttribute="centerY" secondItem="EIH-rs-s9y" secondAttribute="centerY" id="bWf-X9-I4z"/>
                 <constraint firstItem="09b-SZ-6Nf" firstAttribute="leading" secondItem="pEq-d0-Dot" secondAttribute="trailing" constant="5" id="bge-sJ-0Qp"/>
+                <constraint firstAttribute="trailing" secondItem="245-wy-SYD" secondAttribute="trailing" constant="70" id="gb5-Gx-MCC"/>
                 <constraint firstItem="69O-Yv-QD7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="5" id="hAX-lt-8Ph"/>
                 <constraint firstItem="t5w-1p-b2u" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="jYX-jJ-LxW"/>
                 <constraint firstAttribute="trailing" secondItem="hkC-hQ-dE3" secondAttribute="trailing" id="jgk-zm-5uB"/>
                 <constraint firstItem="t5w-1p-b2u" firstAttribute="top" secondItem="aEG-Hz-PI2" secondAttribute="bottom" constant="64" id="lZr-bT-r0q"/>
+                <constraint firstItem="t5w-1p-b2u" firstAttribute="centerX" secondItem="mxg-bV-73w" secondAttribute="centerX" id="mnY-BN-f16"/>
                 <constraint firstItem="D5s-b6-nFH" firstAttribute="width" secondItem="245-wy-SYD" secondAttribute="width" id="nLE-xq-nZF"/>
                 <constraint firstItem="t5w-1p-b2u" firstAttribute="top" secondItem="aEG-Hz-PI2" secondAttribute="bottom" constant="60" id="nPQ-vJ-ce8"/>
                 <constraint firstItem="4Qd-Ej-hIg" firstAttribute="width" secondItem="EIH-rs-s9y" secondAttribute="width" id="oE9-qb-57n"/>
@@ -196,14 +201,16 @@
                     <exclude reference="nPQ-vJ-ce8"/>
                     <exclude reference="vlG-61-wdW"/>
                     <exclude reference="B5f-Iu-RRu"/>
+                    <exclude reference="7E4-6Q-6pm"/>
+                    <exclude reference="Weh-zp-fIL"/>
                 </mask>
             </variation>
         </view>
     </objects>
     <resources>
-        <image name="music_fastforward_button.png" width="45" height="45"/>
+        <image name="music_fastforward_button.png" width="33" height="33"/>
         <image name="music_play_button.png" width="64" height="64"/>
-        <image name="music_rewind_button.png" width="45" height="45"/>
+        <image name="music_rewind_button.png" width="33" height="33"/>
         <image name="placeholder.png" width="512" height="512"/>
     </resources>
 </document>

@@ -11,6 +11,9 @@
 #import "TracksListTableViewController.h"
 #import "TrackModel.h"
 #import "UIImageView+WebCache.h"
+#import "HistoryModel.h"
+#import "DataBaseHandle.h"
+#import "HistoryTableViewController.h"
 
 static PlayerViewController *singlePlayer = nil;
 
@@ -37,8 +40,7 @@ static PlayerViewController *singlePlayer = nil;
 
 
 
-// 上次播放时间
-@property (nonatomic, assign)CGFloat lastSeconds;
+
 
 
 // url地址和播放状态时间的列表(播放列表)
@@ -91,14 +93,12 @@ static PlayerViewController *singlePlayer = nil;
     [super viewWillAppear:YES];
     
     
-    
-    
     // 视图
     self.titleLabel.text = self.titleString;
     [self.contentImageView sd_setImageWithURL:[NSURL URLWithString:self.imageUrl] placeholderImage:nil];
 
 
-    // 总时间---------------------//
+    //------------ 总时间---------------------//
     NSString *totalTime = [self convertTime:_totalSeconds];
     self.totalTimeLabel.text = totalTime;
     NSString *currentTime = [self convertTime:_currentSeconds];
@@ -107,11 +107,24 @@ static PlayerViewController *singlePlayer = nil;
     if (_urlString) {
 
         [self p_cancelListen];
-        self.currentItem = [self createPlayerItemWithURLString:_urlString];
+
+        SpecialItem *newItem = [self createPlayerItemWithURLString:_urlString];
+        if (!newItem.isLiveCast) { //***************************?//
+            // 记录上次播放进度-更更新数据库
+            [self p_saveCurrentAlbumInfo]; //----------------------//
+        }
+        
+        self.currentItem = newItem;
         // 初始化播放器
         [self p_playerInitWithItem: _currentItem];
         
-        self.lastSeconds = 0.0;
+        if (!_historyFlag) {
+            self.lastSeconds = 0.0;
+        } else {
+            _historyFlag = NO;
+        }
+        
+        
     } else {
         if (_lastLiveUrl) {
             self.currentItem = [self createPlayerItemWithURLString:_lastLiveUrl];
@@ -128,11 +141,13 @@ static PlayerViewController *singlePlayer = nil;
     }
     
     if (_currentItem.isLiveCast) {
+        self.lastLiveUrl = _urlString;
         self.preButton.enabled = NO;
         self.nextButton.enabled = NO;
         self.listButton.enabled = NO;
         self.timeGoingSlider.value = 0;
         self.timeGoingSlider.enabled = NO;
+        self.historyButton.enabled = NO;
         self.tracksList = nil;
         self.urlStateList = nil;
         self.currentItem.statusObserver = NO;
@@ -150,7 +165,7 @@ static PlayerViewController *singlePlayer = nil;
         self.nextButton.enabled = YES;
         self.listButton.enabled = YES;
         self.timeGoingSlider.enabled = YES;
-        
+        self.historyButton.enabled = YES;
         //
         DLog(@"currentItem = %@, lastItem = %@", _currentItem, _lastItem);
         if (_currentItem != _lastItem) {
@@ -169,7 +184,6 @@ static PlayerViewController *singlePlayer = nil;
         // 添加时间进度观察者
         
         [self p_setPlayerTimerObserver];
-        
         
         // 添加通知监测播放结束
         [self p_listenPlayTimeToEnd];
@@ -205,14 +219,20 @@ static PlayerViewController *singlePlayer = nil;
     } else {
         self.lastLiveUrl = nil;
         
+        // ****************更新数据库*************************
+        if (_urlString || _lastItem) {
+            [self p_saveCurrentAlbumInfo];
+        }
+        
+        
         // 移除item观察者
         if (_currentItem.statusObserver) {
             [self.currentItem removeObserver:self forKeyPath:@"status"];
             _currentItem.statusObserver = NO;
         }
-        
-//        // 移除时间观察者
-//        [self p_removeTimerObserver];
+
+        // 移除时间观察者
+        [self p_removeTimerObserver];
     }
     self.lastSeconds = _currentSeconds;
     self.currentSeconds = 0;
@@ -233,6 +253,10 @@ static PlayerViewController *singlePlayer = nil;
 //    [self.view addSubview:_loadingView];
     
     // Do any additional setup after loading the view from its nib.
+    // 添加轻扫手势
+    
+    [self p_addSwipDownGesture];
+    
     [self.timeGoingSlider setThumbImage:[UIImage imageNamed:@"slider.png"] forState:(UIControlStateHighlighted)]; // 滑动时
     [self.timeGoingSlider setThumbImage:[UIImage imageNamed:@"slider.png"] forState:(UIControlStateNormal)]; // 不滑动时
     // cache路径
@@ -255,7 +279,7 @@ static PlayerViewController *singlePlayer = nil;
             self.lastSeconds = [dataDict[@"lastSeconds"] doubleValue];
             DLog(@"lastSecinds---%lf", _lastSeconds);
             self.currentIndex = [dataDict[@"lastIndex"] integerValue];
-            DLog(@"lastIndex--- %ld", _currentIndex);
+            DLog(@"lastIndex--- %lud", _currentIndex);
             self.imageUrl = dataDict[@"imageUrl"];
             
             TrackModel *track = _tracksList[_currentIndex];
@@ -263,6 +287,7 @@ static PlayerViewController *singlePlayer = nil;
             self.lastItem = [self createPlayerItemWithURLString:track.playUrl64];
             [self p_playerInitWithItem: _lastItem];
             self.titleString= track.title;
+            self.albumId = track.albumId;
             
             DLog(@"trackTitle---%@", track.title);
             
@@ -373,7 +398,7 @@ static PlayerViewController *singlePlayer = nil;
         self.nextButton.enabled = YES;
     }
     
-    DLog(@"urlListCount = %ld", _urlStateList.count);
+    DLog(@"urlListCount = %lud", _urlStateList.count);
     for (NSDictionary *d in _urlStateList) {
         DLog(@"urlArray:keys-%@, values-%@", d[@"url"], d[@"timeState"]);
     }
@@ -477,7 +502,7 @@ static PlayerViewController *singlePlayer = nil;
         
         [self.player pause];
     }
-    DLog(@"currentIndex=%ld", _currentIndex);
+    DLog(@"currentIndex=%ud", _currentIndex);
 }
 
 // 上一首
@@ -488,7 +513,7 @@ static PlayerViewController *singlePlayer = nil;
     }
     if (_currentIndex > 0) {
         _currentIndex--;
-        DLog(@"pre to %ld", _currentIndex);
+        DLog(@"pre to %ud", _currentIndex);
         if (_currentIndex == 0) {
             sender.enabled = NO;
         }
@@ -514,7 +539,7 @@ static PlayerViewController *singlePlayer = nil;
     }
     if (_currentIndex < _tracksList.count - 1) {
         _currentIndex++;
-         DLog(@"nest to %ld", _currentIndex);
+         DLog(@"nest to %ud", _currentIndex);
         if (_currentIndex == _tracksList.count - 1) {
             sender.enabled = NO;
         }
@@ -538,11 +563,24 @@ static PlayerViewController *singlePlayer = nil;
 {
     TracksListTableViewController *trackListVC = [[TracksListTableViewController alloc] init];
     trackListVC.trackList = self.tracksList;
-    
+    trackListVC.albumId = self.albumId;
     [self presentViewController:trackListVC animated:YES completion:^{
         DLog(@"打开列表");
     }];
 }
+
+- (IBAction)historyButtonAction:(UIButton *)sender
+{
+    HistoryTableViewController *historyVC = [[HistoryTableViewController alloc] init];
+    UINavigationController *hisNC = [[UINavigationController alloc] initWithRootViewController:historyVC];
+    historyVC.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:(UIBarButtonItemStyleDone) target:historyVC action:@selector(backToPlayer:)];
+    
+    [self presentViewController:hisNC animated:YES completion:^{
+        
+    }];
+}
+
+
 
 #pragma mark ---- 替换playitem;
 // 更换playItem的方法
@@ -562,6 +600,9 @@ static PlayerViewController *singlePlayer = nil;
         lastSeconds = 0.0;
     }
     [_urlStateList[lastIndex] setObject:@(lastSeconds) forKey:@"timeState"];
+    
+    // ******************更新数据库(播放历史)***********************
+    [self p_saveCurrentAlbumInfo];
     
     self.currentItem = [self createPlayerItemWithURLString:_urlStateList[index][@"url"]];
     self.lastItem = _currentItem;
@@ -622,7 +663,107 @@ static PlayerViewController *singlePlayer = nil;
     
 }
 
+#pragma mark ------ 记录播放历史 --- 归档播放列表
+- (void)p_saveCurrentAlbumInfo
+{
+    
+    NSString *cachePath = [[DataBaseHandle shareDataBase] getPathOf:Cache];
+    NSString *userHistoryPath = [cachePath stringByAppendingPathComponent:@"user/history"];
+    
+    // 判断是否存在,然后创建文件夹
+    BOOL exixt = [[NSFileManager defaultManager] fileExistsAtPath:userHistoryPath];
+    if (!exixt) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:userHistoryPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    
+    
+    NSString *docPath = [[DataBaseHandle shareDataBase] getPathOf:Document];
+    DLog(@"docPath----  %@",docPath);
+    [[DataBaseHandle shareDataBase] openDBWithName:kDBName atPath:docPath];
+    
+    
+    // 创建表 (播放历史)
+    [[DataBaseHandle shareDataBase] createTableWithName:kHistoryTableName paramNames:[HistoryModel historyPropertyNames] paramTypes:[HistoryModel historyPropertyTypes] setPrimaryKey:YES];
+    
+    
+    TrackModel *track = _tracksList[_currentIndex];
+    
+    HistoryModel *history = [[HistoryModel alloc] init];
+    history.albumId = track.albumId;
+    history.albumTitle = track.albumTitle;
+    history.trackTitle = track.title;
+    NSTimeInterval timestamp = [NSDate timeIntervalSinceReferenceDate];
+    history.timestamp = [NSString stringWithFormat:@"%lf", timestamp];
+    
+    
+    CGFloat timeSeconds = 0;
+    if (_currentItem) {
+        timeSeconds = CMTimeGetSeconds([_currentItem currentTime]);
+    } else {
+        timeSeconds = CMTimeGetSeconds([_lastItem currentTime]);
+    }
+    
+    history.currentTime = [self convertTime:timeSeconds];
+    history.coverSmall = track.coverMiddle;
+    history.archiveName = [NSString stringWithFormat:@"aid%@", history.albumId];
+    
+    // 查找数据是否有
+    NSArray *resultArray = [[DataBaseHandle shareDataBase] selectFromTable:kHistoryTableName withKey:@"albumId" pairValue:history.albumId historyProperty:[HistoryModel historyPropertyNames]];
+    
+    if (resultArray.count == 0) { // 没有数据记录则新建
+        BOOL oK = [[DataBaseHandle shareDataBase] insertIntoTable:kHistoryTableName paramKeys:[HistoryModel historyPropertyNames] withValues:[history historyPropertyValues]];
+        if (oK) {
+            [self p_archiveTrackList:self.tracksList withName:history.archiveName atArchivePath:userHistoryPath];
+        } else {
+            DLog(@"保存播放历史数据失败:(");
+        }
+    } else { // 有数据记录则更新
+        
+        NSDictionary *dict = [NSDictionary dictionaryWithObjects:[history historyPropertyValues] forKeys:[HistoryModel historyPropertyNames]];
+        
+        [[DataBaseHandle shareDataBase] updateTable:kHistoryTableName changeDict:dict atPrimaryKey:@"albumId" primaryKeyValue:history.albumId];
+        
+        [self p_archiveTrackList:self.tracksList withName:history.archiveName atArchivePath:userHistoryPath];
+    }
+    
 
+
+    [[DataBaseHandle shareDataBase] closeDB];
+    
+    
+}
+
+
+// 归档播放列表数据
+- (void)p_archiveTrackList:(NSMutableArray *)list  withName:(NSString *)archiveName atArchivePath:(NSString *)path
+{
+    CGFloat timeSeconds = 0;
+    if (_currentItem) {
+        timeSeconds = CMTimeGetSeconds([_currentItem currentTime]);
+    } else {
+        timeSeconds = CMTimeGetSeconds([_lastItem currentTime]);
+    }
+    NSDictionary *dataDict = @{@"lastIndex":@(_currentIndex), @"lastSeconds":@(timeSeconds), @"tracksCount":@(self.tracksList.count), @"imageUrl":_imageUrl};
+    NSString *localListPath = [path stringByAppendingPathComponent:archiveName];
+    
+    // 开始归档
+    [NSKeyedArchiver archiveRootObject:dataDict toFile:localListPath];
+}
+
+
+
+#pragma mark ---- 添加轻扫向下手势
+- (void)p_addSwipDownGesture
+{
+    UISwipeGestureRecognizer *swipDown = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipDownAction:)];
+    swipDown.direction = UISwipeGestureRecognizerDirectionDown;
+    [self.view addGestureRecognizer:swipDown];
+}
+
+- (void)swipDownAction:(UISwipeGestureRecognizer *)sendser
+{
+    [self backAction:nil];
+}
 
 
 - (void)didReceiveMemoryWarning {

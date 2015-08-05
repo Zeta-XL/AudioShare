@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "AlbumModel.h"
+#import "HistoryModel.h"
 
 #define kDBName @"userData.sqlite"
 #define kFavorateTableName @"favorateTable"
@@ -68,12 +69,19 @@ typedef enum paths{
     primaryKeyValue:(NSString *)keyValue;
 
 
-// 全查
+// 全查 (album)
 - (NSArray *)selectAllFromTable:(NSString *)tableName modelProperty:(NSArray *)propertes sidOption:(BOOL)option;
 
+// 全查 (history)
+- (NSArray *)selectAllFromTable:(NSString *)tableName historyProperty:(NSArray *)propertes sidOption:(BOOL)option;
 
-// 条件查
+
+// 条件查 (album)
 - (NSArray *)selectFromTable:(NSString *)tableName withKey:(NSString *) key pairValue:(NSString *)value modelProperty:(NSArray *)propertes;
+
+// 条件查 (history)
+- (NSArray *)selectFromTable:(NSString *)tableName withKey:(NSString *) key pairValue:(NSString *)value historyProperty:(NSArray *)propertes;
+
 
 // 多条件查询
 - (NSArray *)selectFromTable:(NSString *)tableName
