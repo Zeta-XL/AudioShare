@@ -11,6 +11,8 @@
 
 @interface HistoryTableViewController ()
 
+@property (nonatomic, strong)NSMutableArray *dataArray;
+
 @end
 
 @implementation HistoryTableViewController

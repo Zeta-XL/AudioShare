@@ -203,7 +203,7 @@
     cell.tagsLabel.text = album.tags;
     cell.tracksCountsLabel.text = [NSString stringWithFormat:@"共%@集",album.tracksCount];
     
-    [cell.myImageView sd_setImageWithURL:[NSURL URLWithString: album.coverSmall] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+    [cell.myImageView sd_setImageWithURL:[NSURL URLWithString: album.coverLarge] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
     
     return cell;
 }

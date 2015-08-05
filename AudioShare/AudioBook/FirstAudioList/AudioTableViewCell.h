@@ -18,6 +18,6 @@
 @property (nonatomic, strong)UILabel *tagsLabel;
 //专辑中声音个数
 @property (nonatomic, strong)UILabel *tracksCountsLabel;
-
-
+// 记录播放时间
+@property (nonatomic, strong)UILabel *timeLabel;
 @end

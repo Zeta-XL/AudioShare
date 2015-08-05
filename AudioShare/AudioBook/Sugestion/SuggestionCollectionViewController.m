@@ -54,7 +54,7 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
     [self.collectionView registerClass:[HeaderCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header"];
     
     [self p_navigationBar];
-    self.tagNameArray = [NSMutableArray array];
+    
     self.apiString = kAudioSuggetionList;
     _loadEnable = YES;
     _showSuggestion = YES;
@@ -62,8 +62,9 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
     _pageSize = 30;
     [self p_dragDownToRefresh];
     [self p_dragUptoLoadMore];
-    self.dataArray = [NSMutableArray array];
-    [self p_requestDataWithPageId:_currentPageId++ pageSize:_pageSize];
+    
+//    self.dataArray = [NSMutableArray array];
+//    [self p_requestDataWithPageId:_currentPageId++ pageSize:_pageSize];
 
 }
 
@@ -78,6 +79,9 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
     if (_loadEnable) {
         if (_showSuggestion) {
             // 参数字符串
+            
+            NSMutableArray *tempArr = [NSMutableArray array];
+            
             params = [NSString stringWithFormat:@"categoryId=%@&contentType=album&device=iPhone&version=4.1.7.1", self.categoryId];
             [RequestTool_v2 requestWithURL:_apiString paramString:params postRequest:NO callBackData:^(NSData *data) {
                 NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
@@ -98,7 +102,7 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
                             [model setValuesForKeysWithDictionary:audioDict];
                             [subListArray addObject:model];
                         }
-                        [_dataArray addObject:subListDict];
+                        [tempArr addObject:subListDict];
                         
                     }
                     // 获得maxPageId
@@ -108,10 +112,12 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
                 } else {
                     DLog(@"加载数据无效");
                 }
+                self.dataArray = tempArr;
+                [self.collectionView reloadData];
                 DLog(@"加载完毕--%@, %@", _dataArray[0][@"title"], _dataArray[0][@"list"]);
                 [self.collectionView.footer endRefreshing];
                 [self.collectionView.header endRefreshing];
-                [self.collectionView reloadData];
+                
                 
                 self.navigationItem.leftBarButtonItem.enabled = YES;
                 _loadEnable = YES;
@@ -121,8 +127,11 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
         } else {
             
             // 参数字符串
-            params = [NSString stringWithFormat:@"calcDimension=hot&categoryId=%@&device=iPhone&pageId=%ld&pageSize=%ld&status=0&tagName=%@", self.categoryId, pageId, pageSize, _currentTagName];
             
+            NSMutableArray *tempArr = [NSMutableArray array];
+            
+            params = [NSString stringWithFormat:@"calcDimension=hot&categoryId=%@&device=iPhone&pageId=%ld&pageSize=%ld&status=0&tagName=%@", self.categoryId, pageId, pageSize, _currentTagName];
+            DLog(@"currentPageId = %ld", pageId);
             [RequestTool_v2 requestWithURL:_apiString paramString:params postRequest:NO callBackData:^(NSData *data) {
                 NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
                 
@@ -135,7 +144,7 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
                         [subListArray addObject:m];
                         
                     }
-                    [_dataArray addObject:subListDict];
+                    [tempArr addObject:subListDict];
                     
                     // 获得maxPageId
                     _maxPageId = [dict[@"maxPageId"] integerValue];
@@ -144,10 +153,12 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
                 } else {
                     DLog(@"加载数据无效");
                 }
+                
+                self.dataArray = tempArr;
+                [self.collectionView reloadData];
                 DLog(@"加载完毕--%@, %@", _dataArray[0][@"title"], _dataArray[0][@"list"]);
                 [self.collectionView.footer endRefreshing];
                 [self.collectionView.header endRefreshing];
-                [self.collectionView reloadData];
                 
                 self.navigationItem.leftBarButtonItem.enabled = YES;
                 _loadEnable = YES;
@@ -166,7 +177,6 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
     // 上拉刷新
     __weak __typeof(self) weakSelf = self;
     
-    
     self.collectionView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         [weakSelf p_loadMoreData];
         
@@ -182,35 +192,38 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
     if (_currentPageId <= _maxPageId) {
         NSString *params = [NSString stringWithFormat:@"calcDimension=hot&categoryId=%@&device=iPhone&pageId=%ld&pageSize=%ld&status=0&tagName=%@", self.categoryId, _currentPageId, _pageSize, _currentTagName];
         
-        [RequestTool_v2 requestWithURL:_apiString paramString:params postRequest:NO callBackData:^(NSData *data) {
-            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
-            
-            if ([dict[@"msg"] isEqualToString:@"成功"]) {
-
-                for (NSDictionary *audioDict in dict[@"list"]) {
-                    AudioModel *m = [[AudioModel alloc] init];
-                    [m setValuesForKeysWithDictionary:audioDict];
-                    [_dataArray.firstObject[@"list"] addObject:m];
+        if (_loadEnable) {
+            [RequestTool_v2 requestWithURL:_apiString paramString:params postRequest:NO callBackData:^(NSData *data) {
+                NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+                
+                if ([dict[@"msg"] isEqualToString:@"成功"]) {
+                    
+                    for (NSDictionary *audioDict in dict[@"list"]) {
+                        AudioModel *m = [[AudioModel alloc] init];
+                        [m setValuesForKeysWithDictionary:audioDict];
+                        [_dataArray.firstObject[@"list"] addObject:m];
+                    }
+                    
+                    // 获得maxPageId
+                    _maxPageId = [dict[@"maxPageId"] integerValue];
+                    DLog(@"maxPageId = %ld", _maxPageId);
+                    
+                } else {
+                    DLog(@"加载更多数据失败");
                 }
+                DLog(@"加载完毕--%@, %@", _dataArray[0][@"title"], _dataArray[0][@"list"]);
+                [self.collectionView.footer endRefreshing];
+                [self.collectionView.header endRefreshing];
+                [self.collectionView reloadData];
                 
-                // 获得maxPageId
-                _maxPageId = [dict[@"maxPageId"] integerValue];
-                DLog(@"maxPageId = %ld", _maxPageId);
-                
-            } else {
-                DLog(@"加载更多数据失败");
-            }
-            DLog(@"加载完毕--%@, %@", _dataArray[0][@"title"], _dataArray[0][@"list"]);
-            [self.collectionView.footer endRefreshing];
-            [self.collectionView.header endRefreshing];
-            [self.collectionView reloadData];
-            
-            self.navigationItem.leftBarButtonItem.enabled = YES;
-            _loadEnable = YES;
-            _currentPageId++;
-        }];
-        self.navigationItem.leftBarButtonItem.enabled = NO;
-        _loadEnable = NO;
+                self.navigationItem.leftBarButtonItem.enabled = YES;
+                _loadEnable = YES;
+                DLog(@"当前加载的page:%ld", _currentPageId);
+                _currentPageId++;
+            }];
+            self.navigationItem.leftBarButtonItem.enabled = NO;
+            _loadEnable = NO;
+        }
         
     } else {
         [self.collectionView.footer noticeNoMoreData];
@@ -223,15 +236,13 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
 // 下拉刷新
 - (void)p_dragDownToRefresh
 {
-    __weak __typeof(self) weakSelf = self;
+    // 刷新数据
     
+    __weak __typeof(self) weakSelf = self;
     
     // 下拉刷新
     self.collectionView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-    
-        // 刷新数据
         _currentPageId = 1;
-        self.dataArray = [NSMutableArray array];
         if (_showSuggestion) {
             self.tagNameArray = [NSMutableArray array];
             [weakSelf p_requestDataWithPageId:_currentPageId++ pageSize:30];
@@ -276,6 +287,7 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
         _currentPageId = 1;
         _pageSize = 21;
         _showSuggestion = NO;
+        _loadEnable = YES;
         self.apiString = kSubAudioAlbumList;
         [self p_dragDownToRefresh];
     };

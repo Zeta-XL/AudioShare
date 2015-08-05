@@ -51,6 +51,11 @@
     //自动调整放置文字位置的大小
     self.tracksCountsLabel.adjustsFontSizeToFitWidth = YES;
     [self.contentView addSubview:_tracksCountsLabel];
+    
+    self.timeLabel = [[UILabel alloc] init];
+    _timeLabel.frame = CGRectMake(CGRectGetMaxX(_tracksCountsLabel.frame)+5, CGRectGetMinY(_tracksCountsLabel.frame), 60, CGRectGetHeight(_tracksCountsLabel.frame));
+    [self.contentView addSubview:_timeLabel];
+    
 }
 
 
@@ -61,7 +66,7 @@
     _titleLabel.frame = CGRectMake(CGRectGetMaxX(_myImageView.frame) + 10, 10, CGRectGetWidth(self.frame) - CGRectGetWidth(_myImageView.frame) - 30, (self.contentView.bounds.size.height - 40) / 3);
     _tagsLabel.frame = CGRectMake(CGRectGetMinX(_titleLabel.frame), CGRectGetMaxY(_titleLabel.frame) + 10, 130, CGRectGetHeight(_titleLabel.frame));
     _tracksCountsLabel.frame = CGRectMake(CGRectGetMinX(_tagsLabel.frame), CGRectGetMaxY(_tagsLabel.frame) + 10, 50, CGRectGetHeight(_tagsLabel.frame));
-    
+    _timeLabel.frame = CGRectMake(CGRectGetMaxX(_tracksCountsLabel.frame)+5, CGRectGetMinY(_tracksCountsLabel.frame), 60, CGRectGetHeight(_tracksCountsLabel.frame));
 }
 
 

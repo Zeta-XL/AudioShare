@@ -23,9 +23,10 @@
     NSInteger _currentPageId;
     NSInteger _pageSize;
     BOOL _dragDown;
+    BOOL _refresh;
+    
 }
 @property (nonatomic, strong)NSMutableArray *dataArray;
-
 
 @end
 
@@ -46,32 +47,51 @@
     
     NSString *params = [NSString stringWithFormat:@"calcDimension=hot&categoryId=%@&device=iPhone&pageId=%ld&pageSize=%ld&status=0&tagName=%@", self.categoryId, pageId, pageSize, self.tagName];
     
+    
     [RequestTool_v2 requestWithURL:kSubAudioAlbumList paramString:params postRequest:NO callBackData:^(NSData *data) {
+        NSMutableArray *tempArr = nil;
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
-        
         if ([dict[@"msg"] isEqualToString:@"成功"]) {
+            
+            if (_refresh) {
+                tempArr = [NSMutableArray array];
+            } else {
+                tempArr = [NSMutableArray arrayWithArray:_dataArray];
+            }
             for (NSDictionary *d in dict[@"list"]) {
                 AudioModel *m = [[AudioModel alloc] init];
                 [m setValuesForKeysWithDictionary:d];
-                [_dataArray addObject:m];
                 
+                [tempArr addObject:m];
+                DLog(@"%ld", tempArr.count);
+
             }
             // 获得maxPageId
             _maxPageId = [dict[@"maxPageId"] integerValue];
             DLog(@"maxPageId = %ld", _maxPageId);
-
+            
         } else {
             DLog(@"加载数据无效");
         }
+        
+        
+            self.dataArray = tempArr;
+        
+        [self.tableView reloadData];
         DLog(@"加载完毕");
+        
+        tempArr = nil;
         [self.tableView.footer endRefreshing];
         [self.tableView.header endRefreshing];
-        [self.tableView reloadData];
-        self.tableView.scrollEnabled = YES;
         self.navigationItem.leftBarButtonItem.enabled = YES;
     }];
     self.navigationItem.leftBarButtonItem.enabled = NO;
-    self.tableView.scrollEnabled = NO;
+    
+    
+    
+
+
+    
 }
 
 
@@ -103,19 +123,19 @@
     [self p_requestDataWithPageId:_currentPageId++ pageSize:_pageSize];
     // 上拉加载
     [self p_dragUptoLoadMore];
+    _refresh = YES;
     // 下拉刷新
     [self p_dragDownToRefresh];
     
     
-    
-    
-    
+
 }
 
 #pragma mark ---- 上拉刷新和下拉刷新
 // 上拉加载
 - (void)p_dragUptoLoadMore
 {
+    
     // 设置回调（一旦进入刷新状态，就调用target的action，也就是调用self的loadMoreData方法）
     self.tableView.footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(p_loadMoreData)];
     // 设置了底部inset
@@ -127,6 +147,7 @@
 // 加载数据
 - (void)p_loadMoreData
 {
+    _refresh = NO;
     if (_currentPageId <= _maxPageId) {
         [self p_requestDataWithPageId:_currentPageId pageSize:_pageSize];
         _currentPageId++;
@@ -143,13 +164,15 @@
     
     // 设置回调（一旦进入刷新状态就会调用这个refreshingBlock）
     self.tableView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        _dragDown = YES;
+        
         [weakSelf leftBarButtonAction:nil];
     }];
-
+    
     // 马上进入刷新状态
     [self.tableView.header beginRefreshing];
-    _dragDown = NO;
+    
+    
+    
 }
 
 
@@ -171,17 +194,12 @@
 -(void)leftBarButtonAction : (UIBarButtonItem *)sender
 {
     DLog(@"刷新");
+    _refresh = YES;
+    _currentPageId = 1;
     
-    if (self.tableView.decelerating == NO || _dragDown) {
-        NSInteger count = _dataArray.count;
-        self.dataArray = [NSMutableArray array];
-        [self.tableView reloadData];
-        if (count != 0) {
-            [self p_requestDataWithPageId:1 pageSize:count];
-        } else {
-            [self p_requestDataWithPageId:1 pageSize:_pageSize];
-        }
-    }
+    [self p_requestDataWithPageId:_currentPageId++ pageSize:_pageSize];
+
+    
     
    
     

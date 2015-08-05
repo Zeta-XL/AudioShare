@@ -31,8 +31,7 @@
 @property (nonatomic, assign)NSInteger currentPageId;
 @property (nonatomic, assign)NSInteger pageSize;
 @property (nonatomic, assign)BOOL loadEnable;
-// 默认位置
-@property (nonatomic, assign)CGPoint defaultOffSet;
+
 @end
 
 @implementation RadioTableViewController
@@ -48,11 +47,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
- 
+    
     //注册
     [self.tableView registerClass:[RadioTableViewCell class] forCellReuseIdentifier:@"radioCell"];
-    self.navigationItem.title = @"国家电台直播";
+    self.titleString = @"广播电台";
     
+    self.radioFoxView = [[RadioFoxView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 140)];
+    [self.radioFoxView.networkButton addTarget:self action:@selector(networkButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.radioFoxView.countriesButton addTarget:self action:@selector(countriesButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.radioFoxView.provinceButton addTarget:self action:@selector(provinceButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    _radioFoxView.foxLabel.text = @"国家电台列表";
     
     self.pageSize = 15;
     self.currentPageId = 1;
@@ -214,14 +218,6 @@
 {
     
     
-    self.radioFoxView = [[RadioFoxView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 140)];
-    
-    
-    [self.radioFoxView.networkButton addTarget:self action:@selector(networkButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
-    
-    [self.radioFoxView.countriesButton addTarget:self action:@selector(countriesButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
-    
-    [self.radioFoxView.provinceButton addTarget:self action:@selector(provinceButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     
     return _radioFoxView;
     
@@ -238,12 +234,15 @@
 //网络电台按钮点击方法
 - (void)networkButtonAction:(UIButton *)sender
 {
+    if (_loadEnable) {
+        self.radioFoxView.foxLabel.text = @"网络电台列表";
+    }
     self.radioType = 3;
     self.currentPageId = 1;
     self.radioArray = [NSMutableArray array];
     [self.tableView reloadData];
     [self p_requestDataWithPageId:_currentPageId++ pageSize:_pageSize];
-
+    
     
 }
 
@@ -252,6 +251,9 @@
 - (void)countriesButtonAction:(UIButton *)sender
 {
 
+    if (_loadEnable) {
+        self.radioFoxView.foxLabel.text = @"国家电台列表";
+    }
     self.radioType = 1;
     self.currentPageId = 1;
     self.radioArray = [NSMutableArray array];
@@ -273,8 +275,8 @@
         self.radioArray = [NSMutableArray array];
         self.provinceCode = aString;
         [self p_requestDataWithPageId:_currentPageId++ pageSize:_pageSize];
+        self.radioFoxView.foxLabel.text = @"地方电台列表";
     };
-  
     [self.navigationController pushViewController:provinceVC animated:YES];
 }
 

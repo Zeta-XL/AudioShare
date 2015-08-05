@@ -76,7 +76,7 @@
                         <constraint firstAttribute="width" constant="60" id="bU5-Mr-zUK"/>
                         <constraint firstAttribute="height" constant="60" id="ujj-dG-GjX"/>
                     </constraints>
-                    <state key="normal" title="Button" image="play_btn.jpg">
+                    <state key="normal" title="Button" image="music_play_button.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -89,7 +89,7 @@
                         <constraint firstAttribute="width" constant="50" id="IVg-1b-Try"/>
                         <constraint firstAttribute="height" constant="50" id="mqv-Su-DhD"/>
                     </constraints>
-                    <state key="normal" title="Button" image="btn_pre.png">
+                    <state key="normal" title="Button" image="music_rewind_button.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -98,7 +98,7 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="245-wy-SYD">
                     <rect key="frame" x="470" y="510" width="50" height="50"/>
-                    <state key="normal" title="Button" image="btn_next.png">
+                    <state key="normal" title="Button" image="music_fastforward_button.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -201,9 +201,9 @@
         </view>
     </objects>
     <resources>
-        <image name="btn_next.png" width="45" height="45"/>
-        <image name="btn_pre.png" width="45" height="45"/>
+        <image name="music_fastforward_button.png" width="45" height="45"/>
+        <image name="music_play_button.png" width="64" height="64"/>
+        <image name="music_rewind_button.png" width="45" height="45"/>
         <image name="placeholder.png" width="512" height="512"/>
-        <image name="play_btn.jpg" width="128" height="128"/>
     </resources>
 </document>

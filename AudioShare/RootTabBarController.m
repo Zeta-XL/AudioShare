@@ -33,22 +33,24 @@
     
     UINavigationController *homeNC = [[UINavigationController alloc] initWithRootViewController:homeVC];
     homeNC.tabBarItem.title = @"听书";
+    homeNC.tabBarItem.image = [UIImage imageNamed:@"30x-Music.png"];
     
     // 直播页
     RadioTableViewController *radioVC = [[RadioTableViewController alloc] init];
     UINavigationController *radioNC = [[UINavigationController alloc] initWithRootViewController:radioVC];
     radioNC.tabBarItem.title = @"电台直播";
+    radioNC.tabBarItem.image = [UIImage imageNamed:@"30x-Radio.png"];
     
     // 下载页
     DownloadViewController *downloadVC = [[DownloadViewController alloc] init];
     UINavigationController *downloadNC = [[UINavigationController alloc] initWithRootViewController:downloadVC];
     downloadNC.tabBarItem.title = @"下载";
-    
+    downloadNC.tabBarItem.image = [UIImage imageNamed:@"30x-Download.png"];
     
     FoxSettingsTableViewController *user_settingsVC = [[FoxSettingsTableViewController alloc] init];
     UINavigationController *user_settingsNC = [[UINavigationController alloc] initWithRootViewController:user_settingsVC];
     user_settingsNC.tabBarItem.title = @"我的";
-    
+    user_settingsNC.tabBarItem.image = [UIImage imageNamed:@"30x-Home.png"];
     
     self.viewControllers = @[homeNC, radioNC, downloadNC, user_settingsNC];
     

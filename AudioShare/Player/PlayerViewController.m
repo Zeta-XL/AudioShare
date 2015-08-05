@@ -225,11 +225,12 @@ static PlayerViewController *singlePlayer = nil;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.loadingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:(UIActivityIndicatorViewStyleGray)];
-    
-    _loadingView.frame = CGRectMake(0, 0, 50, 50);
-    _loadingView.center = CGPointMake(CGRectGetMidX([UIScreen mainScreen].bounds), [UIScreen mainScreen].bounds.size.height - 180);
-    [self.view addSubview:_loadingView];
+    // 加载动画
+//    self.loadingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:(UIActivityIndicatorViewStyleGray)];
+//    
+//    _loadingView.frame = CGRectMake(0, 0, 50, 50);
+//    _loadingView.center = CGPointMake(CGRectGetMidX([UIScreen mainScreen].bounds), [UIScreen mainScreen].bounds.size.height - 180);
+//    [self.view addSubview:_loadingView];
     
     // Do any additional setup after loading the view from its nib.
     [self.timeGoingSlider setThumbImage:[UIImage imageNamed:@"slider.png"] forState:(UIControlStateHighlighted)]; // 滑动时
@@ -463,7 +464,7 @@ static PlayerViewController *singlePlayer = nil;
 {
     _isPlaying = !_isPlaying;
     if (_isPlaying) {
-        [sender setImage:[UIImage imageNamed:@"pause_btn.jpg"] forState:(UIControlStateNormal)];
+        [sender setImage:[UIImage imageNamed:@"music_pause_button.png"] forState:(UIControlStateNormal)];
         // 判断当前的item属性
         if (self.currentItem.isLiveCast) { // 直播
             self.currentItem = [self createPlayerItemWithURLString:_urlString];
@@ -472,7 +473,7 @@ static PlayerViewController *singlePlayer = nil;
         [self.player play];
         
     } else {
-        [sender setImage:[UIImage imageNamed:@"play_btn.jpg"] forState:(UIControlStateNormal)];
+        [sender setImage:[UIImage imageNamed:@"music_play_button.png"] forState:(UIControlStateNormal)];
         
         [self.player pause];
     }
