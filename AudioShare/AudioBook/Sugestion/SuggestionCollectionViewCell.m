@@ -40,14 +40,34 @@
     
     
     // 专辑声音个数
+    //--------------//
+    UIView *tracksCountView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_albumTitleLabel.frame), CGRectGetMinY(_albumTitleLabel.frame), self.contentView.bounds.size.width *0.25, CGRectGetHeight(_albumTitleLabel.frame))];
+    [self.contentView addSubview:tracksCountView];
+    
+    
+    // 标签1
+    self.textLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tracksCountView.bounds.size.width, tracksCountView.bounds.size.height / 3)];
+    _textLabel1.textAlignment = NSTextAlignmentCenter;
+    _textLabel1.font = [UIFont systemFontOfSize:14.f];
+    [tracksCountView addSubview:_textLabel1];
+    _textLabel1.text = @"共";
+    
+    
+    // 内容
     self.tracksCountsLabel = [[UILabel alloc] init];
-    _tracksCountsLabel.frame = CGRectMake(CGRectGetMaxX(_albumTitleLabel.frame), CGRectGetMinY(_albumTitleLabel.frame), self.contentView.bounds.size.width *0.25, CGRectGetHeight(_albumTitleLabel.frame));
+    _tracksCountsLabel.frame = CGRectMake(0, CGRectGetMaxY(_textLabel1.frame), CGRectGetWidth(_textLabel1.frame), CGRectGetHeight(_textLabel1.frame));
     _tracksCountsLabel.textAlignment = NSTextAlignmentCenter;
     _tracksCountsLabel.font = [UIFont systemFontOfSize:14.f];
-    _tracksCountsLabel.numberOfLines = 3;
+    _tracksCountsLabel.numberOfLines = 1;
     _tracksCountsLabel.adjustsFontSizeToFitWidth = YES;
-    [self.contentView addSubview:_tracksCountsLabel];
-//     _tracksCountsLabel.backgroundColor = [UIColor blueColor];
+    [tracksCountView addSubview:_tracksCountsLabel];
+    
+    // 标签2
+    self.textLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_tracksCountsLabel.frame), CGRectGetWidth(_textLabel1.frame), CGRectGetHeight(_textLabel1.frame))];
+    _textLabel2.textAlignment = NSTextAlignmentCenter;
+    _textLabel2.font = [UIFont systemFontOfSize:14.f];
+    [tracksCountView addSubview:_textLabel2];
+    _textLabel2.text = @"集";
 
 }
 @end

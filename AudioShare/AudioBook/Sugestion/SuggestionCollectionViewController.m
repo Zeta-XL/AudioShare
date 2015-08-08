@@ -29,6 +29,7 @@
 @property (nonatomic, strong)NSMutableArray *tagNameArray;
 @property (nonatomic, strong)NSMutableArray *dataArray;
 @property (nonatomic, copy)NSString *currentTagName;
+@property (nonatomic, strong)UIActivityIndicatorView *activity;
 @end
 
 @implementation SuggestionCollectionViewController
@@ -62,11 +63,29 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
     _pageSize = 30;
     [self p_dragDownToRefresh];
     [self p_dragUptoLoadMore];
-    
+    [self p_setupActivity];
 //    self.dataArray = [NSMutableArray array];
 //    [self p_requestDataWithPageId:_currentPageId++ pageSize:_pageSize];
 
 }
+
+- (void)p_setupActivity
+{
+    //进度轮
+    self.activity = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(100, 100, 80, 50)];
+    self.activity.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    self.activity.backgroundColor = [UIColor grayColor];
+    self.activity.alpha = 0.3;
+    self.activity.layer.cornerRadius = 6;
+    self.activity.layer.masksToBounds = YES;
+    
+    //显示位置
+    [self.activity setCenter:CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2)];
+    
+    [self.view addSubview:_activity];
+}
+
+
 
 #pragma mark ---请求数据刷新数据
 // 请求数据
@@ -75,7 +94,7 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
 {
     
     NSString *params = nil;
-    
+    [self.activity startAnimating];
     if (_loadEnable) {
         if (_showSuggestion) {
             // 参数字符串
@@ -113,11 +132,12 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
                     DLog(@"加载数据无效");
                 }
                 self.dataArray = tempArr;
-                [self.collectionView reloadData];
+                
                 DLog(@"加载完毕--%@, %@", _dataArray[0][@"title"], _dataArray[0][@"list"]);
                 [self.collectionView.footer endRefreshing];
                 [self.collectionView.header endRefreshing];
-                
+                [self.collectionView reloadData];
+                [self.activity stopAnimating];
                 
                 self.navigationItem.leftBarButtonItem.enabled = YES;
                 _loadEnable = YES;
@@ -155,10 +175,12 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
                 }
                 
                 self.dataArray = tempArr;
-                [self.collectionView reloadData];
+                
                 DLog(@"加载完毕--%@, %@", _dataArray[0][@"title"], _dataArray[0][@"list"]);
                 [self.collectionView.footer endRefreshing];
                 [self.collectionView.header endRefreshing];
+                [self.collectionView reloadData];
+                [self.activity stopAnimating];
                 
                 self.navigationItem.leftBarButtonItem.enabled = YES;
                 _loadEnable = YES;
@@ -192,7 +214,9 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
     if (_currentPageId <= _maxPageId) {
         NSString *params = [NSString stringWithFormat:@"calcDimension=hot&categoryId=%@&device=iPhone&pageId=%ld&pageSize=%ld&status=0&tagName=%@", self.categoryId, _currentPageId, _pageSize, _currentTagName];
         
+    
         if (_loadEnable) {
+            [self.activity startAnimating];
             [RequestTool_v2 requestWithURL:_apiString paramString:params postRequest:NO callBackData:^(NSData *data) {
                 NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
                 
@@ -214,6 +238,7 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
                 DLog(@"加载完毕--%@, %@", _dataArray[0][@"title"], _dataArray[0][@"list"]);
                 [self.collectionView.footer endRefreshing];
                 [self.collectionView.header endRefreshing];
+                [self.activity stopAnimating];
                 [self.collectionView reloadData];
                 
                 self.navigationItem.leftBarButtonItem.enabled = YES;
@@ -342,7 +367,7 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
     // Configure the cell
     
     AudioModel *m = _dataArray[indexPath.section][@"list"][indexPath.row];
-    cell.tracksCountsLabel.text = [NSString stringWithFormat:@"共%02ld集", [m.tracksCounts integerValue]];
+    cell.tracksCountsLabel.text = [NSString stringWithFormat:@"%02ld", [m.tracksCounts integerValue]];
     cell.albumTitleLabel.text = m.title;
     [cell.albumImageView sd_setImageWithURL:[NSURL URLWithString:m.coverMiddle] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
     return cell;

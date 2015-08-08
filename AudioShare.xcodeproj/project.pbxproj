@@ -9,11 +9,9 @@
 /* Begin PBXBuildFile section */
 		C241B8E51B6F6B6500845637 /* SearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C241B8E21B6F6B6500845637 /* SearchModel.m */; };
 		C241B8E61B6F6B6500845637 /* SearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C241B8E41B6F6B6500845637 /* SearchTableViewController.m */; };
-		C241B8EA1B6FA35A00845637 /* DataBaseHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = C241B8E91B6FA35A00845637 /* DataBaseHandle.m */; };
 		C241B8EF1B6FA94700845637 /* FavorateTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C241B8EE1B6FA94700845637 /* FavorateTableViewController.m */; };
 		C241B8F11B6FABF200845637 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C241B8F01B6FABF200845637 /* libsqlite3.dylib */; };
 		C241B8F41B6FAD7C00845637 /* HistoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C241B8F31B6FAD7C00845637 /* HistoryTableViewController.m */; };
-		C2C08F551B6AFD5200930A4F /* RequestTool_v2.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C08F541B6AFD5200930A4F /* RequestTool_v2.m */; };
 		C2C08F581B6B047E00930A4F /* RadioTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C08F571B6B047E00930A4F /* RadioTableViewController.m */; };
 		C2C08F611B6B04CF00930A4F /* Radio.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C08F5B1B6B04CF00930A4F /* Radio.m */; };
 		C2C08F621B6B04CF00930A4F /* RadioProvince.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C08F5E1B6B04CF00930A4F /* RadioProvince.m */; };
@@ -104,6 +102,9 @@
 		C2CCA8681B67885000B62775 /* DownloadedAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCA8671B67885000B62775 /* DownloadedAlbumCell.m */; };
 		C2CCA8701B67A2A500B62775 /* DownloadingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCA86E1B67A2A500B62775 /* DownloadingTableViewCell.m */; };
 		C2CCA8711B67A2A500B62775 /* DownloadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C2CCA86F1B67A2A500B62775 /* DownloadingTableViewCell.xib */; };
+		C2CCC9AE1B759061007A01E1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCC9AD1B759061007A01E1 /* Reachability.m */; };
+		C2CCC9B41B759757007A01E1 /* DataBaseHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCC9B11B759757007A01E1 /* DataBaseHandle.m */; };
+		C2CCC9B51B759757007A01E1 /* RequestTool_v2.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCC9B31B759757007A01E1 /* RequestTool_v2.m */; };
 		C2CEAE261B71B013000F6858 /* HistoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CEAE251B71B013000F6858 /* HistoryModel.m */; };
 		C2CEAE2D1B72376F000F6858 /* Album_ListView.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CEAE2A1B72376F000F6858 /* Album_ListView.m */; };
 		C2CEAE2E1B72376F000F6858 /* Album_ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CEAE2C1B72376F000F6858 /* Album_ListViewController.m */; };
@@ -128,15 +129,11 @@
 		C241B8E21B6F6B6500845637 /* SearchModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchModel.m; sourceTree = "<group>"; };
 		C241B8E31B6F6B6500845637 /* SearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTableViewController.h; sourceTree = "<group>"; };
 		C241B8E41B6F6B6500845637 /* SearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchTableViewController.m; sourceTree = "<group>"; };
-		C241B8E81B6FA35A00845637 /* DataBaseHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataBaseHandle.h; sourceTree = "<group>"; };
-		C241B8E91B6FA35A00845637 /* DataBaseHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataBaseHandle.m; sourceTree = "<group>"; };
 		C241B8ED1B6FA94700845637 /* FavorateTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavorateTableViewController.h; sourceTree = "<group>"; };
 		C241B8EE1B6FA94700845637 /* FavorateTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavorateTableViewController.m; sourceTree = "<group>"; };
 		C241B8F01B6FABF200845637 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		C241B8F21B6FAD7C00845637 /* HistoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryTableViewController.h; sourceTree = "<group>"; };
 		C241B8F31B6FAD7C00845637 /* HistoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryTableViewController.m; sourceTree = "<group>"; };
-		C2C08F531B6AFD5200930A4F /* RequestTool_v2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestTool_v2.h; sourceTree = "<group>"; };
-		C2C08F541B6AFD5200930A4F /* RequestTool_v2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestTool_v2.m; sourceTree = "<group>"; };
 		C2C08F561B6B047E00930A4F /* RadioTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioTableViewController.h; sourceTree = "<group>"; };
 		C2C08F571B6B047E00930A4F /* RadioTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadioTableViewController.m; sourceTree = "<group>"; };
 		C2C08F5A1B6B04CF00930A4F /* Radio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Radio.h; sourceTree = "<group>"; };
@@ -305,6 +302,12 @@
 		C2CCA86D1B67A2A500B62775 /* DownloadingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadingTableViewCell.h; sourceTree = "<group>"; };
 		C2CCA86E1B67A2A500B62775 /* DownloadingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadingTableViewCell.m; sourceTree = "<group>"; };
 		C2CCA86F1B67A2A500B62775 /* DownloadingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DownloadingTableViewCell.xib; sourceTree = "<group>"; };
+		C2CCC9AC1B759061007A01E1 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		C2CCC9AD1B759061007A01E1 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		C2CCC9B01B759757007A01E1 /* DataBaseHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataBaseHandle.h; sourceTree = "<group>"; };
+		C2CCC9B11B759757007A01E1 /* DataBaseHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataBaseHandle.m; sourceTree = "<group>"; };
+		C2CCC9B21B759757007A01E1 /* RequestTool_v2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestTool_v2.h; sourceTree = "<group>"; };
+		C2CCC9B31B759757007A01E1 /* RequestTool_v2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestTool_v2.m; sourceTree = "<group>"; };
 		C2CEAE241B71B013000F6858 /* HistoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryModel.h; sourceTree = "<group>"; };
 		C2CEAE251B71B013000F6858 /* HistoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryModel.m; sourceTree = "<group>"; };
 		C2CEAE291B72376F000F6858 /* Album_ListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album_ListView.h; sourceTree = "<group>"; };
@@ -368,16 +371,6 @@
 			path = Search;
 			sourceTree = "<group>";
 		};
-		C241B8E71B6FA33C00845637 /* Tool */ = {
-			isa = PBXGroup;
-			children = (
-				C241B8E81B6FA35A00845637 /* DataBaseHandle.h */,
-				C241B8E91B6FA35A00845637 /* DataBaseHandle.m */,
-			);
-			name = Tool;
-			path = Download/Tool;
-			sourceTree = "<group>";
-		};
 		C241B8EB1B6FA7A600845637 /* Favorate */ = {
 			isa = PBXGroup;
 			children = (
@@ -395,15 +388,6 @@
 				C241B8F31B6FAD7C00845637 /* HistoryTableViewController.m */,
 			);
 			path = History;
-			sourceTree = "<group>";
-		};
-		C2C08F521B6AFD5200930A4F /* Tools */ = {
-			isa = PBXGroup;
-			children = (
-				C2C08F531B6AFD5200930A4F /* RequestTool_v2.h */,
-				C2C08F541B6AFD5200930A4F /* RequestTool_v2.m */,
-			);
-			path = Tools;
 			sourceTree = "<group>";
 		};
 		C2C08F591B6B04CF00930A4F /* Model */ = {
@@ -599,9 +583,9 @@
 				C2C4DFBF1B6648D3004690C3 /* Radio */,
 				C241B8E01B6F6B3500845637 /* Search */,
 				C2C4DFBA1B6648D3004690C3 /* Download */,
-				C241B8E71B6FA33C00845637 /* Tool */,
 				C2C4DFC41B6648D3004690C3 /* User_Settings */,
 				C2C4DFC31B6648D3004690C3 /* ThirdPart */,
+				C2CCC9AF1B759757007A01E1 /* Tool */,
 				C2C4DFC01B6648D3004690C3 /* Resources */,
 				C2C4DF911B66470C004690C3 /* Images.xcassets */,
 				C2C4DF931B66470C004690C3 /* LaunchScreen.xib */,
@@ -735,8 +719,8 @@
 		C2C4DFC31B6648D3004690C3 /* ThirdPart */ = {
 			isa = PBXGroup;
 			children = (
+				C2CCC9AB1B759061007A01E1 /* Reachability */,
 				C2C08F771B6B574E00930A4F /* MJRefresh */,
-				C2C08F521B6AFD5200930A4F /* Tools */,
 				C2C4DFCD1B66553E004690C3 /* SDWebImage */,
 			);
 			path = ThirdPart;
@@ -870,6 +854,26 @@
 			);
 			name = DownloadingCell;
 			path = DownloadedCell;
+			sourceTree = "<group>";
+		};
+		C2CCC9AB1B759061007A01E1 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				C2CCC9AC1B759061007A01E1 /* Reachability.h */,
+				C2CCC9AD1B759061007A01E1 /* Reachability.m */,
+			);
+			path = Reachability;
+			sourceTree = "<group>";
+		};
+		C2CCC9AF1B759757007A01E1 /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				C2CCC9B01B759757007A01E1 /* DataBaseHandle.h */,
+				C2CCC9B11B759757007A01E1 /* DataBaseHandle.m */,
+				C2CCC9B21B759757007A01E1 /* RequestTool_v2.h */,
+				C2CCC9B31B759757007A01E1 /* RequestTool_v2.m */,
+			);
+			path = Tool;
 			sourceTree = "<group>";
 		};
 		C2CEAE231B71AFED000F6858 /* HistoryModel */ = {
@@ -1081,7 +1085,6 @@
 				C2C4DFB31B6647FD004690C3 /* RootTabBarController.m in Sources */,
 				C2C4DFF81B66553E004690C3 /* UIButton+WebCache.m in Sources */,
 				C2CCA8131B67121300B62775 /* PlayerViewController.m in Sources */,
-				C2C08F551B6AFD5200930A4F /* RequestTool_v2.m in Sources */,
 				C2C4DFF01B66553E004690C3 /* NSData+ImageContentType.m in Sources */,
 				C2C08F611B6B04CF00930A4F /* Radio.m in Sources */,
 				C2C725F11B69B307005E671F /* SpecialItem.m in Sources */,
@@ -1104,6 +1107,7 @@
 				C2C4DFF31B66553E004690C3 /* SDWebImageDecoder.m in Sources */,
 				C2CCA8611B67871B00B62775 /* DownloadedTracksCell.m in Sources */,
 				C2C08FB01B6B574E00930A4F /* MJRefreshNormalHeader.m in Sources */,
+				C2CCC9AE1B759061007A01E1 /* Reachability.m in Sources */,
 				C2C08FB11B6B574E00930A4F /* MJRefreshStateHeader.m in Sources */,
 				C2CCA8441B676D6C00B62775 /* AudioTableViewController.m in Sources */,
 				C2C08FAC1B6B574E00930A4F /* MJRefreshBackGifFooter.m in Sources */,
@@ -1111,6 +1115,7 @@
 				C241B8E51B6F6B6500845637 /* SearchModel.m in Sources */,
 				C2CCA84D1B676D8700B62775 /* AlbumTableViewCell.m in Sources */,
 				C2C08FB31B6B574E00930A4F /* MJRefreshConst.m in Sources */,
+				C2CCC9B41B759757007A01E1 /* DataBaseHandle.m in Sources */,
 				C2CEAE261B71B013000F6858 /* HistoryModel.m in Sources */,
 				C2C4DFC51B6648D3004690C3 /* AudioBookCategoryCollectionViewCell.m in Sources */,
 				C2C4DFEF1B66553E004690C3 /* MKAnnotationView+WebCache.m in Sources */,
@@ -1120,12 +1125,12 @@
 				C2C4DFF21B66553E004690C3 /* SDWebImageCompat.m in Sources */,
 				C2C4DF8D1B66470C004690C3 /* main.m in Sources */,
 				C2C08FAD1B6B574E00930A4F /* MJRefreshBackNormalFooter.m in Sources */,
+				C2CCC9B51B759757007A01E1 /* RequestTool_v2.m in Sources */,
 				C2C08FA91B6B574E00930A4F /* MJRefreshAutoGifFooter.m in Sources */,
 				C2C08F621B6B04CF00930A4F /* RadioProvince.m in Sources */,
 				C2C4DFFA1B66553E004690C3 /* UIImage+MultiFormat.m in Sources */,
 				C2C4DFFC1B66553E004690C3 /* UIImageView+HighlightedWebCache.m in Sources */,
 				C2CCA8701B67A2A500B62775 /* DownloadingTableViewCell.m in Sources */,
-				C241B8EA1B6FA35A00845637 /* DataBaseHandle.m in Sources */,
 				C241B8F41B6FAD7C00845637 /* HistoryTableViewController.m in Sources */,
 				C2C08FAB1B6B574E00930A4F /* MJRefreshAutoStateFooter.m in Sources */,
 				C2C4DFF91B66553E004690C3 /* UIImage+GIF.m in Sources */,

@@ -9,8 +9,17 @@
 #import "AppDelegate.h"
 #import "RootTabBarController.h"
 #import "PlayerViewController.h"
-@interface AppDelegate ()
+#import "Reachability.h"
+@interface AppDelegate () <UIAlertViewDelegate>
+{
+    Reachability *hostReach;
+}
 
+//网络连接改变
+- (void)reachabilityChanged: (NSNotification *)note;
+
+//处理连接改变后的情况
+- (void) updateInterfaceWithReachability: (Reachability*) curReach;
 @end
 
 @implementation AppDelegate
@@ -26,8 +35,76 @@
     RootTabBarController *rootTBC = [[RootTabBarController alloc] init];
     self.window.rootViewController = rootTBC;
     
+    //开启网络状况的监听
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+    
+    //初始化hostReach
+    Reachability *hostReach = [Reachability reachabilityWithHostname:@"baidu.com"];
+    
+    //开始监听,会启动一个run loop
+    [hostReach startNotifier];
+    
+    //解决偏移问题
+    [[UIApplication sharedApplication]setStatusBarHidden:YES];
+    
+    
+    
     return YES;
 }
+
+- (void)reachabilityChanged: (NSNotification *)note
+{
+    Reachability *curReach = [note object];
+    
+    NSParameterAssert([curReach isKindOfClass:[Reachability class]]);
+    
+    [self updateInterfaceWithReachability: curReach];
+}
+
+//处理连接改变后的情况
+- (void) updateInterfaceWithReachability: (Reachability*) curReach
+{
+    //对连接改变做出响应的处理动作
+    NetworkStatus stause = [curReach currentReachabilityStatus];
+    
+    if (stause == ReachableViaWWAN) {
+        DLog(@"2G/3G网络");
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前为2G/3G网络是否继续" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alertView show];
+    }
+    else if (stause == ReachableViaWiFi)
+    {
+        DLog(@"当前为WiFi网络");
+    }else
+    {
+        DLog(@"无网络");
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前无网络，无法加载数据，是否跳转到本地下载" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        
+        alertView.delegate = self;
+        [alertView show];
+        
+        
+    }
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    NSString *meg = [NSString stringWithFormat:@"点击第%ld个按钮",buttonIndex];
+    DLog(@"meg = %@",meg);
+    if (buttonIndex == 1) {
+        
+        //DownloadedTrackViewController *downloadTVC = [[DownloadedTrackViewController alloc]init];
+        
+        //[self.window.rootViewController presentViewController:downloadTVC animated:YES completion:^{
+        //    DLog(@"!@#$^&*()");
+        //}];
+        
+    }
+}
+
+
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -86,7 +163,7 @@
     CGFloat lastSeconds = CMTimeGetSeconds(currentTime);
     NSString *lastLiveUrl = [PlayerViewController sharedPlayer].lastLiveUrl;
     NSString *imageUrl = [PlayerViewController sharedPlayer].imageUrl;
-    DLog(@"index--%ud  trackList--%@  lastSeconds--%lf", lastIndex, tracksList, lastSeconds);
+    DLog(@"index--%lu  trackList--%@  lastSeconds--%lf", lastIndex, tracksList, lastSeconds);
     //-------------------------上次播放的索引---------------上次播放的时间-------------------播放列表-----//
     if (tracksList) {
         NSDictionary *dataDict = @{@"lastIndex":@(lastIndex), @"lastSeconds":@(lastSeconds), @"trackList":tracksList, @"imageUrl":imageUrl};

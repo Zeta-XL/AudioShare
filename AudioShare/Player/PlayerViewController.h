@@ -36,7 +36,8 @@
 @property (nonatomic, copy) NSString *titleString;
 // 上次播放时间
 @property (nonatomic, assign)CGFloat lastSeconds;
-
+// 是否示后台播放
+@property (nonatomic, assign)BOOL background;
 // 数据
 @property (nonatomic, assign)BOOL historyFlag;
 
@@ -58,5 +59,5 @@
 - (SpecialItem *)createPlayerItemWithURLString:(NSString *)urlString;
 + (instancetype)sharedPlayer;
 - (void)releasePlayer;
-
+- (void)p_saveCurrentAlbumInfo;
 @end

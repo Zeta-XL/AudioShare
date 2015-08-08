@@ -37,7 +37,10 @@
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"清空" style:(UIBarButtonItemStyleDone) target:self action:@selector(p_deleteAllHistoryAction:)];
     
-    
+    PlayerViewController *player = [PlayerViewController sharedPlayer];
+    if (player.isPlaying && player.background) {
+        [player p_saveCurrentAlbumInfo];
+    }
     
     
     

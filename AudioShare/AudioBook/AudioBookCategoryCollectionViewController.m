@@ -18,6 +18,8 @@
 @interface AudioBookCategoryCollectionViewController ()<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,UICollectionViewDelegate>
 
 @property (nonatomic, strong)NSMutableArray *dataArray;
+
+@property (nonatomic, strong)UIActivityIndicatorView *activity;
 @end
 
 @implementation AudioBookCategoryCollectionViewController
@@ -28,6 +30,7 @@ static NSString * const reuseIdentifier = @"CategoryCell";
     [super viewWillAppear:animated];
     
     self.dataArray = [NSMutableArray array];
+    [self.activity startAnimating];
     [RequestTool_v2 requestWithURL:kAudioCategoryList paramString:nil postRequest:NO callBackData:^(NSData *data) {
         // 解析
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
@@ -42,7 +45,9 @@ static NSString * const reuseIdentifier = @"CategoryCell";
         } else {
             DLog(@"--请求数据失败--");
         }
+        [self.activity stopAnimating];
         [self.collectionView reloadData];
+        
     }];
     
 }
@@ -56,8 +61,26 @@ static NSString * const reuseIdentifier = @"CategoryCell";
     [self.collectionView registerClass:[AudioBookCategoryCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     self.collectionView.backgroundColor = [UIColor whiteColor];
     [self p_setupNavigationBar];
+    [self p_setupActivity];
     
+}
+
+
+// 进度轮
+- (void)p_setupActivity
+{
+    //进度轮
+    self.activity = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(100, 100, 80, 50)];
+    self.activity.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    self.activity.backgroundColor = [UIColor grayColor];
+    self.activity.alpha = 0.3;
+    self.activity.layer.cornerRadius = 6;
+    self.activity.layer.masksToBounds = YES;
     
+    //显示位置
+    [self.activity setCenter:CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2)];
+    
+    [self.view addSubview:_activity];
 }
 
 #pragma mark -----navigationBar

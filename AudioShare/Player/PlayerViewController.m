@@ -15,6 +15,7 @@
 #import "DataBaseHandle.h"
 #import "HistoryTableViewController.h"
 
+
 static PlayerViewController *singlePlayer = nil;
 
 @interface PlayerViewController () <UIAlertViewDelegate>
@@ -92,7 +93,7 @@ static PlayerViewController *singlePlayer = nil;
 {
     [super viewWillAppear:YES];
     
-    
+    _background = NO;
     // 视图
     self.titleLabel.text = self.titleString;
     [self.contentImageView sd_setImageWithURL:[NSURL URLWithString:self.imageUrl] placeholderImage:nil];
@@ -238,6 +239,7 @@ static PlayerViewController *singlePlayer = nil;
     self.currentSeconds = 0;
     self.currentItem = nil;
     self.urlString = nil;
+    _background = YES;
 
 }
 
@@ -502,7 +504,7 @@ static PlayerViewController *singlePlayer = nil;
         
         [self.player pause];
     }
-    DLog(@"currentIndex=%ud", _currentIndex);
+    DLog(@"currentIndex=%lu", _currentIndex);
 }
 
 // 上一首
@@ -513,7 +515,7 @@ static PlayerViewController *singlePlayer = nil;
     }
     if (_currentIndex > 0) {
         _currentIndex--;
-        DLog(@"pre to %ud", _currentIndex);
+        DLog(@"pre to %lud", _currentIndex);
         if (_currentIndex == 0) {
             sender.enabled = NO;
         }
@@ -539,7 +541,7 @@ static PlayerViewController *singlePlayer = nil;
     }
     if (_currentIndex < _tracksList.count - 1) {
         _currentIndex++;
-         DLog(@"nest to %ud", _currentIndex);
+         DLog(@"nest to %lud", _currentIndex);
         if (_currentIndex == _tracksList.count - 1) {
             sender.enabled = NO;
         }
@@ -602,7 +604,7 @@ static PlayerViewController *singlePlayer = nil;
     [_urlStateList[lastIndex] setObject:@(lastSeconds) forKey:@"timeState"];
     
     // ******************更新数据库(播放历史)***********************
-    [self p_saveCurrentAlbumInfo];
+//    [self p_saveCurrentAlbumInfo];
     
     self.currentItem = [self createPlayerItemWithURLString:_urlStateList[index][@"url"]];
     self.lastItem = _currentItem;
@@ -625,7 +627,10 @@ static PlayerViewController *singlePlayer = nil;
     
     
     [self.player replaceCurrentItemWithPlayerItem:_currentItem];
-    [self p_setPlayerTimerObserver];
+    if (!_background) {
+        [self p_setPlayerTimerObserver];
+    }
+    
 }
 
 

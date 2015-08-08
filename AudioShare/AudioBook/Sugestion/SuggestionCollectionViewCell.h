@@ -12,4 +12,7 @@
 @property (nonatomic, strong)UIImageView *albumImageView;
 @property (nonatomic, strong)UILabel *albumTitleLabel;
 @property (nonatomic, strong)UILabel *tracksCountsLabel;
+@property (nonatomic, strong)UILabel *textLabel1;
+@property (nonatomic, strong)UILabel *textLabel2;
+
 @end

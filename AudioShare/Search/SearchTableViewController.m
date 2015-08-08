@@ -30,7 +30,7 @@
 
 
 @property (nonatomic, strong)NSMutableArray *dataArray;
-
+@property (nonatomic, strong)UIActivityIndicatorView *activity;
 
 @end
 
@@ -83,10 +83,26 @@
     [self p_dragUptoLoadMore];
     self.tableView.footer.hidden = YES;
     self.tableView.tableHeaderView.hidden = YES;
+    [self p_setupActivity];
 }
 
 
-
+//进度轮
+- (void)p_setupActivity
+{
+    //进度轮
+    self.activity = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(100, 100, 80, 50)];
+    self.activity.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    self.activity.backgroundColor = [UIColor grayColor];
+    self.activity.alpha = 0.3;
+    self.activity.layer.cornerRadius = 6;
+    self.activity.layer.masksToBounds = YES;
+    
+    //显示位置
+    [self.activity setCenter:CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2)];
+    
+    [self.view addSubview:_activity];
+}
 
 -(void)p_requestDataWithPageId:(NSInteger)pageId
                       pageSize:(NSInteger)pageSize
@@ -97,6 +113,7 @@
     NSString *params = [NSString stringWithFormat:@"device=android&condition=relation&core=album&kw=%@&page=%ld&rows=%ld", self.kw, pageId, pageSize];
     
     if (_loadEnable) {
+        [self.activity startAnimating];
         [RequestTool_v2 requestWithURL:kSearchUrl paramString:params postRequest:nil callBackData:^(NSData *data) {
             
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
@@ -135,9 +152,9 @@
                 [self.tableView.footer endRefreshing];
                 [self.tableView.header endRefreshing];
             }
-            
-            
+ 
             [self.tableView reloadData];
+            [self.activity stopAnimating];
             _loadEnable = YES;
             self.tableView.scrollEnabled = YES;
             self.tableView.footer.hidden = NO;

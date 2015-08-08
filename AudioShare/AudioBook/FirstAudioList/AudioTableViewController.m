@@ -27,6 +27,7 @@
     
 }
 @property (nonatomic, strong)NSMutableArray *dataArray;
+@property (nonatomic, strong)UIActivityIndicatorView *activity;
 
 @end
 
@@ -39,6 +40,22 @@
     
 }
 
+//进度轮
+- (void)p_setupActivity
+{
+    //进度轮
+    self.activity = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(100, 100, 80, 50)];
+    self.activity.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    self.activity.backgroundColor = [UIColor grayColor];
+    self.activity.alpha = 0.3;
+    self.activity.layer.cornerRadius = 6;
+    self.activity.layer.masksToBounds = YES;
+    
+    //显示位置
+    [self.activity setCenter:CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2)];
+    
+    [self.view addSubview:_activity];
+}
 
 - (void)p_requestDataWithPageId:(NSInteger)pageId
                        pageSize:(NSInteger)pageSize
@@ -47,7 +64,7 @@
     
     NSString *params = [NSString stringWithFormat:@"calcDimension=hot&categoryId=%@&device=iPhone&pageId=%ld&pageSize=%ld&status=0&tagName=%@", self.categoryId, pageId, pageSize, self.tagName];
     
-    
+    [self.activity startAnimating];
     [RequestTool_v2 requestWithURL:kSubAudioAlbumList paramString:params postRequest:NO callBackData:^(NSData *data) {
         NSMutableArray *tempArr = nil;
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
@@ -84,14 +101,12 @@
         [self.tableView.footer endRefreshing];
         [self.tableView.header endRefreshing];
         self.navigationItem.leftBarButtonItem.enabled = YES;
+        [self.activity stopAnimating];
     }];
     self.navigationItem.leftBarButtonItem.enabled = NO;
     
     
-    
-
-
-    
+   
 }
 
 
@@ -127,7 +142,7 @@
     // 下拉刷新
     [self p_dragDownToRefresh];
     
-    
+    [self p_setupActivity];
 
 }
 

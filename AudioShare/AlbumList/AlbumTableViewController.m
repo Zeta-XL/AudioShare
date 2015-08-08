@@ -30,6 +30,8 @@
 @property (nonatomic, strong)AlbumView *albumView;
 @property (nonatomic, strong)NSMutableArray *tracksList;
 @property (nonatomic, strong)AlbumModel *album;
+@property (nonatomic, strong)UIActivityIndicatorView *activity;
+
 @end
 
 @implementation AlbumTableViewController
@@ -40,7 +42,7 @@
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:(UIBarButtonItemStyleDone) target:self action:@selector(backButtonAction:)];
     [self p_albumView];
-    
+    [self p_setupActivity];
 
     
     //注册
@@ -51,8 +53,26 @@
     
     [self p_requestDataWithPageId:_currentPageId++ pageSize:_pageSize];
     [self p_dragUptoLoadMore];
+    [self.activity startAnimating];
      
 }
+
+- (void)p_setupActivity
+{
+    //进度轮
+    self.activity = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(100, 100, 80, 50)];
+    self.activity.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    self.activity.backgroundColor = [UIColor grayColor];
+    self.activity.alpha = 0.3;
+    self.activity.layer.cornerRadius = 6;
+    self.activity.layer.masksToBounds = YES;
+    
+    //显示位置
+    [self.activity setCenter:CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2)];
+    
+    [self.view addSubview:_activity];
+}
+
 
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -100,6 +120,7 @@
             _albumView.writerLabel.text = [NSString stringWithFormat:@"作者: %@",  _album.nickname];
             _albumView.detailLabel.text = [NSString stringWithFormat:@"简介: %@",  _album.intro];
             _loadOk = YES;
+            [self.activity stopAnimating];
             _albumView.collectionButton.enabled = YES;
             _albumView.loadButton.enabled = YES;
         } else {
