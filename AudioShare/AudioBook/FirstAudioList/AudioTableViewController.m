@@ -85,7 +85,7 @@
                     
                     [tempArr addObject:m];
                     
-                    
+                    DLog(@"%@", tempArr);
                 }
                 // 获得maxPageId
                 _maxPageId = [dict[@"maxPageId"] integerValue];
@@ -126,7 +126,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+/*    // 图片
+    CGRect rect = [[self view] bounds];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:rect];
+    [imageView setImage:[UIImage imageNamed:@"9.jpg" ]];
     
+    [self.view setBackgroundColor:[UIColor clearColor]];
+    self.tableView.opaque = NO;
+    self.tableView.backgroundView = imageView;
+  */  
     
     self.navigationItem.title = @"听我想听";
     
@@ -272,12 +280,13 @@
     
     AudioModel *m = _dataArray[indexPath.row];
     cell.titleLabel.text = m.title;
+//    cell.titleLabel.textColor = [UIColor whiteColor];
     cell.tagsLabel.text = m.tags;
+//    cell.tagsLabel.textColor = [UIColor whiteColor];
     cell.tracksCountsLabel.text = [NSString stringWithFormat:@"共%@集",m.tracksCounts];
-
+//    cell.tracksCountsLabel.textColor = [UIColor whiteColor];
     [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[_dataArray[indexPath.row]coverMiddle]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
-    
-    
+//    cell.backgroundColor = [UIColor whiteColor];
     
     return cell;
 }

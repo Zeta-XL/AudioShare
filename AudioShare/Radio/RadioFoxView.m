@@ -24,7 +24,10 @@
 - (void)p_setupView
 {
      self.backgroundColor = [UIColor whiteColor];
-
+    
+    self.backImageView = [[UIImageView alloc] initWithFrame:self.bounds];
+    [self addSubview:_backImageView];
+    
     self.networkButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
     _networkButton.frame = CGRectMake(15, 10, CGRectGetWidth(self.bounds) / 3 - 20 , 35);
     [_networkButton setTitle:@"网络电台" forState:(UIControlStateNormal)];

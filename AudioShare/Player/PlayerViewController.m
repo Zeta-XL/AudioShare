@@ -283,7 +283,7 @@ static PlayerViewController *singlePlayer = nil;
             self.lastSeconds = [dataDict[@"lastSeconds"] doubleValue];
             DLog(@"lastSecinds---%lf", _lastSeconds);
             self.currentIndex = [dataDict[@"lastIndex"] integerValue];
-            DLog(@"lastIndex--- %u", _currentIndex);
+            DLog(@"lastIndex--- %lu", _currentIndex);
             self.imageUrl = dataDict[@"imageUrl"];
             
             TrackModel *track = _tracksList[_currentIndex];
@@ -467,6 +467,7 @@ static PlayerViewController *singlePlayer = nil;
     TimerViewController *timerVC = [[TimerViewController alloc] init];
     timerVC.isModal = YES;
     UINavigationController *timerNC = [[UINavigationController alloc] initWithRootViewController:timerVC];
+    [timerNC.navigationBar setBackgroundImage:[UIImage imageNamed: @"navigationBar.jpg"] forBarMetrics:(UIBarMetricsDefault)];
     [self presentViewController:timerNC animated:YES completion:nil];
 
     DLog(@"定时关闭");
@@ -588,7 +589,7 @@ static PlayerViewController *singlePlayer = nil;
 {
     HistoryTableViewController *historyVC = [[HistoryTableViewController alloc] init];
     UINavigationController *hisNC = [[UINavigationController alloc] initWithRootViewController:historyVC];
-    
+    [hisNC.navigationBar setBackgroundImage:[UIImage imageNamed: @"navigationBar.jpg"] forBarMetrics:(UIBarMetricsDefault)];
     historyVC.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back@2x.png"] style:(UIBarButtonItemStyleDone) target:historyVC action:@selector(backToPlayer:)];
     historyVC.isModal = YES;
     [self presentViewController:hisNC animated:YES completion:^{

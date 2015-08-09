@@ -10,6 +10,8 @@
 
 @interface RadioFoxView : UIView
 
+@property (nonatomic, strong)UIImageView *backImageView;
+
 //网络电台
 @property (nonatomic, strong)UIButton *networkButton;
 

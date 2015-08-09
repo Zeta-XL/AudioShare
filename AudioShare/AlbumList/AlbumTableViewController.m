@@ -40,6 +40,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // 背景
+/*    CGRect rect = [[self view] bounds];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:rect];
+    [imageView setImage:[UIImage imageNamed:@"19.jpg" ]];
+    
+    [self.view setBackgroundColor:[UIColor clearColor]];
+    self.tableView.opaque = NO;
+    self.tableView.backgroundView = imageView;
+*/
+    
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back@2x.png"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backButtonAction:)];
     [self p_albumView];
     [self p_setupActivity];
@@ -118,6 +128,9 @@
             [_albumView.albumImageView sd_setImageWithURL:[NSURL URLWithString:_album.coverLarge] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
             _albumView.titleLabel.text = _album.title;
             _albumView.writerLabel.text = [NSString stringWithFormat:@"作者: %@",  _album.nickname];
+            if (_album.intro.length == 0) {
+                _album.intro = @"无";
+            }
             _albumView.detailLabel.text = [NSString stringWithFormat:@"简介: %@",  _album.intro];
             _loadOk = YES;
             [self.activity stopAnimating];
@@ -303,17 +316,17 @@
     
     cell.titleLabel.text = track.title;
     NSString *time = [self p_convertTime:track.duration];
-  
+//    cell.titleLabel.textColor = [UIColor whiteColor];
     cell.playTimesLabel.text = [NSString stringWithFormat:@"时长 %@", time];
-    
+//    cell.playTimesLabel.textColor = [UIColor whiteColor];
     NSInteger playtimes = track.playtimes;
     if (playtimes >= 10000  ) {
         cell.commentLabel.text = [NSString stringWithFormat:@"收听人数: %.1lf万", playtimes/10000.0];
     } else {
         cell.commentLabel.text = [NSString stringWithFormat:@"收听人数: %ld", playtimes];
     }
-    
-    
+//    cell.commentLabel.textColor = [UIColor whiteColor];
+//    cell.backgroundColor = [UIColor clearColor];
     
     return cell;
 }

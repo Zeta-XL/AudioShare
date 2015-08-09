@@ -240,7 +240,7 @@
 -(void)createView
 {
     
-    self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds) - 100, 40)];
+    self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds) - 100, 30)];
     
     self.searchBar.placeholder = @"输入搜索专辑的名称";
     

@@ -73,7 +73,7 @@
     
     self.tabBar.tintColor = [UIColor blackColor];
     self.tabBar.barStyle = UIBarMetricsDefault;
-
+    self.tabBar.barTintColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"navigationBar.jpg"]];
 }
 
 // 创建数据库和表
@@ -124,7 +124,7 @@
     self.buttonView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.tabBar.frame)-25, CGRectGetMinY(self.tabBar.frame)-50, 50, 50)];
     _buttonView.backgroundColor = [UIColor whiteColor];
     _buttonView.layer.cornerRadius = 25;
-    _buttonView.alpha = 0.5;
+    _buttonView.alpha = 0.6;
     
     UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panAction:)];
     [_buttonView addGestureRecognizer:pan];

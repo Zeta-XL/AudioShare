@@ -18,6 +18,8 @@
 
 @interface AlbumView : UIView
 
+@property (nonatomic, strong)UIImageView *albumBackView;
+
 //视图
 @property (nonatomic, strong)UIImageView *albumImageView;
 

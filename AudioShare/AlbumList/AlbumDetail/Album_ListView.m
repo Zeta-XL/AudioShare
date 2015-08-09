@@ -26,12 +26,24 @@
 {
     
     self.backgroundColor = [UIColor whiteColor];
+    CGRect rect = [self bounds];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:rect];
+    [imageView setImage:[UIImage imageNamed:@"detailBack.jpg" ]];
     
-    self.myScrollView = [[UIScrollView alloc]initWithFrame:self.frame];
+    [self setBackgroundColor:[UIColor clearColor]];
+    self.myScrollView.opaque = NO;
+    
+    [self addSubview:imageView];
+    
+    
+    
+    self.myScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height - 64 - 49)];
     
     //self.myScrollView.backgroundColor = [UIColor yellowColor];
-    
+    _myScrollView.backgroundColor = [UIColor clearColor];
     [self addSubview:_myScrollView];
+
+    
     
     
     //
@@ -67,7 +79,7 @@
         CGRect temp = _discriptionLabel.frame;
         temp.size.height = [self.delegate tellTextHeight];
         _discriptionLabel.frame = temp;
-        _myScrollView.contentSize = CGSizeMake(self.frame.size.width, height + 64);
+        _myScrollView.contentSize = CGSizeMake(self.frame.size.width, height);
     }
     
 }

@@ -27,6 +27,13 @@
     //
     self.layer.borderColor = [UIColor grayColor].CGColor;
     self.layer.borderWidth = 1.f;
+    self.backgroundColor = [UIColor whiteColor];
+    
+    // backImageView
+    self.albumBackView = [[UIImageView alloc] initWithFrame:self.bounds];
+    _albumBackView.image = [UIImage imageNamed:@"albumBackView.jpg"];
+    [self addSubview:_albumBackView];
+    
     self.titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 5, CGRectGetWidth(self.frame) - 40, (self.bounds.size.height ) /4)];
 //    self.titleLabel.backgroundColor = [UIColor blueColor];
     self.titleLabel.numberOfLines = 2;

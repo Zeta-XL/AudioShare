@@ -33,6 +33,8 @@
 @property (nonatomic, assign)BOOL loadEnable;
 @property (nonatomic, assign)BOOL networkOK;
 @property (nonatomic, strong)UIActivityIndicatorView *activity;
+@property (nonatomic, strong)NSArray *imageArray;
+
 @end
 
 @implementation RadioTableViewController
@@ -49,6 +51,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    UIImage *v1 = [UIImage imageNamed:@"v1.jpg"];
+    UIImage *v2 = [UIImage imageNamed:@"v2.jpg"];
+    UIImage *v3 = [UIImage imageNamed:@"v3.jpg"];
+    self.imageArray = @[v1, v2, v3];
     //注册
     [self.tableView registerClass:[RadioTableViewCell class] forCellReuseIdentifier:@"radioCell"];
     self.titleString = @"广播电台";
@@ -58,7 +64,7 @@
     [self.radioFoxView.countriesButton addTarget:self action:@selector(countriesButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [self.radioFoxView.provinceButton addTarget:self action:@selector(provinceButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     _radioFoxView.foxLabel.text = @"国家电台列表";
-    
+    _radioFoxView.backImageView.image = _imageArray[1];
     self.pageSize = 15;
     self.currentPageId = 1;
     self.radioType = 1;
@@ -273,6 +279,7 @@
     
     if (_loadEnable) {
         self.radioFoxView.foxLabel.text = @"网络电台列表";
+        _radioFoxView.backImageView.image = _imageArray[0];
     }
     self.radioType = 3;
     self.currentPageId = 1;
@@ -290,6 +297,7 @@
 {
     if (_loadEnable) {
         self.radioFoxView.foxLabel.text = @"国家电台列表";
+        _radioFoxView.backImageView.image = _imageArray[1];
     }
     self.radioType = 1;
     self.currentPageId = 1;
@@ -316,6 +324,7 @@
             self.provinceCode = aString;
             [self p_requestDataWithPageId:_currentPageId++ pageSize:_pageSize];
             self.radioFoxView.foxLabel.text = @"地方电台列表";
+            _radioFoxView.backImageView.image = _imageArray[2];
         };
         [self.navigationController pushViewController:provinceVC animated:YES];
     } else {

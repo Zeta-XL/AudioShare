@@ -63,6 +63,7 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:(UIBarButtonSystemItemDone) target:self action:@selector(confirmAction:)];
     self.navigationItem.rightBarButtonItem.enabled = NO;
     self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed: @"navigationBar.jpg"] forBarMetrics:(UIBarMetricsDefault)];
 }
 
 - (void)backButtonAction:(UIBarButtonItem *)sender
