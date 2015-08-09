@@ -31,6 +31,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
+
     
     RootTabBarController *rootTBC = [[RootTabBarController alloc] init];
     self.window.rootViewController = rootTBC;
@@ -41,13 +42,34 @@
     
     self.hostReach = [Reachability reachabilityForInternetConnection];
     NetworkStatus status = [_hostReach currentReachabilityStatus];
-    if (status == NotReachable) {
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前无网络，无法加载数据" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alertView show];
-        [ud setBool:NO forKey:@"networkOK"];
-    } else {
-        [ud setBool:YES forKey:@"networkOK"];
+    
+    switch (status) {
+        case ReachableViaWiFi:
+        {
+            [ud setBool:YES forKey:@"networkOK"];
+            break;
+        }
+        case ReachableViaWWAN:
+        {
+            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前为2G/3G网络是否继续收听" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            alertView.delegate = self;
+            alertView.tag = 102;
+            BOOL swichOn = [[NSUserDefaults standardUserDefaults] boolForKey:@"switchOn"];
+            if (!swichOn) {
+                [alertView show];
+            }
+            break;
+        }
+        case NotReachable:
+        {   UIAlertView *alert= [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前无网络，无法加载数据" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            [ud setBool:NO forKey:@"networkOK"];
+            break;
+        }
+        default:
+            break;
     }
+    
     [ud synchronize];
 
     //开启网络状况的监听
@@ -82,8 +104,9 @@
     if (status == ReachableViaWWAN) {
         
         DLog(@"2G/3G网络");
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前为2G/3G网络是否继续" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前为2G/3G网络是否继续收听" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         alertView.delegate = self;
+        alertView.tag = 101;
         BOOL swichOn = [[NSUserDefaults standardUserDefaults] boolForKey:@"switchOn"];
         if (!swichOn) {
             [alertView show];
@@ -117,16 +140,18 @@
     DLog(@"meg = %@",meg);
     
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-
-    if (buttonIndex == 0) {
-        [ud setBool:NO forKey:@"networkOK"];
-        [ud setBool:NO forKey:@"switchOn"];
-        [ud synchronize];
-    } else if (buttonIndex == 1) {
-        [ud setBool:YES forKey:@"networkOK"];
-        [ud setBool:YES forKey:@"switchOn"];
-        [ud synchronize];
+    if (alertView.tag == 101 || alertView.tag == 102 ) {
+        if (buttonIndex == 0) {
+            [ud setBool:NO forKey:@"networkOK"];
+            [ud setBool:NO forKey:@"switchOn"];
+            [ud synchronize];
+        } else if (buttonIndex == 1) {
+            [ud setBool:YES forKey:@"networkOK"];
+            [ud setBool:YES forKey:@"switchOn"];
+            [ud synchronize];
+        }
     }
+    
 }
 
 
@@ -151,6 +176,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    [application beginBackgroundTaskWithExpirationHandler:nil];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

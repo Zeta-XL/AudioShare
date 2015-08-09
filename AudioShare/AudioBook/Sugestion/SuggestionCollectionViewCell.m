@@ -21,12 +21,16 @@
 - (void)p_setUpView
 {
     self.contentView.backgroundColor = [UIColor whiteColor];
+    self.contentView.layer.borderColor = [UIColor grayColor].CGColor;
+    self.contentView.layer.borderWidth = 1.f;
     
     // 专辑图片
     self.albumImageView = [[UIImageView alloc] init];
     _albumImageView.frame = CGRectMake(0, 0, self.contentView.bounds.size.width, self.contentView.bounds.size.height * 0.66);
     [self.contentView addSubview:_albumImageView];
-//    _albumImageView.backgroundColor = [UIColor grayColor];
+    _albumImageView.layer.borderColor = [UIColor grayColor].CGColor;
+    _albumImageView.layer.borderWidth =  0.5f;
+    //    _albumImageView.backgroundColor = [UIColor grayColor];
     
     
     // 专辑名
@@ -34,9 +38,11 @@
     _albumTitleLabel.frame = CGRectMake(0, CGRectGetMaxY(_albumImageView.frame), CGRectGetWidth(_albumImageView.frame) * 0.75, self.contentView.bounds.size.height * 0.34);
     _albumTitleLabel.textAlignment = NSTextAlignmentCenter;
     _albumTitleLabel.font = [UIFont systemFontOfSize:15.f];
-    _albumTitleLabel.numberOfLines = 2;
+    _albumTitleLabel.numberOfLines = 3;
+    _albumTitleLabel.textColor = [UIColor whiteColor];
     [self.contentView addSubview:_albumTitleLabel];
-//    _albumTitleLabel.backgroundColor = [UIColor greenColor];
+    _albumTitleLabel.backgroundColor = [UIColor blackColor];
+    _albumTitleLabel.alpha = 0.8;
     
     
     // 专辑声音个数

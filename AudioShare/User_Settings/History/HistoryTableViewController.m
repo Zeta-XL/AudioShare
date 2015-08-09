@@ -35,7 +35,8 @@
     [self.tableView registerClass:[AudioTableViewCell class] forCellReuseIdentifier:@"historyCell"];
     self.navigationItem.title = @"播放历史";
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"清空" style:(UIBarButtonItemStyleDone) target:self action:@selector(p_deleteAllHistoryAction:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"trash.png"] style:(UIBarButtonItemStyleDone) target:self action:@selector(p_deleteAllHistoryAction:)];
+    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
     
     PlayerViewController *player = [PlayerViewController sharedPlayer];
     DLog(@"playing------%d, playforegroud--------%d", player.isPlaying, player.foreground);
@@ -143,9 +144,9 @@
     
     cell.titleLabel.text = history.albumTitle;
     cell.tagsLabel.text = history.trackTitle;
-    cell.tagsLabel.numberOfLines = 2;
+    cell.tagsLabel.font = [UIFont systemFontOfSize:13.f];
     
-    cell.tracksCountsLabel.text = @"播放时长:";
+    cell.tracksCountsLabel.text = @"当前播放到:";
     cell.timeLabel.text = history.currentTime;
     [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:history.coverSmall] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
     
@@ -155,7 +156,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return 90;
 }
 
 

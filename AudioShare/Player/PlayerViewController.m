@@ -81,6 +81,9 @@ static PlayerViewController *singlePlayer = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         singlePlayer = [[PlayerViewController alloc] init];
+        AVAudioSession *session = [AVAudioSession sharedInstance];
+        [session setActive:YES error:nil];
+        [session setCategory:AVAudioSessionCategoryPlayback error:nil];
     });
     
     return singlePlayer;
@@ -258,8 +261,8 @@ static PlayerViewController *singlePlayer = nil;
     
     [self p_addSwipDownGesture];
     
-    [self.timeGoingSlider setThumbImage:[UIImage imageNamed:@"slider.png"] forState:(UIControlStateHighlighted)]; // 滑动时
-    [self.timeGoingSlider setThumbImage:[UIImage imageNamed:@"slider.png"] forState:(UIControlStateNormal)]; // 不滑动时
+    [self.timeGoingSlider setThumbImage:[UIImage imageNamed:@"round.png"] forState:(UIControlStateHighlighted)]; // 滑动时
+    [self.timeGoingSlider setThumbImage:[UIImage imageNamed:@"round.png"] forState:(UIControlStateNormal)]; // 不滑动时
     // cache路径
     NSString *cachePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
     DLog(@"%@", cachePath);
@@ -280,7 +283,7 @@ static PlayerViewController *singlePlayer = nil;
             self.lastSeconds = [dataDict[@"lastSeconds"] doubleValue];
             DLog(@"lastSecinds---%lf", _lastSeconds);
             self.currentIndex = [dataDict[@"lastIndex"] integerValue];
-            DLog(@"lastIndex--- %lud", _currentIndex);
+            DLog(@"lastIndex--- %u", _currentIndex);
             self.imageUrl = dataDict[@"imageUrl"];
             
             TrackModel *track = _tracksList[_currentIndex];
@@ -298,7 +301,7 @@ static PlayerViewController *singlePlayer = nil;
             NSDictionary *dataDict = [NSKeyedUnarchiver unarchiveObjectWithFile:radioPath];
             self.imageUrl = dataDict[@"imageUrl"];
             self.lastLiveUrl = dataDict[@"lastLiveUrl"];
-            
+            self.titleString = dataDict[@"title"];
         }
     }
     
@@ -585,7 +588,8 @@ static PlayerViewController *singlePlayer = nil;
 {
     HistoryTableViewController *historyVC = [[HistoryTableViewController alloc] init];
     UINavigationController *hisNC = [[UINavigationController alloc] initWithRootViewController:historyVC];
-    historyVC.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:(UIBarButtonItemStyleDone) target:historyVC action:@selector(backToPlayer:)];
+    
+    historyVC.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back@2x.png"] style:(UIBarButtonItemStyleDone) target:historyVC action:@selector(backToPlayer:)];
     historyVC.isModal = YES;
     [self presentViewController:hisNC animated:YES completion:^{
     }];
@@ -802,7 +806,7 @@ static PlayerViewController *singlePlayer = nil;
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"timerOn"];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"定时关闭时间已到" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [alert show];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [alert dismissWithClickedButtonIndex:0 animated:YES];
         });
     }

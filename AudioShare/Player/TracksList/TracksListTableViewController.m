@@ -58,9 +58,11 @@
 - (void)p_setupNavigation
 {
     self.navigationItem.title = @"播放列表";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:(UIBarButtonItemStyleDone) target:self action:@selector(backButtonAction:)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:(UIBarButtonItemStyleDone) target:self action:@selector(confirmAction:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back@2x.png"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backButtonAction:)];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:(UIBarButtonSystemItemDone) target:self action:@selector(confirmAction:)];
     self.navigationItem.rightBarButtonItem.enabled = NO;
+    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
 }
 
 - (void)backButtonAction:(UIBarButtonItem *)sender
@@ -138,7 +140,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 80;
+    return 70;
 }
 
 

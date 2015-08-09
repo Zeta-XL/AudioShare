@@ -67,7 +67,7 @@
         CGRect temp = _discriptionLabel.frame;
         temp.size.height = [self.delegate tellTextHeight];
         _discriptionLabel.frame = temp;
-        _myScrollView.contentSize = CGSizeMake(self.frame.size.width, height);
+        _myScrollView.contentSize = CGSizeMake(self.frame.size.width, height + 64);
     }
     
 }

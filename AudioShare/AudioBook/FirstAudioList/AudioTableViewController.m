@@ -128,12 +128,13 @@
     [super viewDidLoad];
     
     
+    self.navigationItem.title = @"听我想听";
+    
     //右button事件
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"逛逛书城" style:(UIBarButtonItemStylePlain) target:self action:@selector(rightBarButtonAction : )];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btn_nav_collection@2x.png"] style:(UIBarButtonItemStyleDone) target:self action:@selector(rightBarButtonAction : )];
     
     //左button事件
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"刷新" style:(UIBarButtonItemStylePlain) target:self action:@selector(leftBarButtonAction : )];
-    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"playback_reload.png"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBarButtonAction : )];
     
     //注册
     [self.tableView registerClass:[AudioTableViewCell class] forCellReuseIdentifier:@"cell"];
@@ -283,7 +284,7 @@
 //确定每个cell的高度
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return 90;
 }
 
 //跳转到专辑页面

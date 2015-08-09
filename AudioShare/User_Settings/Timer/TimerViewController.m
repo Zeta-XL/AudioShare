@@ -103,6 +103,10 @@
         _tv.showTimerLable.text = nil;
         self.navigationItem.rightBarButtonItem.enabled = NO;
         self.time = 0;
+        self.lastLabel.backgroundColor = [UIColor whiteColor];
+        self.lastLabel.textColor = [UIColor blackColor];
+        self.timeManual = 0;
+        self.lastLabel = nil;
     }
     [ud synchronize];
 }
@@ -111,9 +115,10 @@
 - (void)tapAction:(UITapGestureRecognizer *)sender
 {
     UILabel *lab = (UILabel *)sender.view;
-    
-    self.lastLabel.backgroundColor = [UIColor yellowColor];
-    lab.backgroundColor = [UIColor greenColor];
+    self.lastLabel.backgroundColor = [UIColor whiteColor];
+    self.lastLabel.textColor = [UIColor blackColor];
+    lab.backgroundColor = [UIColor blackColor];
+    lab.textColor = [UIColor whiteColor];
     switch (lab.tag) {
         case 101:
             self.timeManual = 60 * 10;
@@ -146,8 +151,10 @@
 - (void)p_setupNavigation
 {
     self.navigationItem.title = @"定时睡眠";
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:(UIBarButtonItemStylePlain) target:self action:@selector(confirmAction:)];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(backAction:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back@2x.png"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backAction:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:(UIBarButtonSystemItemDone) target:self action:@selector(confirmAction:)];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:(UIBarButtonItemStylePlain) target:self action:@selector(confirmAction:)];
+
     
     
 }

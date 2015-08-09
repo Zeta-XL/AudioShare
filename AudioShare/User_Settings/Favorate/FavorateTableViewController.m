@@ -59,7 +59,7 @@
     self.navigationItem.title = @"收藏专辑";
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"清空" style:(UIBarButtonItemStyleDone) target:self action:@selector(deleteAllAction:)];
-    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"trash.png"] style:(UIBarButtonItemStyleDone) target:self action:@selector(deleteAllAction:)];
     
     // 数据库更新
     DLog(@"once--------------------");
@@ -211,7 +211,7 @@
 // cell 的高
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return 90;
     
 }
 

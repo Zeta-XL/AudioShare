@@ -62,10 +62,11 @@
 {
     //判断mySwitch状态
     BOOL isSwitchOn = [_mySwitch isOn];
+    NetworkStatus status = [[Reachability reachabilityForInternetConnection] currentReachabilityStatus];
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     if (isSwitchOn) {
         [ud setBool:YES forKey:@"switchOn"];
-        NetworkStatus status = [[Reachability reachabilityForInternetConnection] currentReachabilityStatus];
+        
         if (status != NotReachable) {
             [ud setBool:YES forKey:@"networkOK"];
         } else {
@@ -75,7 +76,11 @@
         DLog(@"允许在数据网络下播放, %d", [ud boolForKey:@"switchOn"]);
     } else {
         [ud setBool:NO forKey:@"switchOn"];
-        [ud setBool:NO forKey:@"networkOK"];
+        if (status == ReachableViaWiFi) {
+            [ud setBool:YES forKey:@"networkOK"];
+        } else {
+            [ud setBool:NO forKey:@"networkOK"];
+        }
         DLog(@"关闭在数据网络下播放, %d", [ud boolForKey:@"switchOn"]);
     }
     [ud synchronize];

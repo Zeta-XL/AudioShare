@@ -32,6 +32,7 @@
 @property (nonatomic, assign)NSInteger pageSize;
 @property (nonatomic, assign)BOOL loadEnable;
 @property (nonatomic, assign)BOOL networkOK;
+@property (nonatomic, strong)UIActivityIndicatorView *activity;
 @end
 
 @implementation RadioTableViewController
@@ -51,8 +52,8 @@
     //注册
     [self.tableView registerClass:[RadioTableViewCell class] forCellReuseIdentifier:@"radioCell"];
     self.titleString = @"广播电台";
-    
-    self.radioFoxView = [[RadioFoxView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 140)];
+    [self p_setupActivity];
+    self.radioFoxView = [[RadioFoxView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 90)];
     [self.radioFoxView.networkButton addTarget:self action:@selector(networkButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [self.radioFoxView.countriesButton addTarget:self action:@selector(countriesButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
     [self.radioFoxView.provinceButton addTarget:self action:@selector(provinceButtonAction:) forControlEvents:(UIControlEventTouchUpInside)];
@@ -65,9 +66,25 @@
     self.radioArray = [NSMutableArray array];
     self.loadEnable = YES;
     [self p_requestDataWithPageId:_currentPageId++ pageSize:_pageSize];
-    
     [self p_dragUptoLoadMore];
+    
+}
 
+
+- (void)p_setupActivity
+{
+    //进度轮
+    self.activity = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(100, 100, 80, 50)];
+    self.activity.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    self.activity.backgroundColor = [UIColor grayColor];
+    self.activity.alpha = 0.3;
+    self.activity.layer.cornerRadius = 6;
+    self.activity.layer.masksToBounds = YES;
+    
+    //显示位置
+    [self.activity setCenter:CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2)];
+    
+    [self.view addSubview:_activity];
 }
 
 #pragma mark ---- 加载更多数据;
@@ -105,6 +122,7 @@
     self.networkOK = [[NSUserDefaults standardUserDefaults] boolForKey:@"networkOK"];
     if (_networkOK) {
         
+        [self.activity startAnimating];
         NSString *params = nil;
         if (self.radioType == 2) {
             params = [NSString stringWithFormat:@"pageNum=%ld&radioType=2&device=iPhone&provinceCode=%@&pageSize=%ld", pageId, self.provinceCode, pageSize];
@@ -133,6 +151,7 @@
                 
                 
                 [self.tableView reloadData];
+                [self.activity stopAnimating];
                 self.loadEnable = YES;
                 self.navigationItem.leftBarButtonItem.enabled = YES;
                 [self.tableView.footer endRefreshing];
@@ -146,6 +165,7 @@
     } else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前网络不可用, 请检查当前网络设置" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [alert show];
+        [self.activity stopAnimating];
     }
     
 }
@@ -225,7 +245,7 @@
 //header高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return  140;
+    return  90;
 }
 
 
@@ -311,7 +331,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
-    return 110;
+    return 80;
 }
 
 

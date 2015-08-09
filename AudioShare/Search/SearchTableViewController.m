@@ -59,11 +59,10 @@
     //self.navigationItem.title = @"搜索";
     
     //搜索button事件
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"搜索" style:(UIBarButtonItemStylePlain) target:self action:@selector(rightBarButtonAction : )];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"搜索" style:(UIBarButtonItemStylePlain) target:self action:@selector(rightBarButtonAction: )];
     
     //返回button事件
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:(UIBarButtonItemStylePlain) target:self action:@selector(leftBarButtonAction : )];
-    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back@2x.png"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backButtonAction:)];
     
     //布局
     [self createView];
@@ -216,7 +215,7 @@
 
 
 //返回button事件
--(void)leftBarButtonAction : (UIBarButtonItem *)sender
+-(void)backButtonAction: (UIBarButtonItem *)sender
 {
     DLog(@"返回");
     
@@ -243,7 +242,7 @@
     
     self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds) - 100, 40)];
     
-    self.searchBar.placeholder = @"搜索专辑";
+    self.searchBar.placeholder = @"输入搜索专辑的名称";
     
     self.searchBar.backgroundColor = [UIColor whiteColor];
     

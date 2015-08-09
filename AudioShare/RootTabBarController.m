@@ -36,24 +36,28 @@
     UINavigationController *homeNC = [[UINavigationController alloc] initWithRootViewController:homeVC];
     homeNC.tabBarItem.title = @"听书";
     homeNC.tabBarItem.image = [UIImage imageNamed:@"30x-Music.png"];
+    homeNC.navigationBar.tintColor = [UIColor blackColor];
+    [homeNC.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigationBar.jpg"]  forBarMetrics:(UIBarMetricsDefault)];
     
     // 直播页
     RadioTableViewController *radioVC = [[RadioTableViewController alloc] init];
     UINavigationController *radioNC = [[UINavigationController alloc] initWithRootViewController:radioVC];
     radioNC.tabBarItem.title = @"电台直播";
     radioNC.tabBarItem.image = [UIImage imageNamed:@"30x-Radio.png"];
-    
-//    // 下载页
-//    DownloadViewController *downloadVC = [[DownloadViewController alloc] init];
-//    UINavigationController *downloadNC = [[UINavigationController alloc] initWithRootViewController:downloadVC];
-//    downloadNC.tabBarItem.title = @"下载";
-//    downloadNC.tabBarItem.image = [UIImage imageNamed:@"30x-Download.png"];
+    radioNC.navigationBar.tintColor = [UIColor blackColor];
+    [radioNC.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigationBar.jpg"]  forBarMetrics:(UIBarMetricsDefault)];
+    //    // 下载页
+    //    DownloadViewController *downloadVC = [[DownloadViewController alloc] init];
+    //    UINavigationController *downloadNC = [[UINavigationController alloc] initWithRootViewController:downloadVC];
+    //    downloadNC.tabBarItem.title = @"下载";
+    //    downloadNC.tabBarItem.image = [UIImage imageNamed:@"30x-Download.png"];
     
     FoxSettingsTableViewController *user_settingsVC = [[FoxSettingsTableViewController alloc] init];
     UINavigationController *user_settingsNC = [[UINavigationController alloc] initWithRootViewController:user_settingsVC];
     user_settingsNC.tabBarItem.title = @"我的";
     user_settingsNC.tabBarItem.image = [UIImage imageNamed:@"30x-Home.png"];
-    
+    user_settingsNC.navigationBar.tintColor = [UIColor blackColor];
+    [user_settingsNC.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigationBar.jpg"]  forBarMetrics:(UIBarMetricsDefault)];
     self.viewControllers = @[homeNC, radioNC, user_settingsNC];
     
     [self p_setPlayButton];
@@ -67,7 +71,8 @@
     // 反归档获得setting信息
     [self p_unarchiveData];
     
-    
+    self.tabBar.tintColor = [UIColor blackColor];
+    self.tabBar.barStyle = UIBarMetricsDefault;
 
 }
 

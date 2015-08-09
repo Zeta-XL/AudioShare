@@ -40,7 +40,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:(UIBarButtonItemStyleDone) target:self action:@selector(backButtonAction:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back@2x.png"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backButtonAction:)];
     [self p_albumView];
     [self p_setupActivity];
 
@@ -169,7 +169,7 @@
 //自定义albumView视图
 -(void)p_albumView
 {
-    self.albumView = [[AlbumView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.tableView.frame), 220)];
+    self.albumView = [[AlbumView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.tableView.frame), 180)];
     self.tableView.tableHeaderView = _albumView;
     self.albumView.delegate = self;
     
@@ -322,7 +322,7 @@
 //确定每个cell的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return 70;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

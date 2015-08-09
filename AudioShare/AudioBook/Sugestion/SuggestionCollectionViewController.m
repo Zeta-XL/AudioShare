@@ -315,7 +315,7 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
 - (void)p_navigationBar
 {
     self.navigationItem.title = @"推荐内容";
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"更多分类" style:(UIBarButtonItemStyleDone) target:self action:@selector(moreAction:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btn_nav_list@2x.png"] style:(UIBarButtonItemStyleDone) target:self action:@selector(moreAction:)];
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back@2x.png"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backAction:)];
     
