@@ -22,7 +22,6 @@
 }
 
 
-
 @end
 
 @implementation TracksListTableViewController
@@ -36,7 +35,8 @@
     _currentPageId = 2;
     _maxPageId = 99;
     [self p_dragUptoLoadMore];
-    
+    [self p_setupNavigation];
+    self.currentIndex = [PlayerViewController sharedPlayer].currentIndex;
 }
 
 - (NSString *)p_convertTime:(CGFloat)second
@@ -53,6 +53,40 @@
     NSString *showtimeNew = [formatter stringFromDate:d];
     return showtimeNew;
 }
+
+
+- (void)p_setupNavigation
+{
+    self.navigationItem.title = @"播放列表";
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:(UIBarButtonItemStyleDone) target:self action:@selector(backButtonAction:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:(UIBarButtonItemStyleDone) target:self action:@selector(confirmAction:)];
+    self.navigationItem.rightBarButtonItem.enabled = NO;
+}
+
+- (void)backButtonAction:(UIBarButtonItem *)sender
+{
+    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+        DLog(@"退出列表");
+    }];
+}
+
+- (void)confirmAction:(UIBarButtonItem *)sender
+{
+    TrackModel *track = _trackList[self.currentIndex];
+    PlayerViewController *playerVC = [PlayerViewController sharedPlayer];
+    playerVC.urlString = track.playUrl64;
+    playerVC.totalSeconds = track.duration;
+    playerVC.titleString = track.title;
+    playerVC.currentIndex = self.currentIndex;
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+
+
+
+
+
 
 
 
@@ -83,11 +117,21 @@
     TrackModel *track = _trackList[indexPath.row];
     
     
-    [cell.optionButton setTitle:@"下载" forState:(UIControlStateNormal)];
+
     cell.titleLabel.text = track.title;
     NSString *time = [self p_convertTime:track.duration];
     cell.playTimesLabel.text = [NSString stringWithFormat:@"时长 %@", time];
-    cell.commentLabel.text = [NSString stringWithFormat:@"第%ld个", indexPath.row +1];
+    if (indexPath.row == [PlayerViewController sharedPlayer].currentIndex) {
+        cell.titleLabel.textColor = [UIColor orangeColor];
+    } else {
+        cell.titleLabel.textColor = [UIColor blackColor];
+    }
+    NSInteger playtimes = track.playtimes;
+    if (playtimes >= 10000  ) {
+        cell.commentLabel.text = [NSString stringWithFormat:@"收听人数: %.1lf万", playtimes/10000.0];
+    } else {
+        cell.commentLabel.text = [NSString stringWithFormat:@"收听人数: %ld", playtimes];
+    }
     
     return cell;
 }
@@ -98,42 +142,36 @@
 }
 
 
-// header
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 60;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 40   )];
-    view.backgroundColor = [UIColor whiteColor];
-    UIButton *backButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    backButton.frame = CGRectMake(CGRectGetMidX([UIScreen mainScreen].bounds) -40, 30, 80, 20);
-    [backButton setTitle:@"返回" forState:(UIControlStateNormal)];
-    [backButton addTarget:self action:@selector(backAction:) forControlEvents:(UIControlEventTouchUpInside)];
-    [view addSubview:backButton];
-    return view;
-}
-
-- (void)backAction:(UIButton *)sender
-{
-    [self dismissViewControllerAnimated:YES completion:^{
-        DLog(@"退出列表");
-    }];
-}
+//// header
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    return 60;
+//}
+//
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 40   )];
+//    view.backgroundColor = [UIColor whiteColor];
+//    UIButton *backButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+//    backButton.frame = CGRectMake(CGRectGetMidX([UIScreen mainScreen].bounds) -40, 30, 80, 20);
+//    [backButton setTitle:@"返回" forState:(UIControlStateNormal)];
+//    [backButton addTarget:self action:@selector(backAction:) forControlEvents:(UIControlEventTouchUpInside)];
+//    [view addSubview:backButton];
+//    return view;
+//}
+//
+//- (void)backAction:(UIButton *)sender
+//{
+//    [self dismissViewControllerAnimated:YES completion:^{
+//        DLog(@"退出列表");
+//    }];
+//}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TrackModel *track = _trackList[indexPath.row];
-    PlayerViewController *playerVC = [PlayerViewController sharedPlayer];
-    playerVC.urlString = track.playUrl64;
-    playerVC.totalSeconds = track.duration;
-    playerVC.titleString = track.title;
-    playerVC.currentIndex = indexPath.row;
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
+    self.navigationItem.rightBarButtonItem.enabled = YES;
+    
+    self.currentIndex = indexPath.row;
 }
 
 #pragma mark ------- 请求数据
@@ -149,12 +187,14 @@
         
         if ([dict[@"msg"] isEqualToString:@"0"]) {
             // 获取声音model
-            //            DLog(@"%@", dict[@"tracks"][@"list"]);
+            
             for (NSDictionary *d in dict[@"tracks"][@"list"]) {
                 TrackModel *trackm = [[TrackModel alloc] init];
                 [trackm setValuesForKeysWithDictionary:d];
                 [_trackList addObject:trackm];
             }
+            
+            
             
             // 获得maxPageId
             _maxPageId = [dict[@"tracks"][@"maxPageId"] integerValue];

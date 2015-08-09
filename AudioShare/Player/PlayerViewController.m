@@ -14,7 +14,7 @@
 #import "HistoryModel.h"
 #import "DataBaseHandle.h"
 #import "HistoryTableViewController.h"
-
+#import "TimerViewController.h"
 
 static PlayerViewController *singlePlayer = nil;
 
@@ -33,8 +33,7 @@ static PlayerViewController *singlePlayer = nil;
 
 // 进度观察者;
 @property (nonatomic, strong)id timeObserver;
-// 记录最后的Item
-@property (nonatomic, strong)SpecialItem *lastItem;
+
 
 // 记录当前的item
 @property (nonatomic, strong)SpecialItem *currentItem;
@@ -93,7 +92,7 @@ static PlayerViewController *singlePlayer = nil;
 {
     [super viewWillAppear:YES];
     
-    _background = NO;
+    _foreground = YES;
     // 视图
     self.titleLabel.text = self.titleString;
     [self.contentImageView sd_setImageWithURL:[NSURL URLWithString:self.imageUrl] placeholderImage:nil];
@@ -135,7 +134,7 @@ static PlayerViewController *singlePlayer = nil;
             self.currentItem = _lastItem;
         }
         // 
-        if (_currentItem == NO) {
+        if (_currentItem == nil) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"没有播放记录" delegate:self cancelButtonTitle:@"了解" otherButtonTitles: nil];
             [alert show];
         }
@@ -221,7 +220,7 @@ static PlayerViewController *singlePlayer = nil;
         self.lastLiveUrl = nil;
         
         // ****************更新数据库*************************
-        if (_urlString || _lastItem) {
+        if ( _urlString || _lastItem) {
             [self p_saveCurrentAlbumInfo];
         }
         
@@ -239,7 +238,7 @@ static PlayerViewController *singlePlayer = nil;
     self.currentSeconds = 0;
     self.currentItem = nil;
     self.urlString = nil;
-    _background = YES;
+    _foreground = NO;
 
 }
 
@@ -308,6 +307,7 @@ static PlayerViewController *singlePlayer = nil;
 #pragma mark ---- alertView
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    [self playAction:nil];
     [self backAction:self.backButton];
 }
 
@@ -318,7 +318,9 @@ static PlayerViewController *singlePlayer = nil;
 - (NSString *)convertTime:(CGFloat)second
 {
     NSDate *d = [NSDate dateWithTimeIntervalSince1970:second];
-    
+    NSTimeZone *fromzone = [NSTimeZone systemTimeZone];
+    NSInteger frominterval = [fromzone secondsFromGMTForDate: d];
+    d = [d dateByAddingTimeInterval: -frominterval];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     if (second/3600 >= 1) {
         [formatter setDateFormat:@"HH:mm:ss"];
@@ -459,6 +461,11 @@ static PlayerViewController *singlePlayer = nil;
 - (IBAction)autoShutdownAction:(UIButton *)sender
 {
     
+    TimerViewController *timerVC = [[TimerViewController alloc] init];
+    timerVC.isModal = YES;
+    UINavigationController *timerNC = [[UINavigationController alloc] initWithRootViewController:timerVC];
+    [self presentViewController:timerNC animated:YES completion:nil];
+
     DLog(@"定时关闭");
 }
 
@@ -564,9 +571,12 @@ static PlayerViewController *singlePlayer = nil;
 - (IBAction)ListButtonAction:(UIButton *)sender
 {
     TracksListTableViewController *trackListVC = [[TracksListTableViewController alloc] init];
+    UINavigationController *listNC = [[UINavigationController alloc] initWithRootViewController:trackListVC];
+    
     trackListVC.trackList = self.tracksList;
     trackListVC.albumId = self.albumId;
-    [self presentViewController:trackListVC animated:YES completion:^{
+    
+    [self presentViewController:listNC animated:YES completion:^{
         DLog(@"打开列表");
     }];
 }
@@ -576,10 +586,10 @@ static PlayerViewController *singlePlayer = nil;
     HistoryTableViewController *historyVC = [[HistoryTableViewController alloc] init];
     UINavigationController *hisNC = [[UINavigationController alloc] initWithRootViewController:historyVC];
     historyVC.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:(UIBarButtonItemStyleDone) target:historyVC action:@selector(backToPlayer:)];
-    
+    historyVC.isModal = YES;
     [self presentViewController:hisNC animated:YES completion:^{
-        
     }];
+    
 }
 
 
@@ -627,7 +637,7 @@ static PlayerViewController *singlePlayer = nil;
     
     
     [self.player replaceCurrentItemWithPlayerItem:_currentItem];
-    if (!_background) {
+    if (_foreground) {
         [self p_setPlayerTimerObserver];
     }
     
@@ -707,9 +717,9 @@ static PlayerViewController *singlePlayer = nil;
     } else {
         timeSeconds = CMTimeGetSeconds([_lastItem currentTime]);
     }
-    
+      
     history.currentTime = [self convertTime:timeSeconds];
-    history.coverSmall = track.coverMiddle;
+    history.coverSmall = track.coverLarge;
     history.archiveName = [NSString stringWithFormat:@"aid%@", history.albumId];
     
     // 查找数据是否有
@@ -769,6 +779,36 @@ static PlayerViewController *singlePlayer = nil;
 {
     [self backAction:nil];
 }
+
+
+
+#pragma mark ----timer 相关
+- (void)timerStopAction
+{
+    if (_isPlaying) {
+        [self playAction:nil];
+    }
+    
+}
+
+- (void)timerChangeAction:(NSTimer *)aTimer
+{
+    
+    self.timerTime = _timerTime - 1;
+    if (_timerTime <= 0) {
+        [self timerStopAction];
+        [self.timer invalidate];
+        self.timer = nil;
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"timerOn"];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"定时关闭时间已到" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [alert dismissWithClickedButtonIndex:0 animated:YES];
+        });
+    }
+}
+
+
 
 
 - (void)didReceiveMemoryWarning {

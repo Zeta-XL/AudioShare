@@ -19,7 +19,7 @@
 
 @property (nonatomic, strong)NSMutableArray *dataArray;
 @property (nonatomic, assign)BOOL onceFlag;
-
+@property (nonatomic, assign)BOOL networkOK;
 @end
 
 @implementation FavorateTableViewController
@@ -211,20 +211,28 @@
 // cell 的高
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 120;
+    return 100;
     
 }
 
 // 点击cell响应事件
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    AlbumTableViewController *albumTVC = [[AlbumTableViewController alloc] init];
+    self.networkOK = [[NSUserDefaults standardUserDefaults] boolForKey:@"networkOK"];
+    if (_networkOK) {
+        
+        AlbumTableViewController *albumTVC = [[AlbumTableViewController alloc] init];
+        
+        AlbumModel *album = _dataArray[indexPath.row];
+        
+        albumTVC.albumId = album.albumId;
+        
+        [self.navigationController pushViewController:albumTVC animated:YES];
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前网络不可用, 请检查当前网络设置" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];
+    }
     
-    AlbumModel *album = _dataArray[indexPath.row];
-    
-    albumTVC.albumId = album.albumId;
-    
-    [self.navigationController pushViewController:albumTVC animated:YES];
     
 }
 

@@ -71,7 +71,7 @@
     } else if(indexPath.row == 1) {
         
         HistoryTableViewController *histVC = [[HistoryTableViewController alloc]init];
-        
+        histVC.isModal = NO;
         [self.navigationController pushViewController:histVC animated:YES];
         
     } else if(indexPath.row == 2) {

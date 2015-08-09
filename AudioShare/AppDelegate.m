@@ -9,11 +9,8 @@
 #import "AppDelegate.h"
 #import "RootTabBarController.h"
 #import "PlayerViewController.h"
-#import "Reachability.h"
+
 @interface AppDelegate () <UIAlertViewDelegate>
-{
-    Reachability *hostReach;
-}
 
 //网络连接改变
 - (void)reachabilityChanged: (NSNotification *)note;
@@ -23,7 +20,10 @@
 @end
 
 @implementation AppDelegate
-
+- (void)dealloc
+{
+    [_hostReach stopNotifier];
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -35,15 +35,26 @@
     RootTabBarController *rootTBC = [[RootTabBarController alloc] init];
     self.window.rootViewController = rootTBC;
     
-    //开启网络状况的监听
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud setBool:NO forKey:@"switchOn"];
+    [ud setBool:NO forKey:@"timerOn"];
     
-    //初始化hostReach
-    Reachability *hostReach = [Reachability reachabilityWithHostname:@"baidu.com"];
+    self.hostReach = [Reachability reachabilityForInternetConnection];
+    NetworkStatus status = [_hostReach currentReachabilityStatus];
+    if (status == NotReachable) {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前无网络，无法加载数据" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alertView show];
+        [ud setBool:NO forKey:@"networkOK"];
+    } else {
+        [ud setBool:YES forKey:@"networkOK"];
+    }
+    [ud synchronize];
+
+    //开启网络状况的监听
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:_hostReach];
     
     //开始监听,会启动一个run loop
-    [hostReach startNotifier];
-    
+    [_hostReach startNotifier];
     //解决偏移问题
     [[UIApplication sharedApplication]setStatusBarHidden:YES];
     
@@ -65,22 +76,34 @@
 - (void) updateInterfaceWithReachability: (Reachability*) curReach
 {
     //对连接改变做出响应的处理动作
-    NetworkStatus stause = [curReach currentReachabilityStatus];
+    NetworkStatus status = [curReach currentReachabilityStatus];
     
-    if (stause == ReachableViaWWAN) {
+    
+    if (status == ReachableViaWWAN) {
+        
         DLog(@"2G/3G网络");
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前为2G/3G网络是否继续" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-        [alertView show];
+        alertView.delegate = self;
+        BOOL swichOn = [[NSUserDefaults standardUserDefaults] boolForKey:@"switchOn"];
+        if (!swichOn) {
+            [alertView show];
+        }
+        
     }
-    else if (stause == ReachableViaWiFi)
+    else if (status == ReachableViaWiFi)
     {
         DLog(@"当前为WiFi网络");
+        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+        [ud setBool:YES forKey:@"networkOK"];
+        [ud synchronize];
+        
     }else
     {
+        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+        [ud setBool:NO forKey:@"networkOK"];
+        [ud synchronize];
         DLog(@"无网络");
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前无网络，无法加载数据，是否跳转到本地下载" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-        
-        alertView.delegate = self;
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前无网络，无法加载数据" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alertView show];
         
         
@@ -92,14 +115,17 @@
 {
     NSString *meg = [NSString stringWithFormat:@"点击第%ld个按钮",buttonIndex];
     DLog(@"meg = %@",meg);
-    if (buttonIndex == 1) {
-        
-        //DownloadedTrackViewController *downloadTVC = [[DownloadedTrackViewController alloc]init];
-        
-        //[self.window.rootViewController presentViewController:downloadTVC animated:YES completion:^{
-        //    DLog(@"!@#$^&*()");
-        //}];
-        
+    
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+
+    if (buttonIndex == 0) {
+        [ud setBool:NO forKey:@"networkOK"];
+        [ud setBool:NO forKey:@"switchOn"];
+        [ud synchronize];
+    } else if (buttonIndex == 1) {
+        [ud setBool:YES forKey:@"networkOK"];
+        [ud setBool:YES forKey:@"switchOn"];
+        [ud synchronize];
     }
 }
 
@@ -109,6 +135,8 @@
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    
+    
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -188,6 +216,11 @@
     NSUserDefaults *ud =  [NSUserDefaults standardUserDefaults];
     NSDictionary *settngDict = [ud objectForKey:@"defaultSetting"];
     [NSKeyedArchiver archiveRootObject:settngDict toFile:localSettingPath];
+    
+    if ([PlayerViewController sharedPlayer].timer) {
+        [[PlayerViewController sharedPlayer].timer invalidate];
+        [PlayerViewController sharedPlayer].timer = nil;
+    }
 }
 
 

@@ -11,4 +11,5 @@
 @interface TracksListTableViewController : UITableViewController
 @property (nonatomic, strong)NSMutableArray *trackList;
 @property (nonatomic, copy)NSString *albumId;
+@property (nonatomic, assign)NSUInteger currentIndex;
 @end

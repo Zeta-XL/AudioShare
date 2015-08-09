@@ -31,7 +31,7 @@
 @property (nonatomic, strong)NSMutableArray *tracksList;
 @property (nonatomic, strong)AlbumModel *album;
 @property (nonatomic, strong)UIActivityIndicatorView *activity;
-
+@property (nonatomic, assign)BOOL networkOK;
 @end
 
 @implementation AlbumTableViewController
@@ -233,6 +233,8 @@
 
 - (void)onClickDownloadButton:(UIButton *)sender
 {
+    DLog(@"显示详情");
+    [self tapAction:nil];
     
 }
 
@@ -255,7 +257,9 @@
 - (NSString *)p_convertTime:(CGFloat)second
 {
     NSDate *d = [NSDate dateWithTimeIntervalSince1970:second];
-    
+    NSTimeZone *fromzone = [NSTimeZone systemTimeZone];
+    NSInteger frominterval = [fromzone secondsFromGMTForDate: d];
+    d = [d dateByAddingTimeInterval: -frominterval];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     if (second/3600 >= 1) {
         [formatter setDateFormat:@"HH:mm:ss"];
@@ -297,12 +301,18 @@
     
     TrackModel *track = _tracksList[indexPath.row];
     
-    [cell.optionButton setTitle:@"下载" forState:(UIControlStateNormal)];
     cell.titleLabel.text = track.title;
     NSString *time = [self p_convertTime:track.duration];
   
     cell.playTimesLabel.text = [NSString stringWithFormat:@"时长 %@", time];
-    cell.commentLabel.text = [NSString stringWithFormat:@"第%ld个", indexPath.row +1];
+    
+    NSInteger playtimes = track.playtimes;
+    if (playtimes >= 10000  ) {
+        cell.commentLabel.text = [NSString stringWithFormat:@"收听人数: %.1lf万", playtimes/10000.0];
+    } else {
+        cell.commentLabel.text = [NSString stringWithFormat:@"收听人数: %ld", playtimes];
+    }
+    
     
     
     return cell;
@@ -317,25 +327,33 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // 播放声音视图
-    PlayerViewController *playerVC = [PlayerViewController sharedPlayer];
+    
+    self.networkOK = [[NSUserDefaults standardUserDefaults] boolForKey:@"networkOK"];
+    if (_networkOK) {
+        // 播放声音视图
+        PlayerViewController *playerVC = [PlayerViewController sharedPlayer];
+        
+        TrackModel *track = _tracksList[indexPath.row];
+        
+        
+        playerVC.urlString = track.playUrl64;
+        playerVC.totalSeconds = track.duration;
+        playerVC.titleString = track.title;
+        playerVC.currentIndex = indexPath.row;
+        playerVC.imageUrl = self.album.coverLarge;
+        playerVC.albumId = self.albumId;
+        playerVC.tracksList = _tracksList;
+        
+        
+        [self presentViewController:playerVC animated:YES completion:^{
+            DLog(@"打开播放器");
+        }];
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前网络不可用, 请检查当前网络设置" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];
+    }
     
     
-    TrackModel *track = _tracksList[indexPath.row];
-    
-    
-    playerVC.urlString = track.playUrl64;
-    playerVC.totalSeconds = track.duration;
-    playerVC.titleString = track.title;
-    playerVC.currentIndex = indexPath.row;
-    playerVC.imageUrl = self.album.coverLarge;
-    playerVC.albumId = self.albumId;
-    playerVC.tracksList = _tracksList;
-    
- 
-    [self presentViewController:playerVC animated:YES completion:^{
-        DLog(@"打开播放器");
-    }];
     
 }
 

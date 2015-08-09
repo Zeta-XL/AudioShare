@@ -37,7 +37,7 @@
 // 上次播放时间
 @property (nonatomic, assign)CGFloat lastSeconds;
 // 是否示后台播放
-@property (nonatomic, assign)BOOL background;
+@property (nonatomic, assign)BOOL foreground;
 // 数据
 @property (nonatomic, assign)BOOL historyFlag;
 
@@ -45,7 +45,8 @@
 // 在线点播(挺熟)
 @property (nonatomic, strong)NSMutableArray *tracksList;
 @property (nonatomic, copy)NSString *albumId;
-
+// 记录最后的Item
+@property (nonatomic, strong)SpecialItem *lastItem;
 
 
 // 在线直播radio -live
@@ -54,10 +55,20 @@
 // 上一次直播的URL
 @property (nonatomic, copy)NSString *lastLiveUrl;
 
+// timer相关
+@property (nonatomic, strong)NSTimer *timer;
+@property (nonatomic, assign)CGFloat timerTime;
+@property (nonatomic, assign)BOOL timerObserver;
 
 // 根据UrlString初始化播放项目
 - (SpecialItem *)createPlayerItemWithURLString:(NSString *)urlString;
 + (instancetype)sharedPlayer;
 - (void)releasePlayer;
 - (void)p_saveCurrentAlbumInfo;
+// timer
+
+- (void)timerStopAction;
+
+- (void)timerChangeAction:(NSTimer *)aTimer;
+
 @end

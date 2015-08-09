@@ -20,6 +20,7 @@
 @property (nonatomic, strong)NSMutableArray *dataArray;
 
 @property (nonatomic, strong)UIActivityIndicatorView *activity;
+@property (nonatomic, assign)BOOL networkOK;
 @end
 
 @implementation AudioBookCategoryCollectionViewController
@@ -29,26 +30,7 @@ static NSString * const reuseIdentifier = @"CategoryCell";
 {
     [super viewWillAppear:animated];
     
-    self.dataArray = [NSMutableArray array];
-    [self.activity startAnimating];
-    [RequestTool_v2 requestWithURL:kAudioCategoryList paramString:nil postRequest:NO callBackData:^(NSData *data) {
-        // 解析
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
-        DLog(@"%@", dict[@"msg"]);
-        if ([dict[@"msg"] isEqualToString:@"成功"]) {
-            for (NSDictionary *subDict in dict[@"list"]) {
-                AudioCategory *category = [[AudioCategory alloc] init];
-                [category setValuesForKeysWithDictionary:subDict];
-                [_dataArray addObject:category];
-            }
-            
-        } else {
-            DLog(@"--请求数据失败--");
-        }
-        [self.activity stopAnimating];
-        [self.collectionView reloadData];
-        
-    }];
+    
     
 }
 
@@ -62,6 +44,36 @@ static NSString * const reuseIdentifier = @"CategoryCell";
     self.collectionView.backgroundColor = [UIColor whiteColor];
     [self p_setupNavigationBar];
     [self p_setupActivity];
+    self.dataArray = [NSMutableArray array];
+    [self.activity startAnimating];
+    self.networkOK = [[NSUserDefaults standardUserDefaults] boolForKey:@"networkOK"];
+    if (_networkOK) {
+        
+        [RequestTool_v2 requestWithURL:kAudioCategoryList paramString:nil postRequest:NO callBackData:^(NSData *data) {
+            // 解析
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+            DLog(@"%@", dict[@"msg"]);
+            if ([dict[@"msg"] isEqualToString:@"成功"]) {
+                for (NSDictionary *subDict in dict[@"list"]) {
+                    AudioCategory *category = [[AudioCategory alloc] init];
+                    [category setValuesForKeysWithDictionary:subDict];
+                    [_dataArray addObject:category];
+                }
+                
+            } else {
+                DLog(@"--请求数据失败--");
+            }
+            [self.activity stopAnimating];
+            [self.collectionView reloadData];
+            
+        }];
+        
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前网络不可用, 请检查当前网络设置" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];
+        [self.activity stopAnimating];
+    }
+    
     
 }
 
@@ -94,9 +106,18 @@ static NSString * const reuseIdentifier = @"CategoryCell";
 - (void)searchAction:(UIBarButtonItem *)sender
 {
     DLog(@"搜索");
-    SearchTableViewController *searchVC = [[SearchTableViewController alloc] init];
+    self.networkOK = [[NSUserDefaults standardUserDefaults] boolForKey:@"networkOK"];
+    if (_networkOK) {
+        
+        SearchTableViewController *searchVC = [[SearchTableViewController alloc] init];
+        
+        [self.navigationController pushViewController:searchVC animated:YES];
+        
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前网络不可用, 请检查当前网络设置" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];
+    }
     
-    [self.navigationController pushViewController:searchVC animated:YES];
     
 }
 
@@ -189,16 +210,27 @@ static NSString * const reuseIdentifier = @"CategoryCell";
 // 点击cell响应事件
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     DLog(@"%@", indexPath);
-    AudioCategory *audioCate = _dataArray[indexPath.row];
+    self.networkOK = [[NSUserDefaults standardUserDefaults] boolForKey:@"networkOK"];
+    if (_networkOK) {
+        
+        AudioCategory *audioCate = _dataArray[indexPath.row];
+        
+        UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
+        SuggestionCollectionViewController *suggestionVC = [[SuggestionCollectionViewController alloc] initWithCollectionViewLayout:flow];
+        
+        suggestionVC.categoryId = audioCate.categoryId;
+        suggestionVC.categoryName = audioCate.title;
+        
+        [self.navigationController pushViewController:suggestionVC animated:YES];
+        
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前网络不可用, 请检查当前网络设置" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];
+    }
     
-    UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
-    SuggestionCollectionViewController *suggestionVC = [[SuggestionCollectionViewController alloc] initWithCollectionViewLayout:flow];
     
-    suggestionVC.categoryId = audioCate.categoryId;
-    suggestionVC.categoryName = audioCate.title;
-    
-    [self.navigationController pushViewController:suggestionVC animated:YES];
     
 }
 

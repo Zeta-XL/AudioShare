@@ -20,6 +20,7 @@
 @interface RootTabBarController ()
 @property (nonatomic, strong)UIButton *playButton;
 @property (nonatomic, strong)UIView *buttonView;
+@property (nonatomic, assign)BOOL networkOK;
 @end
 
 @implementation RootTabBarController
@@ -42,18 +43,18 @@
     radioNC.tabBarItem.title = @"电台直播";
     radioNC.tabBarItem.image = [UIImage imageNamed:@"30x-Radio.png"];
     
-    // 下载页
-    DownloadViewController *downloadVC = [[DownloadViewController alloc] init];
-    UINavigationController *downloadNC = [[UINavigationController alloc] initWithRootViewController:downloadVC];
-    downloadNC.tabBarItem.title = @"下载";
-    downloadNC.tabBarItem.image = [UIImage imageNamed:@"30x-Download.png"];
+//    // 下载页
+//    DownloadViewController *downloadVC = [[DownloadViewController alloc] init];
+//    UINavigationController *downloadNC = [[UINavigationController alloc] initWithRootViewController:downloadVC];
+//    downloadNC.tabBarItem.title = @"下载";
+//    downloadNC.tabBarItem.image = [UIImage imageNamed:@"30x-Download.png"];
     
     FoxSettingsTableViewController *user_settingsVC = [[FoxSettingsTableViewController alloc] init];
     UINavigationController *user_settingsNC = [[UINavigationController alloc] initWithRootViewController:user_settingsVC];
     user_settingsNC.tabBarItem.title = @"我的";
     user_settingsNC.tabBarItem.image = [UIImage imageNamed:@"30x-Home.png"];
     
-    self.viewControllers = @[homeNC, radioNC, downloadNC, user_settingsNC];
+    self.viewControllers = @[homeNC, radioNC, user_settingsNC];
     
     [self p_setPlayButton];
     
@@ -148,11 +149,18 @@
 
 - (void)playAction:(UIButton *)sender
 {
-    PlayerViewController *newVC = [PlayerViewController sharedPlayer];
-    [self presentViewController:newVC animated:YES completion:^{
-        // 播放声音
-
-    }];
+    self.networkOK = [[NSUserDefaults standardUserDefaults] boolForKey:@"networkOK"];
+    if (_networkOK) {
+        PlayerViewController *newVC = [PlayerViewController sharedPlayer];
+        [self presentViewController:newVC animated:YES completion:^{
+            // 播放声音
+            
+        }];
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前网络不可用, 请检查当前网络设置" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];
+    }
+    
 }
 
 

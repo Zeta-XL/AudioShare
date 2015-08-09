@@ -28,7 +28,8 @@
 }
 @property (nonatomic, strong)NSMutableArray *dataArray;
 @property (nonatomic, strong)UIActivityIndicatorView *activity;
-
+@property (nonatomic, assign)BOOL network;
+@property (nonatomic, assign)BOOL networkOK;
 @end
 
 @implementation AudioTableViewController
@@ -61,49 +62,61 @@
                        pageSize:(NSInteger)pageSize
 {
     
-    
-    NSString *params = [NSString stringWithFormat:@"calcDimension=hot&categoryId=%@&device=iPhone&pageId=%ld&pageSize=%ld&status=0&tagName=%@", self.categoryId, pageId, pageSize, self.tagName];
-    
-    [self.activity startAnimating];
-    [RequestTool_v2 requestWithURL:kSubAudioAlbumList paramString:params postRequest:NO callBackData:^(NSData *data) {
-        NSMutableArray *tempArr = nil;
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
-        if ([dict[@"msg"] isEqualToString:@"成功"]) {
-            
-            if (_refresh) {
-                tempArr = [NSMutableArray array];
-            } else {
-                tempArr = [NSMutableArray arrayWithArray:_dataArray];
-            }
-            for (NSDictionary *d in dict[@"list"]) {
-                AudioModel *m = [[AudioModel alloc] init];
-                [m setValuesForKeysWithDictionary:d];
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    self.networkOK = [ud boolForKey:@"networkOK"];
+    DLog(@"network-%d", _networkOK);
+    if (_networkOK) {
+        NSString *params = [NSString stringWithFormat:@"calcDimension=hot&categoryId=%@&device=iPhone&pageId=%ld&pageSize=%ld&status=0&tagName=%@", self.categoryId, pageId, pageSize, self.tagName];
+        
+        [self.activity startAnimating];
+        [RequestTool_v2 requestWithURL:kSubAudioAlbumList paramString:params postRequest:NO callBackData:^(NSData *data) {
+            NSMutableArray *tempArr = nil;
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+            if ([dict[@"msg"] isEqualToString:@"成功"]) {
                 
-                [tempArr addObject:m];
-                DLog(@"%ld", tempArr.count);
-
+                if (_refresh) {
+                    tempArr = [NSMutableArray array];
+                } else {
+                    tempArr = [NSMutableArray arrayWithArray:_dataArray];
+                }
+                for (NSDictionary *d in dict[@"list"]) {
+                    AudioModel *m = [[AudioModel alloc] init];
+                    [m setValuesForKeysWithDictionary:d];
+                    
+                    [tempArr addObject:m];
+                    
+                    
+                }
+                // 获得maxPageId
+                _maxPageId = [dict[@"maxPageId"] integerValue];
+                DLog(@"maxPageId = %ld", _maxPageId);
+                
+            } else {
+                DLog(@"加载数据无效");
             }
-            // 获得maxPageId
-            _maxPageId = [dict[@"maxPageId"] integerValue];
-            DLog(@"maxPageId = %ld", _maxPageId);
             
-        } else {
-            DLog(@"加载数据无效");
-        }
-        
-        
+            
             self.dataArray = tempArr;
+            
+            [self.tableView reloadData];
+            DLog(@"加载完毕");
+            
+            tempArr = nil;
+            [self.tableView.footer endRefreshing];
+            [self.tableView.header endRefreshing];
+            self.navigationItem.leftBarButtonItem.enabled = YES;
+            [self.activity stopAnimating];
+        }];
+        self.navigationItem.leftBarButtonItem.enabled = NO;
+    } else {
         
-        [self.tableView reloadData];
-        DLog(@"加载完毕");
-        
-        tempArr = nil;
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前网络不可用" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];
+        [self.activity stopAnimating];
         [self.tableView.footer endRefreshing];
         [self.tableView.header endRefreshing];
-        self.navigationItem.leftBarButtonItem.enabled = YES;
-        [self.activity stopAnimating];
-    }];
-    self.navigationItem.leftBarButtonItem.enabled = NO;
+    }
+    
     
     
    
@@ -196,11 +209,21 @@
 {
     DLog(@"逛逛书城");
     // CollectionFlowLayout
-    UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
     
-    AudioBookCategoryCollectionViewController *audiocateVC = [[AudioBookCategoryCollectionViewController alloc] initWithCollectionViewLayout:flow];
+    self.networkOK = [[NSUserDefaults standardUserDefaults] boolForKey:@"networkOK"];
+    if (_networkOK) {
+        
+        UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
+        
+        AudioBookCategoryCollectionViewController *audiocateVC = [[AudioBookCategoryCollectionViewController alloc] initWithCollectionViewLayout:flow];
+        
+        [self.navigationController pushViewController:audiocateVC animated:YES];
+        
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前网络不可用, 请检查当前网络设置" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];
+    }
     
-    [self.navigationController pushViewController:audiocateVC animated:YES];
     
     
 }
@@ -214,9 +237,6 @@
     
     [self p_requestDataWithPageId:_currentPageId++ pageSize:_pageSize];
 
-    
-    
-   
     
     
 }
@@ -263,19 +283,27 @@
 //确定每个cell的高度
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 120;
+    return 100;
 }
 
 //跳转到专辑页面
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    AlbumTableViewController *albumTVC = [[AlbumTableViewController alloc] init];
+    self.networkOK = [[NSUserDefaults standardUserDefaults] boolForKey:@"networkOK"];
+    if (_networkOK) {
+        
+        AlbumTableViewController *albumTVC = [[AlbumTableViewController alloc] init];
+        
+        AudioModel *am = _dataArray[indexPath.row];
+        
+        albumTVC.albumId = am.albumId;
+        
+        [self.navigationController pushViewController:albumTVC animated:YES];
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前网络不可用, 请检查当前网络设置" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];
+    }
     
-    AudioModel *am = _dataArray[indexPath.row];
-    
-    albumTVC.albumId = am.albumId;
-    
-    [self.navigationController pushViewController:albumTVC animated:YES];
 }
 
 

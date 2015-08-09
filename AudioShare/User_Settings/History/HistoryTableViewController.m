@@ -19,7 +19,7 @@
 
 @property (nonatomic, strong)NSMutableArray *dataArray;
 @property (nonatomic, strong)NSMutableArray *tracksList;
-
+@property (nonatomic, assign)BOOL networkOK;
 @end
 
 @implementation HistoryTableViewController
@@ -38,7 +38,8 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"清空" style:(UIBarButtonItemStyleDone) target:self action:@selector(p_deleteAllHistoryAction:)];
     
     PlayerViewController *player = [PlayerViewController sharedPlayer];
-    if (player.isPlaying && player.background) {
+    DLog(@"playing------%d, playforegroud--------%d", player.isPlaying, player.foreground);
+    if (player.isPlaying && player.foreground == NO && player.lastItem.isLiveCast == NO) {
         [player p_saveCurrentAlbumInfo];
     }
     
@@ -55,7 +56,6 @@
     [[DataBaseHandle shareDataBase] openDBWithName:kDBName atPath:docPath];
     
     self.dataArray = [[[DataBaseHandle shareDataBase] selectAllFromTable:kHistoryTableName historyProperty:[HistoryModel historyPropertyNames] sidOption:NO] mutableCopy];
-    
     
     [[DataBaseHandle shareDataBase] closeDB];
     
@@ -155,7 +155,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 120;
+    return 100;
 }
 
 
@@ -164,7 +164,16 @@
 {
     HistoryModel *history = _dataArray[indexPath.row];
     
-    [self p_unarchiveWithTrackListName:history.archiveName albumId:history.albumId];
+    self.networkOK = [[NSUserDefaults standardUserDefaults] boolForKey:@"networkOK"];
+    if (_networkOK) {
+        
+        [self p_unarchiveWithTrackListName:history.archiveName albumId:history.albumId];
+        
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前网络不可用, 请检查当前网络设置" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];
+    }
+    
     
 }
 
@@ -203,7 +212,12 @@
                 playerVC.urlString = track.playUrl64;
                 playerVC.historyFlag = YES;
                 playerVC.albumId = track.albumId;
-                [weakSelf presentViewController:playerVC animated:YES completion:nil];
+                if (weakSelf.isModal) {
+                    [weakSelf backToPlayer:nil];
+                } else {
+                    [weakSelf presentViewController:playerVC animated:YES completion:nil];
+                }
+                
             }
             
         };

@@ -105,6 +105,8 @@
 		C2CCC9AE1B759061007A01E1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCC9AD1B759061007A01E1 /* Reachability.m */; };
 		C2CCC9B41B759757007A01E1 /* DataBaseHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCC9B11B759757007A01E1 /* DataBaseHandle.m */; };
 		C2CCC9B51B759757007A01E1 /* RequestTool_v2.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCC9B31B759757007A01E1 /* RequestTool_v2.m */; };
+		C2CCC9BA1B7617A9007A01E1 /* TimerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCC9B81B7617A9007A01E1 /* TimerViewController.m */; };
+		C2CCC9BE1B761821007A01E1 /* TimerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CCC9BD1B761821007A01E1 /* TimerView.m */; };
 		C2CEAE261B71B013000F6858 /* HistoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CEAE251B71B013000F6858 /* HistoryModel.m */; };
 		C2CEAE2D1B72376F000F6858 /* Album_ListView.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CEAE2A1B72376F000F6858 /* Album_ListView.m */; };
 		C2CEAE2E1B72376F000F6858 /* Album_ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2CEAE2C1B72376F000F6858 /* Album_ListViewController.m */; };
@@ -308,6 +310,10 @@
 		C2CCC9B11B759757007A01E1 /* DataBaseHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataBaseHandle.m; sourceTree = "<group>"; };
 		C2CCC9B21B759757007A01E1 /* RequestTool_v2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestTool_v2.h; sourceTree = "<group>"; };
 		C2CCC9B31B759757007A01E1 /* RequestTool_v2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestTool_v2.m; sourceTree = "<group>"; };
+		C2CCC9B71B7617A9007A01E1 /* TimerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimerViewController.h; sourceTree = "<group>"; };
+		C2CCC9B81B7617A9007A01E1 /* TimerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimerViewController.m; sourceTree = "<group>"; };
+		C2CCC9BC1B761821007A01E1 /* TimerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimerView.h; sourceTree = "<group>"; };
+		C2CCC9BD1B761821007A01E1 /* TimerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimerView.m; sourceTree = "<group>"; };
 		C2CEAE241B71B013000F6858 /* HistoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryModel.h; sourceTree = "<group>"; };
 		C2CEAE251B71B013000F6858 /* HistoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryModel.m; sourceTree = "<group>"; };
 		C2CEAE291B72376F000F6858 /* Album_ListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album_ListView.h; sourceTree = "<group>"; };
@@ -542,6 +548,7 @@
 		C2C11F961B685E9E00CBA7B5 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				C2CCC9B61B7608F3007A01E1 /* Timer */,
 				C2C11F9D1B685E9E00CBA7B5 /* SettingTableViewController.h */,
 				C2C11F9E1B685E9E00CBA7B5 /* SettingTableViewController.m */,
 			);
@@ -876,6 +883,18 @@
 			path = Tool;
 			sourceTree = "<group>";
 		};
+		C2CCC9B61B7608F3007A01E1 /* Timer */ = {
+			isa = PBXGroup;
+			children = (
+				C2CCC9B71B7617A9007A01E1 /* TimerViewController.h */,
+				C2CCC9B81B7617A9007A01E1 /* TimerViewController.m */,
+				C2CCC9BC1B761821007A01E1 /* TimerView.h */,
+				C2CCC9BD1B761821007A01E1 /* TimerView.m */,
+			);
+			name = Timer;
+			path = ../Timer;
+			sourceTree = "<group>";
+		};
 		C2CEAE231B71AFED000F6858 /* HistoryModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -1095,6 +1114,7 @@
 				C2C08FBA1B6B744700930A4F /* TrackModel.m in Sources */,
 				C2C4DFF41B66553E004690C3 /* SDWebImageDownloader.m in Sources */,
 				C2C4E0071B665C20004690C3 /* SuggestionCollectionViewController.m in Sources */,
+				C2CCC9BA1B7617A9007A01E1 /* TimerViewController.m in Sources */,
 				C2C08F701B6B227400930A4F /* AudioModel.m in Sources */,
 				C2C08FB51B6B574E00930A4F /* UIScrollView+MJRefresh.m in Sources */,
 				C2C08FB41B6B574E00930A4F /* UIScrollView+MJExtension.m in Sources */,
@@ -1107,6 +1127,7 @@
 				C2C4DFF31B66553E004690C3 /* SDWebImageDecoder.m in Sources */,
 				C2CCA8611B67871B00B62775 /* DownloadedTracksCell.m in Sources */,
 				C2C08FB01B6B574E00930A4F /* MJRefreshNormalHeader.m in Sources */,
+				C2CCC9BE1B761821007A01E1 /* TimerView.m in Sources */,
 				C2CCC9AE1B759061007A01E1 /* Reachability.m in Sources */,
 				C2C08FB11B6B574E00930A4F /* MJRefreshStateHeader.m in Sources */,
 				C2CCA8441B676D6C00B62775 /* AudioTableViewController.m in Sources */,

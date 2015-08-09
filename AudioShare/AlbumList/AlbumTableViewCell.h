@@ -13,8 +13,8 @@
 //详情
 @property (nonatomic, strong)UILabel *titleLabel;
 
-//下载button
-@property (nonatomic, strong)UIButton *optionButton;
+////下载button
+//@property (nonatomic, strong)UIButton *optionButton;
 
 //播放时间
 @property (nonatomic, strong)UILabel *playTimesLabel;

@@ -30,6 +30,8 @@
 @property (nonatomic, strong)NSMutableArray *dataArray;
 @property (nonatomic, copy)NSString *currentTagName;
 @property (nonatomic, strong)UIActivityIndicatorView *activity;
+
+@property (nonatomic, assign)BOOL networkOK;
 @end
 
 @implementation SuggestionCollectionViewController
@@ -93,102 +95,115 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
                        pageSize:(NSInteger)pageSize
 {
     
-    NSString *params = nil;
-    [self.activity startAnimating];
-    if (_loadEnable) {
-        if (_showSuggestion) {
-            // 参数字符串
-            
-            NSMutableArray *tempArr = [NSMutableArray array];
-            
-            params = [NSString stringWithFormat:@"categoryId=%@&contentType=album&device=iPhone&version=4.1.7.1", self.categoryId];
-            [RequestTool_v2 requestWithURL:_apiString paramString:params postRequest:NO callBackData:^(NSData *data) {
-                NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+    // 刷新数据
+    self.networkOK = [[NSUserDefaults standardUserDefaults] boolForKey:@"networkOK"];
+    if (_networkOK) {
+        //////////////////////////
+        NSString *params = nil;
+        [self.activity startAnimating];
+        if (_loadEnable) {
+            if (_showSuggestion) {
+                // 参数字符串
                 
-                if ([dict[@"msg"] isEqualToString:@"成功"]) {
-                    // 记录小分类列表数组
-                    for (NSDictionary *tagDict in dict[@"tags"][@"list"]) {
-                        NSString *tagName = tagDict[@"tname"];
-                        [_tagNameArray addObject:tagName];
-                    }
-                    DLog(@"tagNameArray---%@", self.tagNameArray);
+                NSMutableArray *tempArr = [NSMutableArray array];
+                
+                params = [NSString stringWithFormat:@"categoryId=%@&contentType=album&device=iPhone&version=4.1.7.1", self.categoryId];
+                [RequestTool_v2 requestWithURL:_apiString paramString:params postRequest:NO callBackData:^(NSData *data) {
+                    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
                     
-                    for (NSDictionary *categoryList in dict[@"categoryContents"][@"list"]) {
+                    if ([dict[@"msg"] isEqualToString:@"成功"]) {
+                        // 记录小分类列表数组
+                        for (NSDictionary *tagDict in dict[@"tags"][@"list"]) {
+                            NSString *tagName = tagDict[@"tname"];
+                            [_tagNameArray addObject:tagName];
+                        }
+                        DLog(@"tagNameArray---%@", self.tagNameArray);
+                        
+                        for (NSDictionary *categoryList in dict[@"categoryContents"][@"list"]) {
+                            NSMutableArray *subListArray = [NSMutableArray array];
+                            NSDictionary *subListDict = @{@"title":categoryList[@"title"], @"list":subListArray};
+                            for (NSDictionary *audioDict in categoryList[@"list"]) {
+                                AudioModel *model = [[AudioModel alloc] init];
+                                [model setValuesForKeysWithDictionary:audioDict];
+                                [subListArray addObject:model];
+                            }
+                            [tempArr addObject:subListDict];
+                            
+                        }
+                        // 获得maxPageId
+                        _maxPageId = [dict[@"tags"][@"maxPageId"] integerValue];
+                        DLog(@"maxPageId = %ld", _maxPageId);
+                        
+                    } else {
+                        DLog(@"加载数据无效");
+                    }
+                    self.dataArray = tempArr;
+                    
+                    DLog(@"加载完毕--%@, %@", _dataArray[0][@"title"], _dataArray[0][@"list"]);
+                    [self.collectionView.footer endRefreshing];
+                    [self.collectionView.header endRefreshing];
+                    [self.collectionView reloadData];
+                    [self.activity stopAnimating];
+                    
+                    self.navigationItem.leftBarButtonItem.enabled = YES;
+                    _loadEnable = YES;
+                }];
+                self.navigationItem.leftBarButtonItem.enabled = NO;
+                _loadEnable = NO;
+            } else {
+                
+                // 参数字符串
+                
+                NSMutableArray *tempArr = [NSMutableArray array];
+                
+                params = [NSString stringWithFormat:@"calcDimension=hot&categoryId=%@&device=iPhone&pageId=%ld&pageSize=%ld&status=0&tagName=%@", self.categoryId, pageId, pageSize, _currentTagName];
+                DLog(@"currentPageId = %ld", pageId);
+                [RequestTool_v2 requestWithURL:_apiString paramString:params postRequest:NO callBackData:^(NSData *data) {
+                    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+                    
+                    if ([dict[@"msg"] isEqualToString:@"成功"]) {
                         NSMutableArray *subListArray = [NSMutableArray array];
-                        NSDictionary *subListDict = @{@"title":categoryList[@"title"], @"list":subListArray};
-                        for (NSDictionary *audioDict in categoryList[@"list"]) {
-                            AudioModel *model = [[AudioModel alloc] init];
-                            [model setValuesForKeysWithDictionary:audioDict];
-                            [subListArray addObject:model];
+                        NSDictionary *subListDict = @{@"title":dict[@"title"], @"list":subListArray};
+                        for (NSDictionary *audioDict in dict[@"list"]) {
+                            AudioModel *m = [[AudioModel alloc] init];
+                            [m setValuesForKeysWithDictionary:audioDict];
+                            [subListArray addObject:m];
+                            
                         }
                         [tempArr addObject:subListDict];
                         
-                    }
-                    // 获得maxPageId
-                    _maxPageId = [dict[@"tags"][@"maxPageId"] integerValue];
-                    DLog(@"maxPageId = %ld", _maxPageId);
-                    
-                } else {
-                    DLog(@"加载数据无效");
-                }
-                self.dataArray = tempArr;
-                
-                DLog(@"加载完毕--%@, %@", _dataArray[0][@"title"], _dataArray[0][@"list"]);
-                [self.collectionView.footer endRefreshing];
-                [self.collectionView.header endRefreshing];
-                [self.collectionView reloadData];
-                [self.activity stopAnimating];
-                
-                self.navigationItem.leftBarButtonItem.enabled = YES;
-                _loadEnable = YES;
-            }];
-            self.navigationItem.leftBarButtonItem.enabled = NO;
-            _loadEnable = NO;
-        } else {
-            
-            // 参数字符串
-            
-            NSMutableArray *tempArr = [NSMutableArray array];
-            
-            params = [NSString stringWithFormat:@"calcDimension=hot&categoryId=%@&device=iPhone&pageId=%ld&pageSize=%ld&status=0&tagName=%@", self.categoryId, pageId, pageSize, _currentTagName];
-            DLog(@"currentPageId = %ld", pageId);
-            [RequestTool_v2 requestWithURL:_apiString paramString:params postRequest:NO callBackData:^(NSData *data) {
-                NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
-                
-                if ([dict[@"msg"] isEqualToString:@"成功"]) {
-                    NSMutableArray *subListArray = [NSMutableArray array];
-                    NSDictionary *subListDict = @{@"title":dict[@"title"], @"list":subListArray};
-                    for (NSDictionary *audioDict in dict[@"list"]) {
-                        AudioModel *m = [[AudioModel alloc] init];
-                        [m setValuesForKeysWithDictionary:audioDict];
-                        [subListArray addObject:m];
+                        // 获得maxPageId
+                        _maxPageId = [dict[@"maxPageId"] integerValue];
+                        DLog(@"maxPageId = %ld", _maxPageId);
                         
+                    } else {
+                        DLog(@"加载数据无效");
                     }
-                    [tempArr addObject:subListDict];
                     
-                    // 获得maxPageId
-                    _maxPageId = [dict[@"maxPageId"] integerValue];
-                    DLog(@"maxPageId = %ld", _maxPageId);
+                    self.dataArray = tempArr;
                     
-                } else {
-                    DLog(@"加载数据无效");
-                }
-                
-                self.dataArray = tempArr;
-                
-                DLog(@"加载完毕--%@, %@", _dataArray[0][@"title"], _dataArray[0][@"list"]);
-                [self.collectionView.footer endRefreshing];
-                [self.collectionView.header endRefreshing];
-                [self.collectionView reloadData];
-                [self.activity stopAnimating];
-                
-                self.navigationItem.leftBarButtonItem.enabled = YES;
-                _loadEnable = YES;
-            }];
-            self.navigationItem.leftBarButtonItem.enabled = NO;
-            _loadEnable = NO;
+                    DLog(@"加载完毕--%@, %@", _dataArray[0][@"title"], _dataArray[0][@"list"]);
+                    [self.collectionView.footer endRefreshing];
+                    [self.collectionView.header endRefreshing];
+                    [self.collectionView reloadData];
+                    [self.activity stopAnimating];
+                    
+                    self.navigationItem.leftBarButtonItem.enabled = YES;
+                    _loadEnable = YES;
+                }];
+                self.navigationItem.leftBarButtonItem.enabled = NO;
+                _loadEnable = NO;
+            }
         }
+        ////////////////////
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前网络不可用, 请检查当前网络设置" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];
+        [self.activity stopAnimating];
+        [self.collectionView.header endRefreshing];
+        [self.collectionView.footer endRefreshing];
     }
+    
     
 }
 
@@ -197,14 +212,24 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
 - (void)p_dragUptoLoadMore
 {
     // 上拉刷新
-    __weak __typeof(self) weakSelf = self;
-    
-    self.collectionView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        [weakSelf p_loadMoreData];
+    self.networkOK = [[NSUserDefaults standardUserDefaults] boolForKey:@"networkOK"];
+    if (_networkOK) {
         
-    }];
-    
-    [self.collectionView.footer beginRefreshing];
+        __weak __typeof(self) weakSelf = self;
+        
+        self.collectionView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+            [weakSelf p_loadMoreData];
+            
+        }];
+        [self.collectionView.footer beginRefreshing];
+        
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前网络不可用, 请检查当前网络设置" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];
+        [self.collectionView.footer endRefreshing];
+        [self.activity stopAnimating];
+    }
+   
     
 }
 
@@ -214,7 +239,6 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
     if (_currentPageId <= _maxPageId) {
         NSString *params = [NSString stringWithFormat:@"calcDimension=hot&categoryId=%@&device=iPhone&pageId=%ld&pageSize=%ld&status=0&tagName=%@", self.categoryId, _currentPageId, _pageSize, _currentTagName];
         
-    
         if (_loadEnable) {
             [self.activity startAnimating];
             [RequestTool_v2 requestWithURL:_apiString paramString:params postRequest:NO callBackData:^(NSData *data) {
@@ -261,7 +285,6 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
 // 下拉刷新
 - (void)p_dragDownToRefresh
 {
-    // 刷新数据
     
     __weak __typeof(self) weakSelf = self;
     
@@ -278,6 +301,7 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
         
     }];
     [self.collectionView.header beginRefreshing];
+    
 }
 
 
@@ -301,24 +325,31 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
 - (void)moreAction:(UIBarButtonSystemItem *)sender
 {
     DLog(@"打开更多分类");
+    self.networkOK = [[NSUserDefaults standardUserDefaults] boolForKey:@"networkOK"];
+    if (_networkOK) {
+        
+        SubListViewController *subListVC = [[SubListViewController alloc] init];
+        // 传值;
+        subListVC.titleString = self.categoryName;
+        subListVC.tagNameArray = self.tagNameArray;
+        subListVC.categoryId = self.categoryId;
+        subListVC.backTagName = ^(NSString *tagName){
+            self.currentTagName = tagName;
+            _currentPageId = 1;
+            _pageSize = 21;
+            _showSuggestion = NO;
+            _loadEnable = YES;
+            self.apiString = kSubAudioAlbumList;
+            [self p_dragDownToRefresh];
+        };
+
+        [self.navigationController pushViewController:subListVC animated:YES];
+        
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前网络不可用, 请检查当前网络设置" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];
+    }
     
-    SubListViewController *subListVC = [[SubListViewController alloc] init];
-    // 传值;
-    subListVC.titleString = self.categoryName;
-    subListVC.tagNameArray = self.tagNameArray;
-    subListVC.categoryId = self.categoryId;
-    subListVC.backTagName = ^(NSString *tagName){
-        self.currentTagName = tagName;
-        _currentPageId = 1;
-        _pageSize = 21;
-        _showSuggestion = NO;
-        _loadEnable = YES;
-        self.apiString = kSubAudioAlbumList;
-        [self p_dragDownToRefresh];
-    };
-    
-    
-    [self.navigationController pushViewController:subListVC animated:YES];
     
     
     
@@ -377,12 +408,20 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     DLog(@"%@", indexPath);
+    self.networkOK = [[NSUserDefaults standardUserDefaults] boolForKey:@"networkOK"];
+    if (_networkOK) {
+        
+        AudioModel *m = _dataArray[indexPath.section][@"list"][indexPath.row];
+        
+        AlbumTableViewController *albumVC = [[AlbumTableViewController alloc] init];
+        albumVC.albumId = m.albumId;
+        [self.navigationController pushViewController:albumVC animated:YES];
+        
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前网络不可用, 请检查当前网络设置" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];
+    }
     
-    AudioModel *m = _dataArray[indexPath.section][@"list"][indexPath.row];
-    
-    AlbumTableViewController *albumVC = [[AlbumTableViewController alloc] init];
-    albumVC.albumId = m.albumId;
-    [self.navigationController pushViewController:albumVC animated:YES];
 }
 
 #pragma mark ----UICollectionViewDelegateFlowLayout

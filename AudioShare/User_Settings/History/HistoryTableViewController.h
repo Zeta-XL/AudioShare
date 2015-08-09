@@ -11,7 +11,7 @@
 typedef void (^trackListBlock)(NSMutableArray *trackList);
 @interface HistoryTableViewController : UITableViewController
 @property (nonatomic, copy)trackListBlock handleTrackList;
-
+@property (nonatomic, assign)BOOL isModal;
 
 - (void)backToPlayer:(UIBarButtonItem *)leftbutton;
 @end

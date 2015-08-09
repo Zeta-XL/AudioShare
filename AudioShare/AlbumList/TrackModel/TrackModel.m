@@ -25,6 +25,8 @@
         self.duration = [value doubleValue];
     } else if ([key isEqualToString:@"downloadSize"]) {
         self.downloadSize = [value doubleValue];
+    } else if ([key isEqualToString:@"playtimes"]){
+        self.playtimes = [value integerValue];
     } else {
         [super setValue:value forKey:key];
     }
@@ -43,7 +45,8 @@
     [aCoder encodeDouble:_downloadSize forKey:@"downloadSize"];
     [aCoder encodeDouble:_lastSeconds forKey:@"lastSeconds"];
     [aCoder encodeObject:_nickname forKey:@"nickname"];
-    [aCoder encodeObject:_coverMiddle forKey:@"coverMiddle"];
+    [aCoder encodeObject:_coverLarge forKey:@"coverLarge"];
+    [aCoder encodeInteger:_playtimes forKey:@"playtimes"];
     
 }
 
@@ -60,7 +63,8 @@
         self.downloadSize = [aDecoder decodeDoubleForKey:@"downloadSize"];
         self.lastSeconds = [aDecoder decodeDoubleForKey:@"lastSeconds"];
         self.nickname = [aDecoder decodeObjectForKey:@"nickname"];
-        self.coverMiddle = [aDecoder decodeObjectForKey:@"coverMiddle"];
+        self.coverLarge = [aDecoder decodeObjectForKey:@"coverLarge"];
+        self.playtimes = [aDecoder decodeIntegerForKey:@"playtimes"];
     }
     
     return self;

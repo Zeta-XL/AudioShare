@@ -61,7 +61,7 @@
     //
     self.loadButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
     self.loadButton.frame = CGRectMake(CGRectGetMaxX(_collectionButton.frame) + 10, CGRectGetMinY(_collectionButton.frame), CGRectGetWidth(_collectionButton.frame), CGRectGetHeight(_collectionButton.frame));
-    [self.loadButton setTitle:@"批量下载" forState:(UIControlStateNormal)];
+    [self.loadButton setTitle:@"详情" forState:(UIControlStateNormal)];
     [self.loadButton addTarget:self action:@selector(MultiDownloadButtonAction: ) forControlEvents:(UIControlEventTouchUpInside)];
     [self addSubview:_loadButton];
     

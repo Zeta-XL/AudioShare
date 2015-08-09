@@ -31,7 +31,7 @@
 @property (nonatomic, assign)NSInteger currentPageId;
 @property (nonatomic, assign)NSInteger pageSize;
 @property (nonatomic, assign)BOOL loadEnable;
-
+@property (nonatomic, assign)BOOL networkOK;
 @end
 
 @implementation RadioTableViewController
@@ -102,43 +102,52 @@
                        pageSize:(NSInteger)pageSize
 {
     
-    NSString *params = nil;
-    if (self.radioType == 2) {
-        params = [NSString stringWithFormat:@"pageNum=%ld&radioType=2&device=iPhone&provinceCode=%@&pageSize=%ld", pageId, self.provinceCode, pageSize];
-    } else {
-        params = [NSString stringWithFormat:@"pageNum=%ld&radioType=%ld&device=iPhone&pageSize=%ld", pageId, self.radioType, pageSize];
-    }
-    
-    if (_loadEnable) {
-        [RequestTool_v2 requestWithURL:kRadioUrl paramString:params postRequest:NO callBackData:^(NSData *data) {
-            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
-            
-            if ([dict[@"ret"] isEqualToString:@"0000"]) {
-                for (NSDictionary *radioDict in dict[@"result"]) {
-                    Radio *rad = [[Radio alloc] init];
-                    [rad setValuesForKeysWithDictionary:radioDict];
-                    [_radioArray addObject:rad];
-                    // 获得maxPageId
-                    _maxPageId = [dict[@"total"] integerValue] % pageSize == 0 ? ([dict[@"total"] integerValue] / pageSize) : ([dict[@"total"] integerValue] / pageSize) + 1;
+    self.networkOK = [[NSUserDefaults standardUserDefaults] boolForKey:@"networkOK"];
+    if (_networkOK) {
+        
+        NSString *params = nil;
+        if (self.radioType == 2) {
+            params = [NSString stringWithFormat:@"pageNum=%ld&radioType=2&device=iPhone&provinceCode=%@&pageSize=%ld", pageId, self.provinceCode, pageSize];
+        } else {
+            params = [NSString stringWithFormat:@"pageNum=%ld&radioType=%ld&device=iPhone&pageSize=%ld", pageId, self.radioType, pageSize];
+        }
+        
+        if (_loadEnable) {
+            [RequestTool_v2 requestWithURL:kRadioUrl paramString:params postRequest:NO callBackData:^(NSData *data) {
+                NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+                
+                if ([dict[@"ret"] isEqualToString:@"0000"]) {
+                    for (NSDictionary *radioDict in dict[@"result"]) {
+                        Radio *rad = [[Radio alloc] init];
+                        [rad setValuesForKeysWithDictionary:radioDict];
+                        [_radioArray addObject:rad];
+                        // 获得maxPageId
+                        _maxPageId = [dict[@"total"] integerValue] % pageSize == 0 ? ([dict[@"total"] integerValue] / pageSize) : ([dict[@"total"] integerValue] / pageSize) + 1;
+                    }
+                    
+                    DLog(@"maxPageId = %ld", _maxPageId);
+                    
+                } else {
+                    DLog(@"加载数据无效");
                 }
                 
-                DLog(@"maxPageId = %ld", _maxPageId);
                 
-            } else {
-                DLog(@"加载数据无效");
-            }
-            
-            
-            [self.tableView reloadData];
-            self.loadEnable = YES;
-            self.navigationItem.leftBarButtonItem.enabled = YES;
-            [self.tableView.footer endRefreshing];
-            
-            
-        }];
+                [self.tableView reloadData];
+                self.loadEnable = YES;
+                self.navigationItem.leftBarButtonItem.enabled = YES;
+                [self.tableView.footer endRefreshing];
+                
+                
+            }];
+        }
+        self.loadEnable = NO;
+        self.navigationItem.leftBarButtonItem.enabled = NO;
+        
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前网络不可用, 请检查当前网络设置" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];
     }
-    self.loadEnable = NO;
-    self.navigationItem.leftBarButtonItem.enabled = NO;
+    
 }
 
 
@@ -187,18 +196,25 @@
 //选中行 模态至播放器页面
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PlayerViewController *pVC = [PlayerViewController sharedPlayer];
     
+    self.networkOK = [[NSUserDefaults standardUserDefaults] boolForKey:@"networkOK"];
+    if (_networkOK) {
+        PlayerViewController *pVC = [PlayerViewController sharedPlayer];
+        //传值
+        Radio *radio = _radioArray[indexPath.row];
+        pVC.urlString = radio.radioPlayUrl;
+        pVC.titleString = radio.programName;
+        pVC.liveStartTime = radio.startTime;
+        pVC.liveEndTime = radio.endTime;
+        pVC.imageUrl = radio.radioCoverLarge;
+        pVC.currentIndex = 0;
+        [self presentViewController:pVC animated:YES completion:nil];
+        
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前网络不可用, 请检查当前网络设置" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];
+    }
     
-    //传值
-    Radio *radio = _radioArray[indexPath.row];
-    pVC.urlString = radio.radioPlayUrl;
-    pVC.titleString = radio.programName;
-    pVC.liveStartTime = radio.startTime;
-    pVC.liveEndTime = radio.endTime;
-    pVC.imageUrl = radio.radioCoverLarge;
-    pVC.currentIndex = 0;
-    [self presentViewController:pVC animated:YES completion:nil];
 }
 
 
@@ -234,6 +250,7 @@
 //网络电台按钮点击方法
 - (void)networkButtonAction:(UIButton *)sender
 {
+    
     if (_loadEnable) {
         self.radioFoxView.foxLabel.text = @"网络电台列表";
     }
@@ -244,13 +261,13 @@
     [self p_requestDataWithPageId:_currentPageId++ pageSize:_pageSize];
     
     
+    
 }
 
 
 //国家电台按钮点击方法
 - (void)countriesButtonAction:(UIButton *)sender
 {
-
     if (_loadEnable) {
         self.radioFoxView.foxLabel.text = @"国家电台列表";
     }
@@ -260,24 +277,32 @@
     [self.tableView reloadData];
     [self p_requestDataWithPageId:_currentPageId++ pageSize:_pageSize];
     
-    
 
 }
 
 //省市电台按钮点击方法
 - (void)provinceButtonAction:(UIButton *)sender
 {
-    RadioProvinceTableViewController *provinceVC = [[RadioProvinceTableViewController alloc] init];
-//    provinceVC.string = _radioProvinveString;
-    self.radioType = 2;
-    self.currentPageId = 1;
-    provinceVC.province = ^(NSString *aString){
-        self.radioArray = [NSMutableArray array];
-        self.provinceCode = aString;
-        [self p_requestDataWithPageId:_currentPageId++ pageSize:_pageSize];
-        self.radioFoxView.foxLabel.text = @"地方电台列表";
-    };
-    [self.navigationController pushViewController:provinceVC animated:YES];
+    
+    self.networkOK = [[NSUserDefaults standardUserDefaults] boolForKey:@"networkOK"];
+    if (_networkOK) {
+        
+        RadioProvinceTableViewController *provinceVC = [[RadioProvinceTableViewController alloc] init];
+        //    provinceVC.string = _radioProvinveString;
+        self.radioType = 2;
+        self.currentPageId = 1;
+        provinceVC.province = ^(NSString *aString){
+            self.radioArray = [NSMutableArray array];
+            self.provinceCode = aString;
+            [self p_requestDataWithPageId:_currentPageId++ pageSize:_pageSize];
+            self.radioFoxView.foxLabel.text = @"地方电台列表";
+        };
+        [self.navigationController pushViewController:provinceVC animated:YES];
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前网络不可用, 请检查当前网络设置" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];
+    }
+    
 }
 
 

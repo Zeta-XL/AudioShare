@@ -37,7 +37,7 @@
 // 制作者名称
 @property (nonatomic, copy)NSString *nickname;
 // 专辑图片(中)
-@property (nonatomic, copy)NSString *coverMiddle;
-
+@property (nonatomic, copy)NSString *coverLarge;
+@property (nonatomic, assign)NSInteger playtimes;
 
 @end
