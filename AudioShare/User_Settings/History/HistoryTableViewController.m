@@ -199,9 +199,11 @@
         CGFloat lastSeconds = [dataDict[@"lastSeconds"] doubleValue];
         NSString *imgUrl = dataDict[@"imageUrl"];
         
+        
+        
         __weak typeof(self) weakSelf = self;
         self.handleTrackList = ^(NSMutableArray *trackList){
-            if (tracksCount != 0) {
+            if (tracksCount != 0 && trackList.count != 0) {
                 PlayerViewController *playerVC = [PlayerViewController sharedPlayer];
                 playerVC.tracksList = trackList;
                 playerVC.lastSeconds = lastSeconds;
@@ -219,6 +221,8 @@
                     [weakSelf presentViewController:playerVC animated:YES completion:nil];
                 }
                 
+            } else {
+                DLog(@"当前网络不稳定");
             }
             
         };

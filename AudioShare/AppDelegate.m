@@ -131,10 +131,19 @@
         DLog(@"无网络");
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前无网络，无法加载数据" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alertView show];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [alertView dismissWithClickedButtonIndex:0 animated:YES];
         });
         
+        PlayerViewController *playerVC = [PlayerViewController sharedPlayer];
+        if (playerVC.foreground) {
+            if (playerVC.isPlaying) {
+                [playerVC timerStopAction];
+            }
+            
+            [playerVC dismissViewControllerAnimated:YES completion:nil];
+            playerVC.foreground = NO;
+        }
     }
     
 }

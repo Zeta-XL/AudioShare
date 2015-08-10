@@ -175,7 +175,7 @@ static PlayerViewController *singlePlayer = nil;
             // 需传参数
             [self.currentItem seekToTime:CMTimeMakeWithSeconds(_lastSeconds, 1)];
             // 点播需设置观察者
-            [_loadingView startAnimating];  /****************/
+
             
         }
         // 设置观察者监测当前item status
@@ -296,7 +296,7 @@ static PlayerViewController *singlePlayer = nil;
             DLog(@"trackTitle---%@", track.title);
             
             [self.lastItem seekToTime:CMTimeMakeWithSeconds(_lastSeconds, 1)];
-            [_loadingView startAnimating]; /***************/
+          
         } else if (radioExist) {
             NSDictionary *dataDict = [NSKeyedUnarchiver unarchiveObjectWithFile:radioPath];
             self.imageUrl = dataDict[@"imageUrl"];
@@ -371,14 +371,17 @@ static PlayerViewController *singlePlayer = nil;
     if (self.currentItem.status == AVPlayerItemStatusReadyToPlay) {
         if (_isPlaying == NO) {
             [self playAction:self.playButton];
-            [_loadingView stopAnimating]; /****************************/
+        
         }
+        if (_currentItem.statusObserver) {
+            [_currentItem removeObserver:self forKeyPath:@"status"];
+            _currentItem.statusObserver = NO;
+        }
+    } else if (self.currentItem.status == AVPlayerItemStatusFailed) {
+        [self p_replacePlayItemAtIndex:_currentIndex startSeconds:_currentSeconds lastIndex:_currentSeconds];
         
     }
-    if (_currentItem.statusObserver) {
-        [_currentItem removeObserver:self forKeyPath:@"status"];
-        _currentItem.statusObserver = NO;
-    }
+    
     
     
 }
@@ -634,7 +637,7 @@ static PlayerViewController *singlePlayer = nil;
     
     self.currentSeconds = startSecs;
     [self.currentItem seekToTime:CMTimeMakeWithSeconds(_currentSeconds, 1)];
-    [_loadingView startAnimating]; /*********************/
+
     
     TrackModel *ctrack = _tracksList[index];
     self.totalSeconds = ctrack.duration;
