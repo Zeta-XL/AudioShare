@@ -261,8 +261,8 @@ static PlayerViewController *singlePlayer = nil;
     
     [self p_addSwipDownGesture];
     
-    [self.timeGoingSlider setThumbImage:[UIImage imageNamed:@"round.png"] forState:(UIControlStateHighlighted)]; // 滑动时
-    [self.timeGoingSlider setThumbImage:[UIImage imageNamed:@"round.png"] forState:(UIControlStateNormal)]; // 不滑动时
+    [self.timeGoingSlider setThumbImage:[UIImage imageNamed:@"round"] forState:(UIControlStateHighlighted)]; // 滑动时
+    [self.timeGoingSlider setThumbImage:[UIImage imageNamed:@"round"] forState:(UIControlStateNormal)]; // 不滑动时
     // cache路径
     NSString *cachePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
     DLog(@"%@", cachePath);
@@ -592,7 +592,7 @@ static PlayerViewController *singlePlayer = nil;
     HistoryTableViewController *historyVC = [[HistoryTableViewController alloc] init];
     UINavigationController *hisNC = [[UINavigationController alloc] initWithRootViewController:historyVC];
     [hisNC.navigationBar setBackgroundImage:[UIImage imageNamed: @"navigationBar.jpg"] forBarMetrics:(UIBarMetricsDefault)];
-    historyVC.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back@2x.png"] style:(UIBarButtonItemStyleDone) target:historyVC action:@selector(backToPlayer:)];
+    historyVC.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back.png"] style:(UIBarButtonItemStyleDone) target:historyVC action:@selector(backToPlayer:)];
     historyVC.isModal = YES;
     hisNC.modalTransitionStyle = UIModalTransitionStylePartialCurl;
     [self presentViewController:hisNC animated:YES completion:^{

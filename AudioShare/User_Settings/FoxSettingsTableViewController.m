@@ -23,9 +23,9 @@
     [super viewDidLoad];
     
     self.array = @[@"收藏专辑", @"播放历史", @"设置"];
-    UIImage *favorate = [UIImage imageNamed:@"favorate.png"];
-    UIImage *history = [UIImage imageNamed:@"history1.png"];
-    UIImage *setting = [UIImage imageNamed:@"setting.png"];
+    UIImage *favorate = [UIImage imageNamed:@"favorate"];
+    UIImage *history = [UIImage imageNamed:@"history2"];
+    UIImage *setting = [UIImage imageNamed:@"setting"];
     self.iconArray = @[favorate, history, setting];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     

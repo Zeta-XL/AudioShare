@@ -144,10 +144,10 @@
     self.navigationItem.title = @"听我想听";
     
     //右button事件
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btn_nav_collection@2x.png"] style:(UIBarButtonItemStyleDone) target:self action:@selector(rightBarButtonAction : )];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"category"] style:(UIBarButtonItemStyleDone) target:self action:@selector(rightBarButtonAction : )];
     
     //左button事件
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"playback_reload.png"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBarButtonAction : )];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reload"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBarButtonAction : )];
     
     //注册
     [self.tableView registerClass:[AudioTableViewCell class] forCellReuseIdentifier:@"cell"];

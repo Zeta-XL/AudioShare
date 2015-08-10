@@ -101,7 +101,7 @@ static NSString * const reuseIdentifier = @"CategoryCell";
 {
     self.navigationItem.title = @"分类";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:(UIBarButtonSystemItemSearch) target:self action:@selector(searchAction:)];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back@2x.png"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backAction:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back.png"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backAction:)];
 }
 
 - (void)searchAction:(UIBarButtonItem *)sender

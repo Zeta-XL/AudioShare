@@ -9,18 +9,18 @@
 #ifndef ZLD_AudioShare_RadioHeader_h
 #define ZLD_AudioShare_RadioHeader_h
 
-#define kUrlRanking @"http://live.ximalaya.com/live-web/v1/getTopRadiosList?device=android&radioNum=20"
+#define kUrlRanking @"http://live.ximalaya.com/live-web/v1/getTopRadiosList?device=iPhone&radioNum=20"
  
 
-#define kUrlCity @"http://live.ximalaya.com/live-web/v1/getProvinceList?device=android"
+#define kUrlCity @"http://live.ximalaya.com/live-web/v1/getProvinceList?device=iPhone"
 
 
-#define kUrlLocal @"http://live.ximalaya.com/live-web/v1/getRadiosListByType?pageNum=1&radioType=2&device=android&provinceCode=110000&pageSize=15"
+#define kUrlLocal @"http://live.ximalaya.com/live-web/v1/getRadiosListByType?pageNum=1&radioType=2&device=iPhone&provinceCode=110000&pageSize=15"
 
-#define kUrlcountries @"http://live.ximalaya.com/live-web/v1/getRadiosListByType?pageNum=1&radioType=1&device=android&pageSize=15"
+#define kUrlcountries @"http://live.ximalaya.com/live-web/v1/getRadiosListByType?pageNum=1&radioType=1&device=iPhone&pageSize=15"
 
 
-#define kUrlnetwork @"http://live.ximalaya.com/live-web/v1/getRadiosListByType?pageNum=1&radioType=3&device=android&pageSize=15"
+#define kUrlnetwork @"http://live.ximalaya.com/live-web/v1/getRadiosListByType?pageNum=1&radioType=3&device=iPhone&pageSize=15"
 
 
 #endif

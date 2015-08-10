@@ -34,8 +34,8 @@
                     <rect key="frame" x="10" y="64" width="580" height="336"/>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aEG-Hz-PI2">
-                    <rect key="frame" x="555" y="25" width="40" height="30"/>
-                    <state key="normal" image="clock.png">
+                    <rect key="frame" x="555" y="25" width="40" height="40"/>
+                    <state key="normal" image="timer">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -85,13 +85,13 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Qd-Ej-hIg">
-                    <rect key="frame" x="548" y="515" width="40" height="40"/>
+                    <rect key="frame" x="555" y="515" width="40" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="Mc2-yD-Q3O"/>
                         <constraint firstAttribute="width" constant="40" id="Zhh-zd-KUh"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                    <state key="normal" image="history.png">
+                    <state key="normal" image="history1">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -106,7 +106,7 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ise-wd-RXI">
-                    <rect key="frame" x="225" y="15" width="150" height="50"/>
+                    <rect key="frame" x="225" y="20" width="150" height="50"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="JJj-oj-hyf"/>
                         <constraint firstAttribute="width" constant="150" id="nZ7-Ts-sfd"/>
@@ -133,19 +133,19 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69O-Yv-QD7">
-                    <rect key="frame" x="5" y="25" width="40" height="30"/>
+                    <rect key="frame" x="5" y="25" width="40" height="40"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="40" id="Nm9-8h-3aC"/>
-                        <constraint firstAttribute="height" constant="30" id="vCy-t4-sqK"/>
+                        <constraint firstAttribute="height" constant="40" id="vCy-t4-sqK"/>
                     </constraints>
-                    <state key="normal" image="undo.png"/>
+                    <state key="normal" image="undo"/>
                     <connections>
                         <action selector="backAction:" destination="-1" eventType="touchUpInside" id="0Zq-aE-sJD"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EIH-rs-s9y">
-                    <rect key="frame" x="12" y="515" width="40" height="40"/>
-                    <state key="normal" image="trackList.png">
+                    <rect key="frame" x="5" y="515" width="40" height="40"/>
+                    <state key="normal" image="trackList">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -163,7 +163,7 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="09b-SZ-6Nf" firstAttribute="centerY" secondItem="pEq-d0-Dot" secondAttribute="centerY" id="0ST-Pe-7f3"/>
-                <constraint firstItem="EIH-rs-s9y" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="12" id="0qB-gI-mpF"/>
+                <constraint firstItem="EIH-rs-s9y" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="5" id="0qB-gI-mpF"/>
                 <constraint firstAttribute="bottom" secondItem="t5w-1p-b2u" secondAttribute="bottom" constant="200" id="1gs-gU-gLe"/>
                 <constraint firstItem="t5w-1p-b2u" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="1xf-I7-61o"/>
                 <constraint firstItem="hkC-hQ-dE3" firstAttribute="top" secondItem="pEq-d0-Dot" secondAttribute="top" id="2fy-OW-AgQ"/>
@@ -179,7 +179,7 @@
                 <constraint firstAttribute="trailing" secondItem="aEG-Hz-PI2" secondAttribute="trailing" constant="10" id="B5f-Iu-RRu"/>
                 <constraint firstItem="CiW-tw-j8a" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Cej-k0-6PW"/>
                 <constraint firstItem="mxg-bV-73w" firstAttribute="top" secondItem="09b-SZ-6Nf" secondAttribute="bottom" constant="30" id="DMl-0c-iPG"/>
-                <constraint firstAttribute="trailing" secondItem="4Qd-Ej-hIg" secondAttribute="trailing" constant="12" id="Hho-a3-KqW"/>
+                <constraint firstAttribute="trailing" secondItem="4Qd-Ej-hIg" secondAttribute="trailing" constant="5" id="Hho-a3-KqW"/>
                 <constraint firstItem="69O-Yv-QD7" firstAttribute="top" secondItem="aEG-Hz-PI2" secondAttribute="top" id="IoD-GO-utZ"/>
                 <constraint firstItem="ise-wd-RXI" firstAttribute="centerX" secondItem="t5w-1p-b2u" secondAttribute="centerX" id="LiT-iZ-lUH"/>
                 <constraint firstItem="4Qd-Ej-hIg" firstAttribute="centerY" secondItem="245-wy-SYD" secondAttribute="centerY" id="Qjk-nf-jdT"/>
@@ -226,14 +226,15 @@
         </view>
     </objects>
     <resources>
-        <image name="clock.png" width="24" height="24"/>
-        <image name="history.png" width="28" height="28"/>
-        <image name="music_fastforward_button.png" width="33" height="33"/>
+        <image name="history.png" width="32" height="32"/>
+        <image name="history1" width="31" height="31"/>
+        <image name="music_fastforward_button.png" width="45" height="45"/>
         <image name="music_play_button.png" width="64" height="64"/>
-        <image name="music_rewind_button.png" width="33" height="33"/>
+        <image name="music_rewind_button.png" width="45" height="45"/>
         <image name="placeholder.png" width="512" height="512"/>
         <image name="playerBackground.jpg" width="1024" height="965"/>
-        <image name="trackList.png" width="28" height="28"/>
-        <image name="undo.png" width="18" height="18"/>
+        <image name="timer" width="31" height="31"/>
+        <image name="trackList" width="40" height="40"/>
+        <image name="undo" width="31" height="31"/>
     </resources>
 </document>

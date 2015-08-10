@@ -35,7 +35,7 @@
     [self.tableView registerClass:[AudioTableViewCell class] forCellReuseIdentifier:@"historyCell"];
     self.navigationItem.title = @"播放历史";
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"trash.png"] style:(UIBarButtonItemStyleDone) target:self action:@selector(p_deleteAllHistoryAction:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"trash"] style:(UIBarButtonItemStyleDone) target:self action:@selector(p_deleteAllHistoryAction:)];
     self.navigationController.navigationBar.tintColor = [UIColor blackColor];
     
     PlayerViewController *player = [PlayerViewController sharedPlayer];

@@ -50,7 +50,7 @@
     self.tableView.backgroundView = imageView;
 */
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back@2x.png"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backButtonAction:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back.png"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backButtonAction:)];
     [self p_albumView];
     [self p_setupActivity];
 

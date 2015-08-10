@@ -39,7 +39,7 @@
     self.navigationItem.title = @"专辑详情";
     
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back@2x.png"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBarAction:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:(UIBarButtonItemStyleDone) target:self action:@selector(leftBarAction:)];
     
     self.albumListView.titleLabel.text = [NSString stringWithFormat:@"专辑名: %@", _titleString];
     self.albumListView.writerLabel.text = _writerString;
