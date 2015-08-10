@@ -39,6 +39,7 @@ static NSString * const reuseIdentifier = @"CategoryCell";
     [super viewDidLoad];
     
     
+    
     // Register cell classes
     [self.collectionView registerClass:[AudioBookCategoryCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     self.collectionView.backgroundColor = [UIColor whiteColor];
@@ -85,7 +86,7 @@ static NSString * const reuseIdentifier = @"CategoryCell";
     self.activity = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(100, 100, 80, 50)];
     self.activity.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
     self.activity.backgroundColor = [UIColor grayColor];
-    self.activity.alpha = 0.3;
+    self.activity.alpha = 0.8;
     self.activity.layer.cornerRadius = 6;
     self.activity.layer.masksToBounds = YES;
     
@@ -161,7 +162,6 @@ static NSString * const reuseIdentifier = @"CategoryCell";
     
     cell.categoryTitleLabel.text = cate.title;
     [cell.categoryImageView sd_setImageWithURL:[NSURL URLWithString:cate.coverPath] placeholderImage:nil];
-    
     
     
     

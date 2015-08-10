@@ -94,6 +94,10 @@
 		C2C4E0041B665C03004690C3 /* SuggestionCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C4E0031B665C03004690C3 /* SuggestionCollectionViewCell.m */; };
 		C2C4E0071B665C20004690C3 /* SuggestionCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C4E0061B665C20004690C3 /* SuggestionCollectionViewController.m */; };
 		C2C4E00B1B666E3A004690C3 /* SubListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C4E00A1B666E3A004690C3 /* SubListViewController.m */; };
+		C2C4F1B61B78273E00C5943F /* favorate.png in Resources */ = {isa = PBXBuildFile; fileRef = C2C4F1B31B78273E00C5943F /* favorate.png */; };
+		C2C4F1B71B78273E00C5943F /* history1.png in Resources */ = {isa = PBXBuildFile; fileRef = C2C4F1B41B78273E00C5943F /* history1.png */; };
+		C2C4F1B81B78273E00C5943F /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = C2C4F1B51B78273E00C5943F /* setting.png */; };
+		C2C4F1BE1B78365000C5943F /* suggestBack.png in Resources */ = {isa = PBXBuildFile; fileRef = C2C4F1BD1B78365000C5943F /* suggestBack.png */; };
 		C2C725F11B69B307005E671F /* SpecialItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C725F01B69B307005E671F /* SpecialItem.m */; };
 		C2C725F91B69D088005E671F /* TracksListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C725F81B69D088005E671F /* TracksListTableViewController.m */; };
 		C2C725FC1B69D13D005E671F /* TracksListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C725FB1B69D13D005E671F /* TracksListTableViewCell.m */; };
@@ -288,6 +292,10 @@
 		C2C4E0061B665C20004690C3 /* SuggestionCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuggestionCollectionViewController.m; sourceTree = "<group>"; };
 		C2C4E0091B666E3A004690C3 /* SubListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubListViewController.h; sourceTree = "<group>"; };
 		C2C4E00A1B666E3A004690C3 /* SubListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubListViewController.m; sourceTree = "<group>"; };
+		C2C4F1B31B78273E00C5943F /* favorate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = favorate.png; sourceTree = "<group>"; };
+		C2C4F1B41B78273E00C5943F /* history1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = history1.png; sourceTree = "<group>"; };
+		C2C4F1B51B78273E00C5943F /* setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting.png; sourceTree = "<group>"; };
+		C2C4F1BD1B78365000C5943F /* suggestBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = suggestBack.png; sourceTree = "<group>"; };
 		C2C725EF1B69B307005E671F /* SpecialItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpecialItem.h; sourceTree = "<group>"; };
 		C2C725F01B69B307005E671F /* SpecialItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpecialItem.m; sourceTree = "<group>"; };
 		C2C725F71B69D088005E671F /* TracksListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TracksListTableViewController.h; sourceTree = "<group>"; };
@@ -743,6 +751,10 @@
 		C2C4DFC01B6648D3004690C3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C2C4F1BD1B78365000C5943F /* suggestBack.png */,
+				C2C4F1B31B78273E00C5943F /* favorate.png */,
+				C2C4F1B41B78273E00C5943F /* history1.png */,
+				C2C4F1B51B78273E00C5943F /* setting.png */,
 				C229C4E71B77952300467F73 /* history.png */,
 				C229C4E51B7793EC00467F73 /* trackList.png */,
 				C229C4BA1B775F8D00467F73 /* backgroundImage */,
@@ -1042,16 +1054,20 @@
 				C2CC83571B76E8F80035B2A3 /* round.png in Resources */,
 				C2C2DA1D1B70EB3900E6A83B /* music_play_button.png in Resources */,
 				C2C2DA1C1B70EB3900E6A83B /* music_pause_button.png in Resources */,
+				C2C4F1B71B78273E00C5943F /* history1.png in Resources */,
 				C229C4DB1B77815300467F73 /* 16.jpg in Resources */,
 				C229C4CA1B775F8D00467F73 /* launcher2.jpg in Resources */,
 				C2CC83561B76E8F80035B2A3 /* back@2x.png in Resources */,
 				C229C4E21B7787FF00467F73 /* v3.jpg in Resources */,
 				C229C4C51B775F8D00467F73 /* playerBackground.jpg in Resources */,
 				C2CEAE361B725050000F6858 /* music_rewind_button.png in Resources */,
+				C2C4F1B81B78273E00C5943F /* setting.png in Resources */,
+				C2C4F1BE1B78365000C5943F /* suggestBack.png in Resources */,
 				C2C4DF951B66470C004690C3 /* LaunchScreen.xib in Resources */,
 				C229C4C81B775F8D00467F73 /* icon.jpg in Resources */,
 				C229C4E41B778A2400467F73 /* albumBackView.jpg in Resources */,
 				C229C4DA1B77815300467F73 /* 9.jpg in Resources */,
+				C2C4F1B61B78273E00C5943F /* favorate.png in Resources */,
 				C229C4C91B775F8D00467F73 /* launcher.jpg in Resources */,
 				C2C2DA1A1B70EB3900E6A83B /* 30x-Radio.png in Resources */,
 				C229C4E11B7787FF00467F73 /* v2.jpg in Resources */,

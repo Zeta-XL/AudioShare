@@ -37,6 +37,7 @@
     self.commentLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_playTimesLabel.frame) + 10, CGRectGetMinY(_playTimesLabel.frame), CGRectGetWidth(_playTimesLabel.frame)*2, CGRectGetHeight(_playTimesLabel.frame))];
 //    self.commentLabel.backgroundColor = [UIColor blueColor];
     self.commentLabel.font = [UIFont systemFontOfSize:13.f];
+    
     [self.contentView addSubview:_commentLabel];
     
     //

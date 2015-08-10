@@ -14,6 +14,7 @@
 
 @interface FoxSettingsTableViewController ()
 @property (nonatomic, strong)NSArray *array;
+@property (nonatomic, strong)NSArray *iconArray;
 @end
 
 @implementation FoxSettingsTableViewController
@@ -22,11 +23,16 @@
     [super viewDidLoad];
     
     self.array = @[@"收藏专辑", @"播放历史", @"设置"];
-    
+    UIImage *favorate = [UIImage imageNamed:@"favorate.png"];
+    UIImage *history = [UIImage imageNamed:@"history1.png"];
+    UIImage *setting = [UIImage imageNamed:@"setting.png"];
+    self.iconArray = @[favorate, history, setting];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     
     self.navigationItem.title = @"我的";
-    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    UIView * newFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 30)];
+//    self.tableView.tableFooterView = newFooterView;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -36,11 +42,11 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 1;
-}
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+//#warning Potentially incomplete method implementation.
+//    // Return the number of sections.
+//    return 1;
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete method implementation.
@@ -53,6 +59,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     
     cell.textLabel.text = _array[indexPath.row];
+    cell.imageView.image = _iconArray[indexPath.row];
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     

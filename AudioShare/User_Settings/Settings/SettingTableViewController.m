@@ -10,7 +10,7 @@
 #import "DataBaseHandle.h"
 #import "Reachability.h"
 #import "TimerViewController.h"
-
+#import "SDImageCache.h"
 @interface SettingTableViewController () <UIAlertViewDelegate>
 
 
@@ -20,10 +20,32 @@
 //
 @property (nonatomic, strong)UISwitch *mySwitch;
 
-
+@property (nonatomic, strong)UILabel *sizeLabel;
 @end
 
 @implementation SettingTableViewController
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    UITableViewCell *  cell= [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+    if ([_sizeLabel superview]) {
+        NSString *sizeStr = [self convertDateSize:[[SDImageCache sharedImageCache] getSize]];
+        _sizeLabel.text = sizeStr;
+    } else {
+        self.sizeLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth([UIScreen mainScreen].bounds) - 80 , 0, 80, cell.contentView.frame.size.height)];
+        _sizeLabel.textAlignment = NSTextAlignmentCenter;
+        _sizeLabel.adjustsFontSizeToFitWidth = YES;
+        [cell.contentView addSubview:_sizeLabel];
+        NSString *sizeStr = [self convertDateSize:[[SDImageCache sharedImageCache] getSize]];
+        _sizeLabel.text = sizeStr;
+    }
+    
+    
+    
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -33,7 +55,7 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.navigationItem.title = @"设置";
     
     //注册
@@ -41,7 +63,7 @@
     
     self.dataArray = @[@"定时关闭", @"是否在2G/3G/4G网络下播放", @"清除缓存"];
     
-    self.mySwitch = [[UISwitch alloc]initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame) - 60 , 50, 0, 0)];
+    self.mySwitch = [[UISwitch alloc]initWithFrame:CGRectMake(CGRectGetWidth(self.tableView.frame) - 60 , 50, 0, 0)];
     
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     if ([ud boolForKey:@"switchOn"]) {
@@ -53,7 +75,10 @@
     
     [_mySwitch addTarget:self action:@selector(mySwitchAction :) forControlEvents:(UIControlEventValueChanged)];
     
-    [self.view addSubview:_mySwitch];
+    [self.tableView addSubview:_mySwitch];
+    
+    
+    
     
 }
 
@@ -109,15 +134,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"settingCell" forIndexPath:indexPath];
+
     
-    
-    
-    //cell.textLabel.text = @"测试";
     
     cell.textLabel.text = _dataArray[indexPath.row];
     cell.textLabel.font = [UIFont systemFontOfSize:16.f];
-    
-    if (indexPath.row != 1) {
+    cell.backgroundColor = [UIColor clearColor];
+    if (indexPath.row == 0) {
         
         //cell小箭头
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -153,8 +176,21 @@
         NSString *cachePath = [[DataBaseHandle shareDataBase] getPathOf:Cache];
         NSString *filePath = [cachePath stringByAppendingPathComponent:@"com.hackemist.SDWebImageCache.default"];
         [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
+        self.sizeLabel.text = @"0.00K";
     }
 }
+
+
+- (NSString *)convertDateSize:(NSUInteger)size
+{
+    if (size > 1024*1024) {
+        return [NSString stringWithFormat:@"%.2lfM", size/1024.0/1024.0];
+    } else {
+        return [NSString stringWithFormat:@"%.2lfK", size/1024.0];
+    }
+}
+
+
 //确定cell高度
 //-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 //{

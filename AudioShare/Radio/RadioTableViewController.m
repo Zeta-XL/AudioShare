@@ -83,7 +83,7 @@
     self.activity = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(100, 100, 80, 50)];
     self.activity.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
     self.activity.backgroundColor = [UIColor grayColor];
-    self.activity.alpha = 0.3;
+    self.activity.alpha = 0.8;
     self.activity.layer.cornerRadius = 6;
     self.activity.layer.masksToBounds = YES;
     

@@ -48,7 +48,7 @@
     self.activity = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(100, 100, 80, 50)];
     self.activity.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
     self.activity.backgroundColor = [UIColor grayColor];
-    self.activity.alpha = 0.3;
+    self.activity.alpha = 0.8;
     self.activity.layer.cornerRadius = 6;
     self.activity.layer.masksToBounds = YES;
     
@@ -135,6 +135,11 @@
     self.tableView.opaque = NO;
     self.tableView.backgroundView = imageView;
   */  
+//    UIImageView *backgroudImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"suggestBack.png"]];
+//    backgroudImageView.frame = self.tableView.bounds;
+//    self.tableView.backgroundView = backgroudImageView;
+//    
+    
     
     self.navigationItem.title = @"听我想听";
     
@@ -286,7 +291,7 @@
     cell.tracksCountsLabel.text = [NSString stringWithFormat:@"共%@集",m.tracksCounts];
 //    cell.tracksCountsLabel.textColor = [UIColor whiteColor];
     [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[_dataArray[indexPath.row]coverMiddle]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
-//    cell.backgroundColor = [UIColor whiteColor];
+    cell.backgroundColor = [UIColor clearColor];
     
     return cell;
 }

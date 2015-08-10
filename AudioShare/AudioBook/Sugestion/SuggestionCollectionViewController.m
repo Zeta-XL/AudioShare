@@ -68,7 +68,10 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
     [self p_setupActivity];
 //    self.dataArray = [NSMutableArray array];
 //    [self p_requestDataWithPageId:_currentPageId++ pageSize:_pageSize];
-
+    
+//    UIImageView *backgroudImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"suggestBack.png"]];
+//    backgroudImageView.frame = self.collectionView.bounds;
+//    self.collectionView.backgroundView = backgroudImageView;
 }
 
 - (void)p_setupActivity
@@ -77,7 +80,7 @@ static NSString * const reuseIdentifier = @"SuggestionCell";
     self.activity = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(100, 100, 80, 50)];
     self.activity.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
     self.activity.backgroundColor = [UIColor grayColor];
-    self.activity.alpha = 0.3;
+    self.activity.alpha = 0.8;
     self.activity.layer.cornerRadius = 6;
     self.activity.layer.masksToBounds = YES;
     

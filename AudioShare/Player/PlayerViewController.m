@@ -467,7 +467,9 @@ static PlayerViewController *singlePlayer = nil;
     TimerViewController *timerVC = [[TimerViewController alloc] init];
     timerVC.isModal = YES;
     UINavigationController *timerNC = [[UINavigationController alloc] initWithRootViewController:timerVC];
+    timerNC.navigationBar.tintColor = [UIColor blackColor];
     [timerNC.navigationBar setBackgroundImage:[UIImage imageNamed: @"navigationBar.jpg"] forBarMetrics:(UIBarMetricsDefault)];
+    timerNC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentViewController:timerNC animated:YES completion:nil];
 
     DLog(@"定时关闭");
@@ -576,7 +578,7 @@ static PlayerViewController *singlePlayer = nil;
 {
     TracksListTableViewController *trackListVC = [[TracksListTableViewController alloc] init];
     UINavigationController *listNC = [[UINavigationController alloc] initWithRootViewController:trackListVC];
-    
+    listNC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     trackListVC.trackList = self.tracksList;
     trackListVC.albumId = self.albumId;
     
@@ -592,6 +594,7 @@ static PlayerViewController *singlePlayer = nil;
     [hisNC.navigationBar setBackgroundImage:[UIImage imageNamed: @"navigationBar.jpg"] forBarMetrics:(UIBarMetricsDefault)];
     historyVC.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back@2x.png"] style:(UIBarButtonItemStyleDone) target:historyVC action:@selector(backToPlayer:)];
     historyVC.isModal = YES;
+    hisNC.modalTransitionStyle = UIModalTransitionStylePartialCurl;
     [self presentViewController:hisNC animated:YES completion:^{
     }];
     
