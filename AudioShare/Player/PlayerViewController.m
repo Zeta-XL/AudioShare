@@ -110,7 +110,10 @@ static PlayerViewController *singlePlayer = nil;
     if (_urlString) {
 
         [self p_cancelListen];
-
+        if (_lastItem.statusObserver) {
+            [_lastItem removeObserver:self forKeyPath:@"status"];
+            _lastItem.statusObserver = NO;
+        }
         SpecialItem *newItem = [self createPlayerItemWithURLString:_urlString];
         if (!newItem.isLiveCast) { //***************************?//
             // 记录上次播放进度-更更新数据库
@@ -123,6 +126,7 @@ static PlayerViewController *singlePlayer = nil;
         
         if (!_historyFlag) {
             self.lastSeconds = 0.0;
+            _historyFlag = NO;
         } else {
             _historyFlag = NO;
         }
@@ -192,7 +196,7 @@ static PlayerViewController *singlePlayer = nil;
         [self p_listenPlayTimeToEnd];
         
     }
-    
+
 }
 
 // 视图出现
@@ -201,10 +205,10 @@ static PlayerViewController *singlePlayer = nil;
     [super viewDidAppear:YES];
     
     if (_isPlaying == NO) {
-        
+        [self.playButton setImage:[UIImage imageNamed:@"music_play_button.png"] forState:(UIControlStateNormal)];
         [self playAction:_playButton];
     } else {
-        
+        [self.playButton setImage:[UIImage imageNamed:@"music_pause_button.png"] forState:(UIControlStateNormal)];
         [_player play];
         
     }
@@ -405,13 +409,13 @@ static PlayerViewController *singlePlayer = nil;
     if (_currentIndex == 0) {
         self.preButton.enabled = NO;
     } else if (_currentIndex == _tracksList.count - 1) {
-        self.nextButton.enabled = YES;
+        self.nextButton.enabled = NO;
     }
     
     DLog(@"urlListCount = %lud", _urlStateList.count);
-    for (NSDictionary *d in _urlStateList) {
-        DLog(@"urlArray:keys-%@, values-%@", d[@"url"], d[@"timeState"]);
-    }
+//    for (NSDictionary *d in _urlStateList) {
+//        DLog(@"urlArray:keys-%@, values-%@", d[@"url"], d[@"timeState"]);
+//    }
     
 }
 
@@ -594,10 +598,10 @@ static PlayerViewController *singlePlayer = nil;
 {
     HistoryTableViewController *historyVC = [[HistoryTableViewController alloc] init];
     UINavigationController *hisNC = [[UINavigationController alloc] initWithRootViewController:historyVC];
-    [hisNC.navigationBar setBackgroundImage:[UIImage imageNamed: @"navigationBar.jpg"] forBarMetrics:(UIBarMetricsDefault)];
-    historyVC.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back.png"] style:(UIBarButtonItemStyleDone) target:historyVC action:@selector(backToPlayer:)];
+//    [hisNC.navigationBar setBackgroundImage:[UIImage imageNamed: @"navigationBar.jpg"] forBarMetrics:(UIBarMetricsDefault)];
+//    historyVC.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:(UIBarButtonItemStyleDone) target:historyVC action:@selector(backToPlayer:)];
     historyVC.isModal = YES;
-    hisNC.modalTransitionStyle = UIModalTransitionStylePartialCurl;
+    hisNC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self presentViewController:hisNC animated:YES completion:^{
     }];
     
@@ -730,7 +734,8 @@ static PlayerViewController *singlePlayer = nil;
     }
       
     history.currentTime = [self convertTime:timeSeconds];
-    history.coverSmall = track.coverLarge;
+    // 播放历史的图片
+    history.coverSmall = self.imageUrl;
     history.archiveName = [NSString stringWithFormat:@"aid%@", history.albumId];
     
     // 查找数据是否有
@@ -797,7 +802,8 @@ static PlayerViewController *singlePlayer = nil;
 - (void)timerStopAction
 {
     if (_isPlaying) {
-        [self playAction:nil];
+        [self.player pause];
+        _isPlaying = NO;
     }
     
 }
@@ -807,6 +813,7 @@ static PlayerViewController *singlePlayer = nil;
     
     self.timerTime = _timerTime - 1;
     if (_timerTime <= 0) {
+        
         [self timerStopAction];
         [self.timer invalidate];
         self.timer = nil;

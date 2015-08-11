@@ -37,7 +37,7 @@
 @property (nonatomic, copy)NSString *tags;
 
 //播放次数 //--未使用--//
-@property (nonatomic, copy)NSString *playsCounts;
+@property (nonatomic, copy)NSString *playTimes;
 
 // 声音个数
 @property (nonatomic, copy)NSString *tracksCount;

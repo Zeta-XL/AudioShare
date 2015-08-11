@@ -15,7 +15,7 @@
 #import "AlbumTableViewController.h"
 #import "API_URL.h"
 
-@interface FavorateTableViewController ()
+@interface FavorateTableViewController () <UIAlertViewDelegate>
 
 @property (nonatomic, strong)NSMutableArray *dataArray;
 @property (nonatomic, assign)BOOL onceFlag;
@@ -150,26 +150,35 @@
 - (void)deleteAllAction:(UIBarButtonItem *)sender
 {
     
-    NSString *docPath = [[DataBaseHandle shareDataBase] getPathOf:Document];
-    [[DataBaseHandle shareDataBase] openDBWithName:kDBName atPath:docPath];
     
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"警告" message:@"是否删除所有收藏记录" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     
-    [[DataBaseHandle shareDataBase] dropTableWithName:kFavorateTableName];
+    [alert show];
     
-    self.dataArray = [[[DataBaseHandle shareDataBase] selectAllFromTable:kFavorateTableName modelProperty:[AlbumModel propertyNames] sidOption:NO] mutableCopy];
-    
-    [[DataBaseHandle shareDataBase] closeDB];
-    
-    if (self.dataArray.count == 0 || self.dataArray == nil) {
+}
+
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        NSString *docPath = [[DataBaseHandle shareDataBase] getPathOf:Document];
+        [[DataBaseHandle shareDataBase] openDBWithName:kDBName atPath:docPath];
+        
+        
+        [[DataBaseHandle shareDataBase] dropTableWithName:kFavorateTableName];
+        
+        
+        [[DataBaseHandle shareDataBase] closeDB];
+        
+        
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 30)];
         label.text = @"没有收藏记录..";
         label.textAlignment = NSTextAlignmentCenter;
         self.tableView.tableHeaderView = label;
         self.navigationItem.rightBarButtonItem.enabled = NO;
-    } else {
-        self.navigationItem.rightBarButtonItem.enabled = YES;
+        self.dataArray = nil;
+        [self.tableView reloadData];
     }
-    [self.tableView reloadData];
 }
 
 

@@ -123,6 +123,9 @@
             // 获取album信息
             self.album = [[AlbumModel alloc] init];
             [_album setValuesForKeysWithDictionary:dict[@"album"]];
+            if (_album.tags == nil) {
+                _album.tags = @"无";
+            }
             self.navigationItem.title = _album.categoryName;
             
             [_albumView.albumImageView sd_setImageWithURL:[NSURL URLWithString:_album.coverLarge] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
@@ -216,9 +219,12 @@
 - (void)onClickCollectionButton:(UIButton *)sender
 {
     _isSaved = !_isSaved;
+    
     // 打开数据库
     NSString *docPath = [[DataBaseHandle shareDataBase] getPathOf:Document];
     [[DataBaseHandle shareDataBase] openDBWithName:kDBName atPath:docPath];
+    // 创建表 (收藏)
+    [[DataBaseHandle shareDataBase] createTableWithName:kFavorateTableName paramNames:[AlbumModel propertyNames] paramTypes:[AlbumModel propertyTypes] setPrimaryKey:YES];
     if (_isSaved) {
         
         // 数据库插入数据

@@ -15,7 +15,7 @@
 #import "PlayerViewController.h"
 #import "RequestTool_v2.h"
 
-@interface HistoryTableViewController ()
+@interface HistoryTableViewController () <UIAlertViewDelegate>
 
 @property (nonatomic, strong)NSMutableArray *dataArray;
 @property (nonatomic, strong)NSMutableArray *tracksList;
@@ -44,7 +44,10 @@
         [player p_saveCurrentAlbumInfo];
     }
     
-    
+    if (_isModal == YES) {
+        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed: @"navigationBar.jpg"] forBarMetrics:(UIBarMetricsDefault)];
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backToPlayer:)];
+    }
     
     
     
@@ -56,7 +59,13 @@
     NSString *docPath = [[DataBaseHandle shareDataBase] getPathOf:Document];
     [[DataBaseHandle shareDataBase] openDBWithName:kDBName atPath:docPath];
     
-    self.dataArray = [[[DataBaseHandle shareDataBase] selectAllFromTable:kHistoryTableName historyProperty:[HistoryModel historyPropertyNames] sidOption:NO] mutableCopy];
+    // 创建表 (播放历史)
+    [[DataBaseHandle shareDataBase] createTableWithName:kHistoryTableName paramNames:[HistoryModel historyPropertyNames] paramTypes:[HistoryModel historyPropertyTypes] setPrimaryKey:YES];
+    
+    NSArray *tempArray = [[DataBaseHandle shareDataBase] selectAllFromTable:kHistoryTableName historyProperty:[HistoryModel historyPropertyNames] sidOption:NO];
+    if (tempArray) {
+        self.dataArray = [tempArray mutableCopy];
+    }
     
     [[DataBaseHandle shareDataBase] closeDB];
     
@@ -78,40 +87,49 @@
             NSTimeInterval t2 = [timeStampStr2 doubleValue];
             return -[@(t1) compare:@(t2)];
         }];
-        
+        [self.tableView reloadData];
     }
-    [self.tableView reloadData];
+    
 }
 
 
 - (void)p_deleteAllHistoryAction:(UIBarButtonItem *)sender;
 {
-    NSString *docPath = [[DataBaseHandle shareDataBase] getPathOf:Document];
-    [[DataBaseHandle shareDataBase] openDBWithName:kDBName atPath:docPath];
     
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"警告" message:@"是否删除所有播放记录" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     
-    [[DataBaseHandle shareDataBase] dropTableWithName:kHistoryTableName];
-    
-    self.dataArray = [[[DataBaseHandle shareDataBase] selectAllFromTable:kHistoryTableName historyProperty:[AlbumModel propertyNames] sidOption:NO] mutableCopy];
-    
-    [[DataBaseHandle shareDataBase] closeDB];
-    
-    if (self.dataArray.count == 0 || self.dataArray == nil) {
+    [alert show];
+}
+
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        NSString *docPath = [[DataBaseHandle shareDataBase] getPathOf:Document];
+        [[DataBaseHandle shareDataBase] openDBWithName:kDBName atPath:docPath];
+        
+        
+        [[DataBaseHandle shareDataBase] dropTableWithName:kHistoryTableName];
+        
+
+        [[DataBaseHandle shareDataBase] closeDB];
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 30)];
         label.text = @"没有历史记录..";
         label.textAlignment = NSTextAlignmentCenter;
         self.tableView.tableHeaderView = label;
         self.navigationItem.rightBarButtonItem.enabled = NO;
-    } else {
-        self.navigationItem.rightBarButtonItem.enabled = YES;
+        
+        // 清楚历史记录文件
+        NSString *cachePath = [[DataBaseHandle shareDataBase] getPathOf:Cache];
+        NSString *userHistoryPath = [cachePath stringByAppendingPathComponent:@"user/history"];
+        
+        [[NSFileManager defaultManager] removeItemAtPath:userHistoryPath error:nil];  
+        self.dataArray = nil;
+        [self.tableView reloadData];
     }
-    
-    NSString *cachePath = [[DataBaseHandle shareDataBase] getPathOf:Cache];
-    NSString *userHistoryPath = [cachePath stringByAppendingPathComponent:@"user/history"];
-    
-    [[NSFileManager defaultManager] removeItemAtPath:userHistoryPath error:nil];
-    [self.tableView reloadData];
 }
+
+
 
 
 
@@ -163,6 +181,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    DLog(@"点击cell IndexPath%@", indexPath);
     HistoryModel *history = _dataArray[indexPath.row];
     
     self.networkOK = [[NSUserDefaults standardUserDefaults] boolForKey:@"networkOK"];
@@ -199,7 +219,7 @@
         CGFloat lastSeconds = [dataDict[@"lastSeconds"] doubleValue];
         NSString *imgUrl = dataDict[@"imageUrl"];
         
-        
+        DLog(@"dataDict ------------------------------%@", dataDict);
         
         __weak typeof(self) weakSelf = self;
         self.handleTrackList = ^(NSMutableArray *trackList){
@@ -252,7 +272,7 @@
                 [tracksList addObject:trackm];
             }
             
-
+                
         } else {
             DLog(@"加载数据无效");
         }

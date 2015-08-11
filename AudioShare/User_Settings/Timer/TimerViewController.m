@@ -82,9 +82,11 @@
     self.time = [change[@"new"] doubleValue];
     self.tv.showTimerLable.text = [self convertTime:_time];
     if (self.time <= 0) {
-        [self timerSwichAction:nil];
+        self.time = 0;
+        [self timerSwichAction:self.tv.timerSwich];
         self.tv.timerSwich.on = NO;
-        
+        self.tv.showTimerLable.text = nil;
+        self.navigationItem.rightBarButtonItem.enabled = NO;
     }
 }
 
@@ -121,7 +123,7 @@
     lab.textColor = [UIColor whiteColor];
     switch (lab.tag) {
         case 101:
-            self.timeManual = 60 * 10;
+            self.timeManual = 60 * 1;
             break;
         case 102:
             self.timeManual = 60 * 20;
@@ -185,10 +187,13 @@
             [playerVC.timer invalidate];
             playerVC.timer = nil;
         }
+        
         playerVC.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:playerVC selector:@selector(timerChangeAction:) userInfo:nil repeats:YES];
         playerVC.timerTime = self.timeManual;
         self.tv.showTimerLable.text = [self convertTime:_timeManual];
         [playerVC.timer fire];
+        
+        
         
         
         if (_isModal) {

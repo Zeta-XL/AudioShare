@@ -58,7 +58,7 @@
 - (void)p_setupNavigation
 {
     self.navigationItem.title = @"播放列表";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back@2x.png"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backButtonAction:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back.png"] style:(UIBarButtonItemStyleDone) target:self action:@selector(backButtonAction:)];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:(UIBarButtonSystemItemDone) target:self action:@selector(confirmAction:)];
     self.navigationItem.rightBarButtonItem.enabled = NO;

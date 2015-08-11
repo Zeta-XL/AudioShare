@@ -20,8 +20,8 @@
         self.tracksCount = [NSString stringWithFormat:@"%@", value];
     } else if ([key isEqualToString:@"albumId"]) {
         self.albumId = [NSString stringWithFormat:@"%@", value];
-    } else if ([key isEqualToString:@"playsCounts"]) {
-        self.playsCounts = [NSString stringWithFormat:@"%@", value];
+    } else if ([key isEqualToString:@"playsTimes"] ) {
+        self.playTimes = [NSString stringWithFormat:@"%@", value];
     } else {
         [super setValue:value forKey:key];
     }
