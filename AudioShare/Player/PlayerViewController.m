@@ -598,8 +598,7 @@ static PlayerViewController *singlePlayer = nil;
 {
     HistoryTableViewController *historyVC = [[HistoryTableViewController alloc] init];
     UINavigationController *hisNC = [[UINavigationController alloc] initWithRootViewController:historyVC];
-//    [hisNC.navigationBar setBackgroundImage:[UIImage imageNamed: @"navigationBar.jpg"] forBarMetrics:(UIBarMetricsDefault)];
-//    historyVC.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:(UIBarButtonItemStyleDone) target:historyVC action:@selector(backToPlayer:)];
+
     historyVC.isModal = YES;
     hisNC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self presentViewController:hisNC animated:YES completion:^{
@@ -813,10 +812,11 @@ static PlayerViewController *singlePlayer = nil;
     
     self.timerTime = _timerTime - 1;
     if (_timerTime <= 0) {
-        
+        _timerTime = 0;
         [self timerStopAction];
-        [self.timer invalidate];
-        self.timer = nil;
+        [aTimer invalidate];
+        aTimer = nil;
+        
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"timerOn"];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"定时关闭时间已到" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [alert show];

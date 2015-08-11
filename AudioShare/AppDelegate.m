@@ -12,11 +12,16 @@
 
 @interface AppDelegate () <UIAlertViewDelegate>
 
-//网络连接改变
+// 网络连接改变
 - (void)reachabilityChanged: (NSNotification *)note;
 
-//处理连接改变后的情况
+// 处理连接改变后的情况
 - (void) updateInterfaceWithReachability: (Reachability*) curReach;
+
+
+
+// timer
+@property (nonatomic, strong)NSTimer *timer;
 @end
 
 @implementation AppDelegate
@@ -185,11 +190,54 @@
     [self p_saveUserData];
     
     
+
+    // 进入后台后, player的计时器会销毁, 需重新创建计时器, 并放到子线程中, 同时启动子线程的runloop
+    UIApplication *app = [UIApplication sharedApplication];
+    self.bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (_bgTask != UIBackgroundTaskInvalid) {
+                [app endBackgroundTask:_bgTask];
+                _bgTask = UIBackgroundTaskInvalid;
+            }
+        });
+    }];
+    
+    dispatch_queue_t queue = dispatch_queue_create(nil, DISPATCH_QUEUE_SERIAL);
+    
+    dispatch_async(queue, ^{
+        PlayerViewController *playerVC = [PlayerViewController sharedPlayer];
+        DLog(@"timerTime---+++---%lf", playerVC.timerTime);
+        
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:playerVC selector:@selector(timerChangeAction:) userInfo:nil repeats:YES];
+        [_timer fire];
+        
+        // 启动runloop
+        [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
+        [[NSRunLoop currentRunLoop] run];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (_bgTask != UIBackgroundTaskInvalid) {
+                [app endBackgroundTask:_bgTask];
+                _bgTask = UIBackgroundTaskInvalid;
+                DLog(@"timer++++++++++");
+            }
+        });
+    });
+    
+    
+
+    
 }
 
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
+    // 后台机试器未销毁, 再程序进入前台后, 赋给player
+    if (self.timer) {
+        [PlayerViewController sharedPlayer].timer = self.timer;
+        self.timer = nil;
+    }
+    
     
 }
 

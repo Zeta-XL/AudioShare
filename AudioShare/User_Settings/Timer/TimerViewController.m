@@ -33,6 +33,7 @@
         [playerVC addObserver:self forKeyPath:@"timerTime" options:(NSKeyValueObservingOptionNew) context:nil];
         playerVC.timerObserver = YES;
         self.navigationItem.rightBarButtonItem.enabled = YES;
+        _tv.showTimerLable.text = [self convertTime:playerVC.timerTime];
         
     } else {
         _tv.timerSwich.on = NO;
@@ -123,7 +124,7 @@
     lab.textColor = [UIColor whiteColor];
     switch (lab.tag) {
         case 101:
-            self.timeManual = 60 * 1;
+            self.timeManual = 60 * 10;
             break;
         case 102:
             self.timeManual = 60 * 20;
@@ -188,14 +189,15 @@
             playerVC.timer = nil;
         }
         
+        
+        
         playerVC.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:playerVC selector:@selector(timerChangeAction:) userInfo:nil repeats:YES];
+        
         playerVC.timerTime = self.timeManual;
         self.tv.showTimerLable.text = [self convertTime:_timeManual];
         [playerVC.timer fire];
         
-        
-        
-        
+
         if (_isModal) {
             
             [self.navigationController dismissViewControllerAnimated:YES completion:nil];

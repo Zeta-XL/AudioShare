@@ -13,5 +13,7 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) Reachability *hostReach;
 
+// 处理后台任务
+@property (nonatomic, assign) UIBackgroundTaskIdentifier bgTask;
 @end
 
