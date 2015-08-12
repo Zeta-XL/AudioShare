@@ -47,7 +47,8 @@
 @property (nonatomic, copy)NSString *albumId;
 // 记录最后的Item
 @property (nonatomic, strong)SpecialItem *lastItem;
-
+// 记录当前的item
+@property (nonatomic, strong)SpecialItem *currentItem;
 
 // 在线直播radio -live
 @property (nonatomic, copy)NSString *liveStartTime;
@@ -60,6 +61,9 @@
 @property (nonatomic, assign)CGFloat timerTime;
 @property (nonatomic, assign)BOOL timerObserver;
 
+
+
+
 // 根据UrlString初始化播放项目
 - (SpecialItem *)createPlayerItemWithURLString:(NSString *)urlString;
 + (instancetype)sharedPlayer;
@@ -70,5 +74,10 @@
 - (void)timerStopAction;
 
 - (void)timerChangeAction:(NSTimer *)aTimer;
+
+
+- (void)controlPlayAction;
+- (void)controlNextAction;
+- (void)controlPreAction;
 
 @end

@@ -11,6 +11,8 @@
 #import "Reachability.h"
 #import "TimerViewController.h"
 #import "SDImageCache.h"
+#import "DisclaimerViewController.h"
+#import "AboutViewController.h"
 @interface SettingTableViewController () <UIAlertViewDelegate>
 
 
@@ -61,7 +63,7 @@
     //注册
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"settingCell"];
     
-    self.dataArray = @[@"定时关闭", @"是否在2G/3G/4G网络下播放", @"清除缓存"];
+    self.dataArray = @[@"定时关闭", @"是否在2G/3G/4G网络下播放", @"清除缓存", @"关于我们", @"免责声明"];
     
     self.mySwitch = [[UISwitch alloc]initWithFrame:CGRectMake(CGRectGetWidth(self.tableView.frame) - 60 , 50, 0, 0)];
     
@@ -140,7 +142,7 @@
     cell.textLabel.text = _dataArray[indexPath.row];
     cell.textLabel.font = [UIFont systemFontOfSize:16.f];
     cell.backgroundColor = [UIColor clearColor];
-    if (indexPath.row == 0) {
+    if (indexPath.row != 1 && indexPath.row != 2) {
         
         //cell小箭头
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -166,6 +168,14 @@
         timerVC.isModal = NO;
         
         [self.navigationController pushViewController:timerVC animated:YES];
+    } else if (indexPath.row == 3) {
+        
+        AboutViewController *aboutVC = [[AboutViewController alloc]init];
+        [self.navigationController pushViewController:aboutVC animated:YES];
+    } else if (indexPath.row == 4) {
+        
+        DisclaimerViewController *disclaimerVC = [[DisclaimerViewController alloc]init];
+        [self.navigationController pushViewController:disclaimerVC animated:YES];
     }
 
 }

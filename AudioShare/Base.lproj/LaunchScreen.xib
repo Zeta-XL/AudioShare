@@ -11,32 +11,20 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launcher2.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="urz-on-Lxh">
-                    <rect key="frame" x="0.0" y="0.0" width="480" height="380"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vkp-sM-NcF">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
                 </imageView>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Copyright (c) 2015年 DLZ. All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="8ie-xW-0ye">
-                    <rect key="frame" x="20" y="439" width="441" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="Kzo-t9-V3l"/>
-                <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="MfP-vx-nX0"/>
-                <constraint firstAttribute="trailing" secondItem="urz-on-Lxh" secondAttribute="trailing" id="QbQ-6x-QIv"/>
-                <constraint firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" id="ZEH-qu-HZ9"/>
-                <constraint firstItem="urz-on-Lxh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="bJQ-g2-6fG"/>
-                <constraint firstAttribute="bottom" secondItem="urz-on-Lxh" secondAttribute="bottom" constant="100" id="mRJ-Nu-51e"/>
-                <constraint firstItem="urz-on-Lxh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="yPc-Th-vBB"/>
+                <constraint firstAttribute="bottom" secondItem="Vkp-sM-NcF" secondAttribute="bottom" id="MQB-Qw-3Vw"/>
+                <constraint firstItem="Vkp-sM-NcF" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ljd-sI-SHz"/>
+                <constraint firstItem="Vkp-sM-NcF" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="sd8-hF-XV3"/>
+                <constraint firstAttribute="trailing" secondItem="Vkp-sM-NcF" secondAttribute="trailing" id="uMY-y8-mez"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="548" y="455"/>
         </view>
     </objects>
-    <resources>
-        <image name="launcher2.jpg" width="562" height="657"/>
-    </resources>
 </document>

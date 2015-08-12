@@ -35,12 +35,6 @@ static PlayerViewController *singlePlayer = nil;
 @property (nonatomic, strong)id timeObserver;
 
 
-// 记录当前的item
-@property (nonatomic, strong)SpecialItem *currentItem;
-
-
-
-
 
 
 // url地址和播放状态时间的列表(播放列表)
@@ -456,6 +450,25 @@ static PlayerViewController *singlePlayer = nil;
 
     self.player = [AVPlayer playerWithPlayerItem:playerItem];
 }
+
+
+#pragma mark --- 对外控制
+- (void)controlPlayAction
+{
+    [self playAction:self.playButton];
+}
+
+- (void)controlNextAction
+{
+    [self nextButtonAction:self.nextButton];
+    
+}
+
+- (void)controlPreAction
+{
+    [self preButtonAction:self.preButton];
+}
+
 
 
 #pragma mark --- button响应事件

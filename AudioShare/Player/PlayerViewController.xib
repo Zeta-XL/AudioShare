@@ -30,9 +30,6 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="playerBackground.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="CiW-tw-j8a">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder.png" translatesAutoresizingMaskIntoConstraints="NO" id="t5w-1p-b2u">
-                    <rect key="frame" x="10" y="64" width="580" height="336"/>
-                </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aEG-Hz-PI2">
                     <rect key="frame" x="555" y="25" width="40" height="40"/>
                     <state key="normal" image="timer">
@@ -159,6 +156,9 @@
                         <action selector="ListButtonAction:" destination="-1" eventType="touchUpInside" id="eHE-Fc-wtP"/>
                     </connections>
                 </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder.png" translatesAutoresizingMaskIntoConstraints="NO" id="t5w-1p-b2u">
+                    <rect key="frame" x="10" y="64" width="580" height="336"/>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>

@@ -32,8 +32,7 @@
     self.categoryTitleLabel = [[UILabel alloc] init];
     _categoryTitleLabel.frame = CGRectMake(0, CGRectGetHeight(_categoryImageView.frame), CGRectGetWidth(_categoryImageView.frame), self.contentView.bounds.size.height / 3.0);
     _categoryTitleLabel.textAlignment = NSTextAlignmentCenter;
-    _categoryTitleLabel.font = [UIFont systemFontOfSize:14.f];
-    _categoryTitleLabel.adjustsFontSizeToFitWidth = YES;
+    _categoryTitleLabel.font = [UIFont systemFontOfSize:11.f];
     [self.contentView addSubview:_categoryTitleLabel];
     _categoryTitleLabel.backgroundColor = [UIColor whiteColor];
     

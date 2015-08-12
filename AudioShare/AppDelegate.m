@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import "RootTabBarController.h"
 #import "PlayerViewController.h"
+#import <AVFoundation/AVFoundation.h>
+#import <MediaPlayer/MediaPlayer.h>
 
 @interface AppDelegate () <UIAlertViewDelegate>
 
@@ -37,7 +39,6 @@
     [self.window makeKeyAndVisible];
     
 
-    
     RootTabBarController *rootTBC = [[RootTabBarController alloc] init];
     self.window.rootViewController = rootTBC;
     
@@ -88,10 +89,73 @@
     //解决偏移问题
     [[UIApplication sharedApplication]setStatusBarHidden:YES];
     
-    
+    // ********* 解决锁屏界面播放问题********** //
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    [self becomeFirstResponder];
     
     return YES;
 }
+
+// 锁屏界面相关
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
+- (void)remoteControlReceivedWithEvent: (UIEvent *) receivedEvent {
+    
+    PlayerViewController *playerVC = [PlayerViewController sharedPlayer];
+    
+    
+    if (receivedEvent.type == UIEventTypeRemoteControl) {
+        
+        switch (receivedEvent.subtype) {
+                
+            case UIEventSubtypeRemoteControlPlay:
+                DLog(@"锁屏播放");
+                [playerVC controlPlayAction];
+
+                break;
+            case UIEventSubtypeRemoteControlNextTrack:
+                DLog(@"锁屏下一首");
+                if (playerVC.currentItem.isLiveCast == NO) {
+                    [playerVC controlNextAction];
+                    [self setMediaInfo:playerVC.contentImageView.image andTitle:playerVC.titleString];
+                }
+                break;
+            case UIEventSubtypeRemoteControlPreviousTrack:
+                DLog(@"锁屏上一首");
+                if (playerVC.currentItem.isLiveCast == NO) {
+                    [playerVC controlPreAction];
+                    [self setMediaInfo:playerVC.contentImageView.image andTitle:playerVC.titleString];
+                }
+                break;
+            case UIEventSubtypeRemoteControlPause:
+                DLog(@"锁屏暂停");
+                [playerVC controlPlayAction];
+            
+            default:
+                break;
+        }
+    }
+}
+
+// 设置锁屏界面显示信息
+- (void)setMediaInfo:(UIImage *) img andTitle : (NSString *) title
+{
+    if (NSClassFromString(@"MPNowPlayingInfoCenter")) {
+        NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+        
+        
+        [dict setObject:title forKey:MPMediaItemPropertyAlbumTitle];
+
+        MPMediaItemArtwork * mArt = [[MPMediaItemArtwork alloc] initWithImage:img];
+        [dict setObject:mArt forKey:MPMediaItemPropertyArtwork];
+        [MPNowPlayingInfoCenter defaultCenter].nowPlayingInfo = nil;
+        [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:dict];
+    }
+}
+
+
 
 - (void)reachabilityChanged: (NSNotification *)note
 {
@@ -226,9 +290,12 @@
         });
     }
     
+    // **********进入后台后, 锁屏播放器设置********** //
+//    PlayerViewController *playerVC = [PlayerViewController sharedPlayer];
+    if (playerVC.contentImageView.image && playerVC.titleString.length > 0) {
+        [self setMediaInfo:playerVC.contentImageView.image andTitle:playerVC.titleString];
+    }
     
-    
-
     
 }
 

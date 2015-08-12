@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		C229C4C41B775F8D00467F73 /* navigationBar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C229C4BC1B775F8D00467F73 /* navigationBar.jpg */; };
 		C229C4C51B775F8D00467F73 /* playerBackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C229C4BD1B775F8D00467F73 /* playerBackground.jpg */; };
-		C229C4C91B775F8D00467F73 /* launcher.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C229C4C11B775F8D00467F73 /* launcher.jpg */; };
-		C229C4CA1B775F8D00467F73 /* launcher2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C229C4C21B775F8D00467F73 /* launcher2.jpg */; };
 		C229C4DA1B77815300467F73 /* 9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C229C4D71B77815300467F73 /* 9.jpg */; };
 		C229C4DB1B77815300467F73 /* 16.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C229C4D81B77815300467F73 /* 16.jpg */; };
 		C229C4DC1B77815300467F73 /* 19.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C229C4D91B77815300467F73 /* 19.jpg */; };
@@ -24,6 +22,10 @@
 		C241B8EF1B6FA94700845637 /* FavorateTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C241B8EE1B6FA94700845637 /* FavorateTableViewController.m */; };
 		C241B8F11B6FABF200845637 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C241B8F01B6FABF200845637 /* libsqlite3.dylib */; };
 		C241B8F41B6FAD7C00845637 /* HistoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C241B8F31B6FAD7C00845637 /* HistoryTableViewController.m */; };
+		C2A719D51B7B452300E5CD2E /* AboutView.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A719D21B7B452300E5CD2E /* AboutView.m */; };
+		C2A719D61B7B452300E5CD2E /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A719D41B7B452300E5CD2E /* AboutViewController.m */; };
+		C2A719DB1B7B452900E5CD2E /* DisclaimerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A719D81B7B452900E5CD2E /* DisclaimerView.m */; };
+		C2A719DC1B7B452900E5CD2E /* DisclaimerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A719DA1B7B452900E5CD2E /* DisclaimerViewController.m */; };
 		C2C08F581B6B047E00930A4F /* RadioTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C08F571B6B047E00930A4F /* RadioTableViewController.m */; };
 		C2C08F611B6B04CF00930A4F /* Radio.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C08F5B1B6B04CF00930A4F /* Radio.m */; };
 		C2C08F621B6B04CF00930A4F /* RadioProvince.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C08F5E1B6B04CF00930A4F /* RadioProvince.m */; };
@@ -126,8 +128,6 @@
 		1E4E816DCCC72B128588F1C9 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		C229C4BC1B775F8D00467F73 /* navigationBar.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = navigationBar.jpg; sourceTree = "<group>"; };
 		C229C4BD1B775F8D00467F73 /* playerBackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = playerBackground.jpg; sourceTree = "<group>"; };
-		C229C4C11B775F8D00467F73 /* launcher.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = launcher.jpg; sourceTree = "<group>"; };
-		C229C4C21B775F8D00467F73 /* launcher2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = launcher2.jpg; sourceTree = "<group>"; };
 		C229C4D71B77815300467F73 /* 9.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 9.jpg; sourceTree = "<group>"; };
 		C229C4D81B77815300467F73 /* 16.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 16.jpg; sourceTree = "<group>"; };
 		C229C4D91B77815300467F73 /* 19.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 19.jpg; sourceTree = "<group>"; };
@@ -145,6 +145,14 @@
 		C241B8F01B6FABF200845637 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		C241B8F21B6FAD7C00845637 /* HistoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryTableViewController.h; sourceTree = "<group>"; };
 		C241B8F31B6FAD7C00845637 /* HistoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryTableViewController.m; sourceTree = "<group>"; };
+		C2A719D11B7B452300E5CD2E /* AboutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutView.h; sourceTree = "<group>"; };
+		C2A719D21B7B452300E5CD2E /* AboutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutView.m; sourceTree = "<group>"; };
+		C2A719D31B7B452300E5CD2E /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
+		C2A719D41B7B452300E5CD2E /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
+		C2A719D71B7B452900E5CD2E /* DisclaimerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisclaimerView.h; sourceTree = "<group>"; };
+		C2A719D81B7B452900E5CD2E /* DisclaimerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisclaimerView.m; sourceTree = "<group>"; };
+		C2A719D91B7B452900E5CD2E /* DisclaimerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisclaimerViewController.h; sourceTree = "<group>"; };
+		C2A719DA1B7B452900E5CD2E /* DisclaimerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisclaimerViewController.m; sourceTree = "<group>"; };
 		C2C08F561B6B047E00930A4F /* RadioTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioTableViewController.h; sourceTree = "<group>"; };
 		C2C08F571B6B047E00930A4F /* RadioTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadioTableViewController.m; sourceTree = "<group>"; };
 		C2C08F5A1B6B04CF00930A4F /* Radio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Radio.h; sourceTree = "<group>"; };
@@ -410,6 +418,28 @@
 			path = History;
 			sourceTree = "<group>";
 		};
+		C2A719CF1B7B44DA00E5CD2E /* AboutWithUs */ = {
+			isa = PBXGroup;
+			children = (
+				C2A719D11B7B452300E5CD2E /* AboutView.h */,
+				C2A719D21B7B452300E5CD2E /* AboutView.m */,
+				C2A719D31B7B452300E5CD2E /* AboutViewController.h */,
+				C2A719D41B7B452300E5CD2E /* AboutViewController.m */,
+			);
+			path = AboutWithUs;
+			sourceTree = "<group>";
+		};
+		C2A719D01B7B44DA00E5CD2E /* Disclaimer */ = {
+			isa = PBXGroup;
+			children = (
+				C2A719D71B7B452900E5CD2E /* DisclaimerView.h */,
+				C2A719D81B7B452900E5CD2E /* DisclaimerView.m */,
+				C2A719D91B7B452900E5CD2E /* DisclaimerViewController.h */,
+				C2A719DA1B7B452900E5CD2E /* DisclaimerViewController.m */,
+			);
+			path = Disclaimer;
+			sourceTree = "<group>";
+		};
 		C2C08F591B6B04CF00930A4F /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -562,6 +592,8 @@
 		C2C11F961B685E9E00CBA7B5 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				C2A719CF1B7B44DA00E5CD2E /* AboutWithUs */,
+				C2A719D01B7B44DA00E5CD2E /* Disclaimer */,
 				C2CCC9B61B7608F3007A01E1 /* Timer */,
 				C2C11F9D1B685E9E00CBA7B5 /* SettingTableViewController.h */,
 				C2C11F9E1B685E9E00CBA7B5 /* SettingTableViewController.m */,
@@ -719,8 +751,6 @@
 			children = (
 				C2C4F1BD1B78365000C5943F /* suggestBack.png */,
 				C229C4BA1B775F8D00467F73 /* backgroundImage */,
-				C229C4C11B775F8D00467F73 /* launcher.jpg */,
-				C229C4C21B775F8D00467F73 /* launcher2.jpg */,
 				C2CEAE331B725050000F6858 /* music_fastforward_button.png */,
 				C2CEAE341B725050000F6858 /* music_rewind_button.png */,
 				C2C2DA0F1B70EB3900E6A83B /* 30x-Home.png */,
@@ -999,7 +1029,6 @@
 				C2C2DA1C1B70EB3900E6A83B /* music_pause_button.png in Resources */,
 				C2C4F1C01B78874E00C5943F /* Images.xcassets in Resources */,
 				C229C4DB1B77815300467F73 /* 16.jpg in Resources */,
-				C229C4CA1B775F8D00467F73 /* launcher2.jpg in Resources */,
 				C229C4E21B7787FF00467F73 /* v3.jpg in Resources */,
 				C229C4C51B775F8D00467F73 /* playerBackground.jpg in Resources */,
 				C2CEAE361B725050000F6858 /* music_rewind_button.png in Resources */,
@@ -1007,7 +1036,6 @@
 				C2C4DF951B66470C004690C3 /* LaunchScreen.xib in Resources */,
 				C229C4E41B778A2400467F73 /* albumBackView.jpg in Resources */,
 				C229C4DA1B77815300467F73 /* 9.jpg in Resources */,
-				C229C4C91B775F8D00467F73 /* launcher.jpg in Resources */,
 				C2C2DA1A1B70EB3900E6A83B /* 30x-Radio.png in Resources */,
 				C229C4E11B7787FF00467F73 /* v2.jpg in Resources */,
 				C229C4E01B7787FF00467F73 /* v1.jpg in Resources */,
@@ -1071,6 +1099,7 @@
 				C2C4DFC61B6648D3004690C3 /* AudioBookCategoryCollectionViewController.m in Sources */,
 				C2CCA85C1B677E3000B62775 /* DownloadView.m in Sources */,
 				C241B8EF1B6FA94700845637 /* FavorateTableViewController.m in Sources */,
+				C2A719D51B7B452300E5CD2E /* AboutView.m in Sources */,
 				C2C08FAA1B6B574E00930A4F /* MJRefreshAutoNormalFooter.m in Sources */,
 				C2C725F91B69D088005E671F /* TracksListTableViewController.m in Sources */,
 				C2C08FA41B6B574E00930A4F /* MJRefreshAutoFooter.m in Sources */,
@@ -1115,6 +1144,7 @@
 				C2C4DFFB1B66553E004690C3 /* UIImage+WebP.m in Sources */,
 				C2C4DFFD1B66553E004690C3 /* UIImageView+WebCache.m in Sources */,
 				C2C4DFF31B66553E004690C3 /* SDWebImageDecoder.m in Sources */,
+				C2A719DC1B7B452900E5CD2E /* DisclaimerViewController.m in Sources */,
 				C2CCA8611B67871B00B62775 /* DownloadedTracksCell.m in Sources */,
 				C2C08FB01B6B574E00930A4F /* MJRefreshNormalHeader.m in Sources */,
 				C2CCC9BE1B761821007A01E1 /* TimerView.m in Sources */,
@@ -1130,7 +1160,9 @@
 				C2CEAE261B71B013000F6858 /* HistoryModel.m in Sources */,
 				C2C4DFC51B6648D3004690C3 /* AudioBookCategoryCollectionViewCell.m in Sources */,
 				C2C4DFEF1B66553E004690C3 /* MKAnnotationView+WebCache.m in Sources */,
+				C2A719D61B7B452300E5CD2E /* AboutViewController.m in Sources */,
 				C2C08FA61B6B574E00930A4F /* MJRefreshComponent.m in Sources */,
+				C2A719DB1B7B452900E5CD2E /* DisclaimerView.m in Sources */,
 				C2CCA8641B67875A00B62775 /* DownloadedTrackViewController.m in Sources */,
 				C2C4E0041B665C03004690C3 /* SuggestionCollectionViewCell.m in Sources */,
 				C2C4DFF21B66553E004690C3 /* SDWebImageCompat.m in Sources */,
@@ -1181,8 +1213,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: YaYun Cui (QG9C9G6T78)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: YaYun Cui (QG9C9G6T78)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Muyang Yu (D6JP68T554)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Muyang Yu (D6JP68T554)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1204,6 +1236,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "edfec789-105e-492b-9b41-038df1c9a332";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1225,8 +1258,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: YaYun Cui (QG9C9G6T78)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: YaYun Cui (QG9C9G6T78)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Muyang Yu (D6JP68T554)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Muyang Yu (D6JP68T554)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1242,6 +1275,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "edfec789-105e-492b-9b41-038df1c9a332";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1253,14 +1287,15 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: YaYun Cui (QG9C9G6T78)";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Muyang Yu (D6JP68T554)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AudioShare/AudioShare-Prefix.pch";
 				INFOPLIST_FILE = AudioShare/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "536c33c3-64db-499f-996c-8bb029716e9c";
+				PROVISIONING_PROFILE = "edfec789-105e-492b-9b41-038df1c9a332";
 			};
 			name = Debug;
 		};
@@ -1270,14 +1305,15 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: YaYun Cui (QG9C9G6T78)";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Muyang Yu (D6JP68T554)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AudioShare/AudioShare-Prefix.pch";
 				INFOPLIST_FILE = AudioShare/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "536c33c3-64db-499f-996c-8bb029716e9c";
+				PROVISIONING_PROFILE = "edfec789-105e-492b-9b41-038df1c9a332";
 			};
 			name = Release;
 		};
