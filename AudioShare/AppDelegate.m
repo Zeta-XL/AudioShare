@@ -190,38 +190,42 @@
     [self p_saveUserData];
     
     
-
+    PlayerViewController *playerVC = [PlayerViewController sharedPlayer];
+    DLog(@"playerVC--timer%@", playerVC.timer);
     // 进入后台后, player的计时器会销毁, 需重新创建计时器, 并放到子线程中, 同时启动子线程的runloop
-    UIApplication *app = [UIApplication sharedApplication];
-    self.bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (_bgTask != UIBackgroundTaskInvalid) {
-                [app endBackgroundTask:_bgTask];
-                _bgTask = UIBackgroundTaskInvalid;
-            }
-        });
-    }];
-    
-    dispatch_queue_t queue = dispatch_queue_create(nil, DISPATCH_QUEUE_SERIAL);
-    
-    dispatch_async(queue, ^{
-        PlayerViewController *playerVC = [PlayerViewController sharedPlayer];
-        DLog(@"timerTime---+++---%lf", playerVC.timerTime);
+    if (playerVC.timerTime > 0) {
+        UIApplication *app = [UIApplication sharedApplication];
+        self.bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (_bgTask != UIBackgroundTaskInvalid) {
+                    [app endBackgroundTask:_bgTask];
+                    _bgTask = UIBackgroundTaskInvalid;
+                }
+            });
+        }];
         
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:playerVC selector:@selector(timerChangeAction:) userInfo:nil repeats:YES];
-        [_timer fire];
-        
-        // 启动runloop
-        [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
-        [[NSRunLoop currentRunLoop] run];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (_bgTask != UIBackgroundTaskInvalid) {
-                [app endBackgroundTask:_bgTask];
-                _bgTask = UIBackgroundTaskInvalid;
-                DLog(@"timer++++++++++");
-            }
+        //    dispatch_queue_t queue = dispatch_queue_create(nil, DISPATCH_QUEUE_SERIAL);
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_async(queue, ^{
+            
+            DLog(@"timerTime---+++---%lf", playerVC.timerTime);
+            
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:playerVC selector:@selector(timerChangeAction:) userInfo:nil repeats:YES];
+            [_timer fire];
+            
+            // 启动runloop
+            [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
+            [[NSRunLoop currentRunLoop] run];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (_bgTask != UIBackgroundTaskInvalid) {
+                    [app endBackgroundTask:_bgTask];
+                    _bgTask = UIBackgroundTaskInvalid;
+                    DLog(@"timer++++++++++");
+                }
+            });
         });
-    });
+    }
+    
     
     
 
