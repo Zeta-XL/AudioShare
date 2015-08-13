@@ -9,9 +9,6 @@
 /* Begin PBXBuildFile section */
 		C229C4C41B775F8D00467F73 /* navigationBar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C229C4BC1B775F8D00467F73 /* navigationBar.jpg */; };
 		C229C4C51B775F8D00467F73 /* playerBackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C229C4BD1B775F8D00467F73 /* playerBackground.jpg */; };
-		C229C4DA1B77815300467F73 /* 9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C229C4D71B77815300467F73 /* 9.jpg */; };
-		C229C4DB1B77815300467F73 /* 16.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C229C4D81B77815300467F73 /* 16.jpg */; };
-		C229C4DC1B77815300467F73 /* 19.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C229C4D91B77815300467F73 /* 19.jpg */; };
 		C229C4E01B7787FF00467F73 /* v1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C229C4DD1B7787FF00467F73 /* v1.jpg */; };
 		C229C4E11B7787FF00467F73 /* v2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C229C4DE1B7787FF00467F73 /* v2.jpg */; };
 		C229C4E21B7787FF00467F73 /* v3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C229C4DF1B7787FF00467F73 /* v3.jpg */; };
@@ -124,9 +121,6 @@
 		1E4E816DCCC72B128588F1C9 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		C229C4BC1B775F8D00467F73 /* navigationBar.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = navigationBar.jpg; sourceTree = "<group>"; };
 		C229C4BD1B775F8D00467F73 /* playerBackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = playerBackground.jpg; sourceTree = "<group>"; };
-		C229C4D71B77815300467F73 /* 9.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 9.jpg; sourceTree = "<group>"; };
-		C229C4D81B77815300467F73 /* 16.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 16.jpg; sourceTree = "<group>"; };
-		C229C4D91B77815300467F73 /* 19.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 19.jpg; sourceTree = "<group>"; };
 		C229C4DD1B7787FF00467F73 /* v1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = v1.jpg; sourceTree = "<group>"; };
 		C229C4DE1B7787FF00467F73 /* v2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = v2.jpg; sourceTree = "<group>"; };
 		C229C4DF1B7787FF00467F73 /* v3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = v3.jpg; sourceTree = "<group>"; };
@@ -371,9 +365,6 @@
 				C229C4DD1B7787FF00467F73 /* v1.jpg */,
 				C229C4DE1B7787FF00467F73 /* v2.jpg */,
 				C229C4DF1B7787FF00467F73 /* v3.jpg */,
-				C229C4D71B77815300467F73 /* 9.jpg */,
-				C229C4D81B77815300467F73 /* 16.jpg */,
-				C229C4D91B77815300467F73 /* 19.jpg */,
 				C229C4BC1B775F8D00467F73 /* navigationBar.jpg */,
 				C229C4BD1B775F8D00467F73 /* playerBackground.jpg */,
 			);
@@ -1016,19 +1007,16 @@
 				C2C495F41B7C35A10073B38A /* Images.xcassets in Resources */,
 				C2C2DA1D1B70EB3900E6A83B /* music_play_button.png in Resources */,
 				C2C2DA1C1B70EB3900E6A83B /* music_pause_button.png in Resources */,
-				C229C4DB1B77815300467F73 /* 16.jpg in Resources */,
 				C229C4E21B7787FF00467F73 /* v3.jpg in Resources */,
 				C229C4C51B775F8D00467F73 /* playerBackground.jpg in Resources */,
 				C2CEAE361B725050000F6858 /* music_rewind_button.png in Resources */,
 				C2C4F1BE1B78365000C5943F /* suggestBack.png in Resources */,
 				C2C4DF951B66470C004690C3 /* LaunchScreen.xib in Resources */,
 				C229C4E41B778A2400467F73 /* albumBackView.jpg in Resources */,
-				C229C4DA1B77815300467F73 /* 9.jpg in Resources */,
 				C229C4E11B7787FF00467F73 /* v2.jpg in Resources */,
 				C229C4E01B7787FF00467F73 /* v1.jpg in Resources */,
 				C2C08FBC1B6B971C00930A4F /* placeholder.png in Resources */,
 				C2C9B7F21B6CA5750053D5B1 /* radio_btn.jpg in Resources */,
-				C229C4DC1B77815300467F73 /* 19.jpg in Resources */,
 				C2C08FB21B6B574E00930A4F /* MJRefresh.bundle in Resources */,
 				C229C4C41B775F8D00467F73 /* navigationBar.jpg in Resources */,
 				C2CCA8711B67A2A500B62775 /* DownloadingTableViewCell.xib in Resources */,
@@ -1219,7 +1207,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				PROVISIONING_PROFILE = "fbb311e6-bb60-46ac-bde9-39f03c19b9ba";
 				SDKROOT = iphoneos;
 			};
@@ -1258,7 +1246,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				PROVISIONING_PROFILE = "fbb311e6-bb60-46ac-bde9-39f03c19b9ba";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -1276,7 +1264,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AudioShare/AudioShare-Prefix.pch";
 				INFOPLIST_FILE = AudioShare/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "fbb311e6-bb60-46ac-bde9-39f03c19b9ba";
@@ -1294,7 +1282,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AudioShare/AudioShare-Prefix.pch";
 				INFOPLIST_FILE = AudioShare/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "fbb311e6-bb60-46ac-bde9-39f03c19b9ba";
