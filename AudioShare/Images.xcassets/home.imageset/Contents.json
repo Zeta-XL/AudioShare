@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "mine30.png"
+      "filename" : "setting30.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "mine60.png"
+      "filename" : "setting60.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "mine90.png"
+      "filename" : "setting90.png"
     }
   ],
   "info" : {
