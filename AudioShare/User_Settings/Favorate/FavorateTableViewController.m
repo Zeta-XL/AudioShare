@@ -45,6 +45,7 @@
         self.navigationItem.rightBarButtonItem.enabled = NO;
     } else {
         self.navigationItem.rightBarButtonItem.enabled = YES;
+        self.tableView.tableHeaderView = nil;
     }
     [self.tableView reloadData];
     

@@ -36,6 +36,27 @@
 
 @implementation AlbumTableViewController
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    //打开数据库 //
+    NSString *docPath = [[DataBaseHandle shareDataBase] getPathOf:Document];
+    [[DataBaseHandle shareDataBase] openDBWithName:kDBName atPath:docPath];
+    // 创建表 (收藏)
+    [[DataBaseHandle shareDataBase] createTableWithName:kFavorateTableName paramNames:[AlbumModel propertyNames] paramTypes:[AlbumModel propertyTypes] setPrimaryKey:YES];
+    // 查找数据
+    NSArray *resultArray = [[DataBaseHandle shareDataBase] selectFromTable:kFavorateTableName withKey:@"albumId" pairValue:self.albumId modelProperty:[AlbumModel propertyNames]];
+    if (resultArray) {
+        _isSaved = YES;
+        [_albumView.collectionButton setTitle:@"取消收藏" forState:(UIControlStateNormal)];
+    } else {
+        _isSaved = NO;
+        [_albumView.collectionButton setTitle:@"收藏" forState:(UIControlStateNormal)];
+    }
+    
+    
+    [[DataBaseHandle shareDataBase] closeDB];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

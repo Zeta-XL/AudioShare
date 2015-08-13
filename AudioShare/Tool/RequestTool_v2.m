@@ -27,7 +27,7 @@
         }
         
         url = [NSURL URLWithString:urlString];
-        NSLog(@"%@", url);
+        DLog(@"%@", url);
         request = [NSMutableURLRequest requestWithURL:url];
         
     }else{
@@ -42,7 +42,7 @@
         if (!connectionError) {
             cb(data);
         }else {
-            NSLog(@"连接错误");
+            DLog(@"连接错误");
         }
         
     }];

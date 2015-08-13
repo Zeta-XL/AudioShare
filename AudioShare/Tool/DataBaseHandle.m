@@ -44,16 +44,16 @@ static sqlite3 *db;
 - (void)openDBWithName:(NSString *)dbName atPath:(NSString *)path
 {
     if (db != nil) {
-        NSLog(@"数据库已打开");
+        DLog(@"数据库已打开");
         return;
     }
     NSString *dbPath = [path stringByAppendingPathComponent:dbName];
     // 打开数据库
     int result = sqlite3_open(dbPath.UTF8String, &db);
     if (result == SQLITE_OK) {
-        NSLog(@"数据库%@打开成功", dbName);
+        DLog(@"数据库%@打开成功", dbName);
     }else {
-        NSLog(@"数据库%@打开失败",dbName);
+        DLog(@"数据库%@打开失败",dbName);
         perror("数据库打开失败");
     }
     
@@ -64,14 +64,14 @@ static sqlite3 *db;
 - (void)closeDB
 {
     if (db == nil) {
-        NSLog(@"数据已关闭");
+        DLog(@"数据已关闭");
     }
     
     int result = sqlite3_close(db);
     if (result == SQLITE_OK) {
-        NSLog(@"数据库关闭成功");
+        DLog(@"数据库关闭成功");
     }else{
-        NSLog(@"数据库关闭失败");
+        DLog(@"数据库关闭失败");
         perror("失败:");
     }
     db = nil;
@@ -81,7 +81,7 @@ static sqlite3 *db;
 - (void)createTableWithName:(NSString *)tableName paramNames:(NSArray *)nameArray paramTypes:(NSArray *)TypeArray;
 {
     if (nameArray.count != TypeArray.count) {
-        NSLog(@"参数不匹配, 建表失败");
+        DLog(@"参数不匹配, 建表失败");
         
         return;
     }
@@ -95,9 +95,9 @@ static sqlite3 *db;
     // 执行SQL语句
     int result = sqlite3_exec(db, createTableSQL.UTF8String, NULL, NULL, NULL);
     if (result == SQLITE_OK) {
-        NSLog(@"添加表成功");
+        DLog(@"添加表成功");
     }else {
-        NSLog(@"添加表失败");
+        DLog(@"添加表失败");
     }
 }
 
@@ -136,9 +136,9 @@ static sqlite3 *db;
     // 执行SQL语句
     int result = sqlite3_exec(db, createTableSQL.UTF8String, NULL, NULL, NULL);
     if (result == SQLITE_OK) {
-        NSLog(@"添加表成功");
+        DLog(@"添加表成功");
     }else {
-        NSLog(@"添加表失败");
+        DLog(@"添加表失败");
     }
     
     
@@ -152,9 +152,9 @@ static sqlite3 *db;
     // 执行SQL语句
     int result = sqlite3_exec(db, dropTableSQL.UTF8String, NULL, NULL, NULL);
     if (result == SQLITE_OK) {
-        NSLog(@"删除表成功");
+        DLog(@"删除表成功");
     }else {
-        NSLog(@"删除表失败");
+        DLog(@"删除表失败");
     }
     
 }
@@ -177,13 +177,13 @@ static sqlite3 *db;
     
     
     NSString *insertSQL = [NSString stringWithFormat:@"insert into %@ (%@) values (%@)", tableName, keyString, valueString];
-    NSLog(@"%@", insertSQL);
+    DLog(@"%@", insertSQL);
     int result = sqlite3_exec(db, insertSQL.UTF8String, NULL, NULL, NULL);
     if (result == SQLITE_OK) {
-        NSLog(@"插入成功");
+        DLog(@"插入成功");
         return YES;
     }else{
-        NSLog(@"插入失败");
+        DLog(@"插入失败");
         return NO;
     }
 
@@ -213,10 +213,10 @@ static sqlite3 *db;
     
     int result = sqlite3_exec(db, insertSQL.UTF8String, NULL, NULL, NULL);
     if (result == SQLITE_OK) {
-        NSLog(@"插入成功");
+        DLog(@"插入成功");
         return YES;
     }else{
-        NSLog(@"插入失败");
+        DLog(@"插入失败");
         return NO;
     }
     
@@ -233,9 +233,9 @@ static sqlite3 *db;
     // 执行
     int result = sqlite3_exec(db, deleteSQL.UTF8String , NULL, NULL, NULL);
     if (result == SQLITE_OK) {
-        NSLog(@"删除成功");
+        DLog(@"删除成功");
     }else {
-        NSLog(@"删除失败");
+        DLog(@"删除失败");
     }
     
 }
@@ -261,10 +261,10 @@ static sqlite3 *db;
     // 执行
     int result = sqlite3_exec(db, updateSQL.UTF8String, NULL, NULL, NULL);
     if (result == SQLITE_OK) {
-        NSLog(@"数据更改成功");
+        DLog(@"数据更改成功");
         
     }else {
-        NSLog(@"数据更新失败");
+        DLog(@"数据更新失败");
     }
 }
 
@@ -399,13 +399,13 @@ static sqlite3 *db;
         }
         
         if (modelArray.count ==0) {
-            NSLog(@"没查到");
+            DLog(@"没查到");
             sqlite3_finalize(stmt);
             return nil;
         }
         
     }else {
-        NSLog(@"查找无结果");
+        DLog(@"查找无结果");
     }
     
     // 关闭伴随指针
@@ -447,7 +447,7 @@ static sqlite3 *db;
         }
         
         if (modelArray.count ==0) {
-            NSLog(@"没查到");
+            DLog(@"没查到");
             sqlite3_finalize(stmt);
             return nil;
         }
@@ -481,7 +481,7 @@ static sqlite3 *db;
     }
     NSString *conditions = [subStrArray componentsJoinedByString:@"and"];
     NSString *selectSQL = [NSString stringWithFormat: @"select * from %@ where %@", tableName, conditions];
-    NSLog(@"%@", selectSQL);
+    DLog(@"%@", selectSQL);
     // 创建伴随指针
     sqlite3_stmt *stmt = nil;
     
@@ -503,14 +503,14 @@ static sqlite3 *db;
         }
         
         if (modelArray.count ==0) {
-            NSLog(@"没查到");
+            DLog(@"没查到");
             // 关闭伴随指针
             sqlite3_finalize(stmt);
             return nil;
         }
         
     }else {
-        NSLog(@"查找失败");
+        DLog(@"查找失败");
     }
     
     // 关闭伴随指针

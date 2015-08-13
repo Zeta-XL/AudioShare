@@ -13,6 +13,8 @@
 #import "SDImageCache.h"
 #import "DisclaimerViewController.h"
 #import "AboutViewController.h"
+#import "PlayerViewController.h"
+
 @interface SettingTableViewController () <UIAlertViewDelegate>
 
 
@@ -44,6 +46,12 @@
         _sizeLabel.text = sizeStr;
     }
     
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    if ([ud boolForKey:@"switchOn"]) {
+        [_mySwitch setOn:YES];
+    } else {
+        [_mySwitch setOn:NO];
+    }
     
     
 }
@@ -67,12 +75,7 @@
     
     self.mySwitch = [[UISwitch alloc]initWithFrame:CGRectMake(CGRectGetWidth(self.tableView.frame) - 60 , 50, 0, 0)];
     
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    if ([ud boolForKey:@"switchOn"]) {
-        [_mySwitch setOn:YES];
-    } else {
-        [_mySwitch setOn:NO];
-    }
+    
     
     
     [_mySwitch addTarget:self action:@selector(mySwitchAction :) forControlEvents:(UIControlEventValueChanged)];
@@ -107,6 +110,10 @@
             [ud setBool:YES forKey:@"networkOK"];
         } else {
             [ud setBool:NO forKey:@"networkOK"];
+            PlayerViewController *playerVC = [PlayerViewController sharedPlayer];
+            if (playerVC.isPlaying) {
+                [playerVC timerStopAction];
+            }
         }
         DLog(@"关闭在数据网络下播放, %d", [ud boolForKey:@"switchOn"]);
     }
