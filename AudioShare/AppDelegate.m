@@ -223,8 +223,8 @@
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    NSString *meg = [NSString stringWithFormat:@"点击第%ld个按钮",buttonIndex];
-    DLog(@"meg = %@",meg);
+    
+    
     
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     if (alertView.tag == 101 || alertView.tag == 102 ) {

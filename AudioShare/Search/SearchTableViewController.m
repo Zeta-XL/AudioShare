@@ -40,7 +40,7 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     
-    [super viewDidAppear:animated];
+    [super viewWillDisappear:animated];
 }
 
 
@@ -239,16 +239,15 @@
 -(void)createView
 {
     
-    self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds) - 100, 30)];
+    self.searchBar = [[UISearchBar alloc] init];
     
     self.searchBar.placeholder = @"输入搜索专辑的名称";
-    
-    self.searchBar.backgroundColor = [UIColor whiteColor];
     
     self.searchBar.keyboardType = UIKeyboardAppearanceDefault;
     
     self.searchBar.showsCancelButton = NO;
     
+    self.searchBar.searchBarStyle = UISearchBarStyleProminent;
     self.navigationItem.titleView = _searchBar;
     _searchBar.delegate = self;
 }

@@ -25,6 +25,13 @@
 @end
 
 @implementation TracksListTableViewController
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    PlayerViewController *playerVC = [PlayerViewController sharedPlayer];
+    [playerVC addObserver:self forKeyPath:@"currentIndex" options:(NSKeyValueObservingOptionNew) context:nil];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -38,6 +45,16 @@
     [self p_setupNavigation];
     self.currentIndex = [PlayerViewController sharedPlayer].currentIndex;
 }
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    PlayerViewController *playerVC = [PlayerViewController sharedPlayer];
+    
+    [playerVC removeObserver:self forKeyPath:@"currentIndex"];
+    
+}
+
 
 - (NSString *)p_convertTime:(CGFloat)second
 {
@@ -53,6 +70,7 @@
     NSString *showtimeNew = [formatter stringFromDate:d];
     return showtimeNew;
 }
+
 
 
 - (void)p_setupNavigation
@@ -88,10 +106,22 @@
 
 
 
-
-
-
-
+#pragma mark ---- observer
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    
+    NSInteger index = [change[@"new"] integerValue];
+    
+    NSIndexPath *lastIndex = [NSIndexPath indexPathForRow:_currentIndex inSection:0];
+    TracksListTableViewCell *lastCell = (TracksListTableViewCell *)[self.tableView cellForRowAtIndexPath:lastIndex];
+    lastCell.titleLabel.textColor = [UIColor blackColor];
+    
+    _currentIndex = index;
+    NSIndexPath *currentIndex = [NSIndexPath indexPathForRow:_currentIndex inSection:0];
+    TracksListTableViewCell *currentCell = (TracksListTableViewCell *)[self.tableView cellForRowAtIndexPath:currentIndex];
+    currentCell.titleLabel.textColor = [UIColor orangeColor];
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -146,9 +146,14 @@ static PlayerViewController *singlePlayer = nil;
         self.preButton.enabled = NO;
         self.nextButton.enabled = NO;
         self.listButton.enabled = NO;
+        self.historyButton.enabled = NO;
+        self.preButton.hidden = YES;
+        self.nextButton.hidden = YES;
+        self.listButton.hidden = YES;
+        self.historyButton.hidden = YES;
         self.timeGoingSlider.value = 0;
         self.timeGoingSlider.enabled = NO;
-        self.historyButton.enabled = NO;
+        
         self.tracksList = nil;
         self.urlStateList = nil;
         self.currentItem.statusObserver = NO;
@@ -167,6 +172,10 @@ static PlayerViewController *singlePlayer = nil;
         self.listButton.enabled = YES;
         self.timeGoingSlider.enabled = YES;
         self.historyButton.enabled = YES;
+        self.preButton.hidden = NO;
+        self.nextButton.hidden = NO;
+        self.listButton.hidden = NO;
+        self.historyButton.hidden = NO;
         //
         DLog(@"currentItem = %@, lastItem = %@", _currentItem, _lastItem);
         if (_currentItem != _lastItem) {
@@ -416,6 +425,7 @@ static PlayerViewController *singlePlayer = nil;
 
 
 
+
 #pragma mark ---- 播放器相关
 // 根据UrlString初始化播放项目
 - (SpecialItem *)createPlayerItemWithURLString:(NSString *)urlString
@@ -547,7 +557,7 @@ static PlayerViewController *singlePlayer = nil;
         self.nextButton.enabled = YES;
     }
     if (_currentIndex > 0) {
-        _currentIndex--;
+        self.currentIndex -= 1;
         DLog(@"pre to %lud", _currentIndex);
         if (_currentIndex == 0) {
             sender.enabled = NO;
@@ -573,7 +583,7 @@ static PlayerViewController *singlePlayer = nil;
         self.preButton.enabled = YES;
     }
     if (_currentIndex < _tracksList.count - 1) {
-        _currentIndex++;
+        self.currentIndex += 1;
          DLog(@"nest to %lud", _currentIndex);
         if (_currentIndex == _tracksList.count - 1) {
             sender.enabled = NO;
